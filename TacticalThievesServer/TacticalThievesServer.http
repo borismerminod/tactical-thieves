@@ -1,0 +1,6 @@
+@TacticalThievesServer_HostAddress = http://localhost:5140
+
+GET {{TacticalThievesServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
