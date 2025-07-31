@@ -1,0 +1,6 @@
+!.gitignore
+!/documents/
+!/TacticalThievesUnity/
+!/TacticalThievesServer/
+!/TacticalThievesClient/
+!README.md
