@@ -1,0 +1,10 @@
+!.gitignore
+!Assets/
+!Assets/**
+!Packages/
+!Packages/**
+!ProjectSettings/
+!ProjectSettings/**
+!UserSettings/
+!UserSettings/**
+!README.md
