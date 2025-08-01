@@ -1,6 +1,15 @@
+using Microsoft.AspNetCore.StaticFiles;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -16,10 +25,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".data"] = "application/octet-stream"; // <-- extension .data
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider
+});
+
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+
+app.UseCors();
 app.MapControllers();
 
 app.Run();
