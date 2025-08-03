@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace TacticalThieves
 {
-    public class Tile : Object
+    public class Thief : Object
     {
-
         // Start is called before the first frame update
         void Start()
         {
-        
+
         }
 
         // Update is called once per frame
         void Update()
         {
-        
+
         }
     }
 }
+

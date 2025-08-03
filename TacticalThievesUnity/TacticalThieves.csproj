@@ -58,6 +58,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\PingTest.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
+    <Compile Include="Assets\Scripts\Thief.cs" />
+    <Compile Include="Assets\Scripts\Object.cs" />
+    <Compile Include="Assets\Scripts\Grid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\TacticalThieves.asmdef" />

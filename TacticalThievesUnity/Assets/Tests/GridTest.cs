@@ -22,16 +22,26 @@ public class GridTest
         GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
         Assert.IsNotNull(gridPrefab, "Grid prefab should be loaded successfully.");
 
-        GameObject gridInstance = Object.Instantiate(gridPrefab);
+        GameObject gridInstance = UnityEngine.Object.Instantiate(gridPrefab);
         Assert.IsNotNull(gridInstance, "Prefab instance is null");
+
+        TacticalThieves.Grid grid = gridInstance.GetComponent<TacticalThieves.Grid>();
+        Assert.IsNotNull(grid, "Grid component should be attached to the prefab instance.");
 
         Assert.AreEqual(gridInstance.tag, "Grid");
 
-        Assert.AreEqual(gridInstance.transform.childCount, 4, "Grid should have at four children.");
+        Assert.AreEqual(gridInstance.transform.childCount, 16, "Grid should have at four children.");
 
-        for (int i = 0; i < gridInstance.transform.childCount; i++)
+        yield return null; // Wait for the next frame to ensure the prefab is loaded
+        Dictionary<string, Tile> tiles = grid.Tiles;
+
+        for (int i = 0; i < tilesCoords.GetLength(0); i++)
         {
-            Tile tile = gridInstance.transform.GetChild(i).gameObject.GetComponent<TacticalThieves.Tile>();
+           
+           string tileKey = $"{tilesCoords[i, 0]}_{tilesCoords[i, 1]}";
+           Assert.IsTrue(tiles.ContainsKey(tileKey), $"Tile with key {tileKey} should exist in the grid's tiles dictionary.");
+
+            Tile tile = tiles[tileKey];
 
             Assert.IsNotNull(tile, $"Child {i} should have a Tile component.");
 
@@ -41,6 +51,6 @@ public class GridTest
 
         yield return null; // Wait for the next frame to ensure the prefab is loaded
 
-        Object.Destroy(gridInstance); // Clean up the instantiated prefab
+        UnityEngine.Object.Destroy(gridInstance); // Clean up the instantiated prefab
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grid
   - Tile
+  - Thief
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,17 @@
+Prérequis : 
+La grille permet de retrouver facilement les case via un dictionnaire et une clé 
+
+Algo du clic pour déplacement
+
+1- Le voleur reçoit un clic du joueur
+2- On regarde la portée de déplacement du joueur
+3- On calcul la case min : max(posX joueur - portée, 1) et max(posY joueur - portée, 1)
+4- On calcul la case max : min(posX joueur + portee, dimension grille) et min(posY joueur + portée, dimension grille)
+5- On fait une boucle pour le x et une boucle pour le y
+6- pour chaque case x et y on fait pow(abs(x - posX joueur), 2) + pow(abs(x - posY joueur,2) 
+7- Si la valeur de la case est inférieure ou égale à pow(portée, 2) alors la case s'illumine SINON elle reste éteinte
+
+Garder en mémoire les position min et max pour déselectionner les cases
+
+Algo de déselection 
+1- Pour chaque case x et y => si la case est marquée comme active alors on la désactive SINON on passe
