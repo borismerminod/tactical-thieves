@@ -111,3 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94cd52d44c4db7f4d89d61fd5ff4036a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  x: 0
+  y: 0
+  enableForMove: 0
+  defaultMaterial: {fileID: 2100000, guid: eeb97cb96a91edb4a8f7c4b6d5aec204, type: 2}
+  moveMaterial: {fileID: 2100000, guid: a35ebbf8c7952204cb7efb249f191fd5, type: 2}

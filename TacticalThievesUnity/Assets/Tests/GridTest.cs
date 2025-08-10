@@ -32,7 +32,9 @@ public class GridTest
 
         Assert.AreEqual(gridInstance.transform.childCount, 16, "Grid should have at four children.");
 
-        yield return null; // Wait for the next frame to ensure the prefab is loaded
+        grid.InitTilesDictionnary();
+
+       // yield return null; // Wait for the next frame to ensure the prefab is loaded
         Dictionary<string, Tile> tiles = grid.Tiles;
 
         for (int i = 0; i < tilesCoords.GetLength(0); i++)

@@ -1,16 +1,21 @@
+using Palmmedia.ReportGenerator.Core.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace TacticalThieves
 {
+    [System.Serializable]
     public abstract class Object : MonoBehaviour
     {
         [SerializeField] protected int x;
         [SerializeField] protected int y;
 
-        public int X { get => x; private set => x = value; }
-        public int Y { get => y; private set => y = value; }
+        public int X { 
+            get => x;
+            set => x = value;
+        }
+        public int Y { get => y;  set => y = value; }
 
         // Start is called before the first frame update
         void Start()
@@ -22,6 +27,13 @@ namespace TacticalThieves
         void Update()
         {
         
+        }
+
+        public override string ToString()
+        {
+            string jsonString = JsonUtility.ToJson(this, true);
+
+            return jsonString;
         }
     }
 
