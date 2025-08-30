@@ -79,7 +79,7 @@ public class ThiefTest
             grid.InitTilesDictionnary();
             thief.EnableMove(true, grid);
 
-            Assert.IsTrue(thief.MovementEnable);
+            Assert.AreEqual(thief.Status, Thief.eThiefStatus.MovementEnable);
             Dictionary<string, Tile> tiles = grid.Tiles;
             for (int j = 0; j < tileCoords.GetLength(0); j++)
             {
@@ -115,6 +115,91 @@ public class ThiefTest
             UnityEngine.Object.Destroy(thief);
             UnityEngine.Object.Destroy(grid);
         }
+    }
+
+    [UnityTest]
+    public IEnumerator ThiefTest_OnMovementProceed()
+    {
+        string[] targetedTileKeys = { "4_4", "1_4", "4_1", "2_3"};
+        Vector2[][] expectedMove = new Vector2[][]{ 
+            new Vector2[] {new Vector2(2, 1), new Vector2(2, 2), new Vector2(3, 2), new Vector2(3, 3), new Vector2(4, 3), new Vector2(4, 4) },
+            new Vector2[] {new Vector2(1, 2), new Vector2(1, 3), new Vector2(1, 4) },
+            new Vector2[] {new Vector2(2, 1), new Vector2(3, 1), new Vector2(4, 1) },
+            new Vector2[] {new Vector2(1, 2), new Vector2(2, 2) , new Vector2(2, 3) }
+        };
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+
+        GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
+        Assert.IsNotNull(gridPrefab, "Grid prefab should be loaded successfully.");
+        TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
+        grid.InitTilesDictionnary();
+
+        for (int i = 0; i < targetedTileKeys.Length; i++)
+        {
+            string targetedTileKey = targetedTileKeys[i];
+            Vector2[] expectedMoveRoute = new Vector2[expectedMove[i].Length];
+            for (int j = 0; j < expectedMove[i].Length; j++)
+            {
+                expectedMoveRoute[j] = expectedMove[i][j];
+            }
+
+            OnMovementProceed(targetedTileKey, expectedMoveRoute);
+        }
+
+
+        void OnMovementProceed(string targetedTileKey, Vector2[] expectedMove)
+        {
+            thief.X = 1;
+            thief.Y = 1;
+            thief.MoveRange = 3;
+            Dictionary<string, Tile> tiles = grid.Tiles;
+
+            Assert.IsTrue(tiles.ContainsKey(targetedTileKey), $"Tile with key {targetedTileKey} should exist in the grid's tiles dictionary.");
+            Tile targetedTile = tiles[targetedTileKey];
+            Assert.IsNotNull(targetedTile, $"Tile at {targetedTileKey} should not be null.");
+
+            List<Vector2> moveRoute = grid.ComputeMoveRoute(thief, targetedTile);
+            Assert.AreEqual(expectedMove.Length, moveRoute.Count, "Move route should have the expected number of steps.");
+            for (int i = 0; i < moveRoute.Count; i++)
+            {
+                Assert.AreEqual(expectedMove[i], moveRoute[i], $"Move route at index {i} should match the expected value.");
+            }
+        }
+
+        yield return null; // Wait for the next frame to ensure the prefab is loaded
+        UnityEngine.Object.Destroy(thief);
+        UnityEngine.Object.Destroy(grid);
+    }
+
+    [UnityTest]
+    public IEnumerator ThiefTest_ThiefStatus()
+    {
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+
+        GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
+        Assert.IsNotNull(gridPrefab, "Grid prefab should be loaded successfully.");
+        TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
+        grid.InitTilesDictionnary();
+        Assert.AreEqual(thief.Status, Thief.eThiefStatus.Wait);
+
+        thief.EnableMove(true, grid);
+        Assert.AreEqual(thief.Status, Thief.eThiefStatus.MovementEnable);
+
+        thief.ProceedMovement(true);
+        Assert.AreEqual(thief.Status, Thief.eThiefStatus.isMoving);
+
+        thief.ProceedMovement(false);
+        Assert.AreEqual(thief.Status, Thief.eThiefStatus.Wait);
+
+        yield return null;
+        UnityEngine.Object.Destroy(thief);
+        UnityEngine.Object.Destroy(grid);
     }
 
 }

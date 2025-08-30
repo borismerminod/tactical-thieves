@@ -39,6 +39,22 @@ namespace TacticalThieves
         void Start()
         {
             InitTilesDictionnary();
+            SendGridToPlayerController();
+
+
+        }
+
+        private void SendGridToPlayerController()
+        {
+            GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
+            if (playerControllerGO == null)
+                return;
+
+            PlayerController playerController = playerControllerGO.GetComponent<PlayerController>();
+            if (playerController == null)
+                return;
+
+            playerController.OnGridStarted(this);
         }
 
         public bool InitTilesDictionnary()
@@ -157,6 +173,50 @@ namespace TacticalThieves
             int posX = Mathf.Min(thief.X + thief.MoveRange, width);
             int posY = Mathf.Min(thief.X + thief.MoveRange, height);
             maxTileCoords = new Vector2(posX, posY);
+        }
+
+        public List<Vector2> ComputeMoveRoute(Thief thief, Tile targetedTile)
+        {
+            List<Vector2> moveRoute = new List<Vector2>();
+            Vector2 currentLocation = new Vector2(thief.X, thief.Y);
+            Vector2 targetLocation = new Vector2(targetedTile.X, targetedTile.Y);
+            while(currentLocation != targetLocation)
+            {
+                Vector2[] possibleMoves = new Vector2[4];
+                possibleMoves[0] = new Vector2(Mathf.Max(currentLocation.x -1, 1),  currentLocation.y); // Left
+                possibleMoves[1] = new Vector2(currentLocation.x, Mathf.Max(currentLocation.y - 1, 1)); // Down
+                possibleMoves[2] = new Vector2(Mathf.Min(currentLocation.x + 1, width), currentLocation.y); // Right
+                possibleMoves[3] = new Vector2(currentLocation.x, Mathf.Min(currentLocation.y + 1, height)); // Up
+
+                Vector2 nextMove = possibleMoves[0];
+                float minDistance = Vector2.Distance(nextMove, targetLocation);
+
+                foreach (Vector2 move in possibleMoves)
+                {
+                    if(move == currentLocation)
+                    {
+                        continue; // Skip the current location
+                    }
+
+                    float distance = Vector2.Distance(move, targetLocation);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nextMove = move;
+                    }
+                }
+
+                moveRoute.Add(nextMove);
+                currentLocation = nextMove;
+            }
+            
+
+            foreach (Vector2 move in moveRoute)
+            {
+                Debug.Log($"Move to: {move}");
+            }
+
+            return moveRoute;
         }
 
         // Update is called once per frame

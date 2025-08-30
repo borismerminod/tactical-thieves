@@ -15,3 +15,26 @@ Garder en mémoire les position min et max pour déselectionner les cases
 
 Algo de déselection 
 1- Pour chaque case x et y => si la case est marquée comme active alors on la désactive SINON on passe
+
+Algo du déplacement : 
+1- Le joueur sélectionne une tuile active pour le déplacement
+2- On mémorise les coordonnée de la tuile cible 
+3- A partir de la position du joueur : 
+	- On regarde les 4 tuiles autours :
+		- X = Max(Joueur_PosX - 1, 1) Y = Joueur_PosY
+		- X = Joueur_PosX Y = Max(Joueur_PosY - 1, 1)
+		- X = Min(Joueur_Pox + 1, Grid.Width) Y = Joueur_PosY
+		- X = Joueur_PosX Y = Min(Joueur_PosY + 1, Grid.Height) 
+	- Pour chacune des 4 tuiles : 
+		- Si la position de la tuile est égale à celle du joueur on élimine la tuile
+		- On calcule la distance entre la tuile et la tuile cible 
+			- distanceX = abs(tuile_X - tuile_cible_X)
+			- distanceY = abs(tuileY - tuile_cible_Y)
+			- distance_carre = distanceX * distanceX + distanceY * distanceY
+		- On garde les coordonnées de la tuiles dont la distance est la plus faible
+	- On ajoute les coordonnées de la tuiles dans une table
+	- On recommence en remplaçant la position du joueur par celle de la tuile sélectionnée
+	- On répète le processus jusqu'à ce que la tuile trouvée soit celle ciblée  
+
+- Autre : 
+	- Le joueur clic sur une tuile non valide pour le déplacement ==> On désactive la sélection du voleur

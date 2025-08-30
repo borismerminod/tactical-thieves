@@ -6,13 +6,21 @@ namespace TacticalThieves
 {
     public class Thief : Object
     {
+
+        public enum eThiefStatus
+        {
+            Wait = 0,
+            MovementEnable = 1,
+            isMoving = 2 
+        }
+
         [SerializeField] private int moveRange;
-        [SerializeField] private bool movementEnable;
+        [SerializeField] private eThiefStatus status;
         
        
 
         public int MoveRange { get => moveRange; set => moveRange = value; }
-        public bool MovementEnable { get => movementEnable; private set => movementEnable = value; }
+        public eThiefStatus Status { get => status; private set => status = value; }
 
         // Start is called before the first frame update
         void Start()
@@ -28,27 +36,40 @@ namespace TacticalThieves
 
         private void OnMouseUp()
         {
-            GameObject gridGO = GameObject.FindGameObjectWithTag("Grid");
-            if(gridGO == null)
-                return;
 
-            Grid grid = gridGO.GetComponent<Grid>();
-            if (grid==null)
+            GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
+            if(playerControllerGO == null)
                 return;
-            EnableMove(!movementEnable, grid);
+            PlayerController playerController = playerControllerGO.GetComponent<PlayerController>();
+            playerController.OnThiefSelected(this);
+
+            
         }
 
         public void EnableMove(bool bCanMove, Grid grid)
         {
-            movementEnable = bCanMove;
-            if (movementEnable)
+            if (bCanMove)
             {
+                status = eThiefStatus.MovementEnable;
                 grid.OnThiefMoveEnable(this);
             }
             else
             {
+                status = eThiefStatus.Wait;
                 grid.OnThiefMoveDisable();
             }       
+        }
+
+        public void ProceedMovement(bool bCanMove)
+        {
+            if(bCanMove)
+            {
+                status = eThiefStatus.isMoving;
+            }
+            else
+            {
+                status = eThiefStatus.Wait;
+            }
         }
     }
 }
