@@ -40,8 +40,6 @@ namespace TacticalThieves
         {
             InitTilesDictionnary();
             SendGridToPlayerController();
-
-
         }
 
         private void SendGridToPlayerController()
@@ -166,13 +164,15 @@ namespace TacticalThieves
             int posY = Mathf.Max(Mathf.Abs(thief.Y - thief.MoveRange), 1);
 
             minTileCoords = new Vector2(posX, posY);
+            Debug.Log("MIN " + minTileCoords + " " + thief);
         }
 
         private void ComputeMaxTileCoords(Thief thief)
         {
             int posX = Mathf.Min(thief.X + thief.MoveRange, width);
-            int posY = Mathf.Min(thief.X + thief.MoveRange, height);
+            int posY = Mathf.Min(thief.Y + thief.MoveRange, height);
             maxTileCoords = new Vector2(posX, posY);
+            Debug.Log("MAX " + maxTileCoords + " " + thief);
         }
 
         public List<Vector2> ComputeMoveRoute(Thief thief, Tile targetedTile)
@@ -217,6 +217,17 @@ namespace TacticalThieves
             }
 
             return moveRoute;
+        }
+
+        public Tile GetNextTileMove(Vector2 moveDestination)
+        {
+            string tileKey = moveDestination.x + "_" + moveDestination.y;
+
+            if (tiles.ContainsKey(tileKey) == false)
+                return null;
+
+            return tiles[tileKey];
+
         }
 
         // Update is called once per frame

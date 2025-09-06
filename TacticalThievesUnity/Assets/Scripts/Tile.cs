@@ -30,15 +30,26 @@ namespace TacticalThieves
 
         private void OnMouseUp()
         {
-            GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
-            if (playerControllerGO == null)
-                return;
+            if(EnableForMove)
+            {
+                GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
+                if (playerControllerGO == null)
+                    return;
 
-            PlayerController playerController = playerControllerGO.GetComponent<PlayerController>();
-            if (playerController == null)
-                return;
+                PlayerController playerController = playerControllerGO.GetComponent<PlayerController>();
+                if (playerController == null)
+                    return;
 
-            playerController.OnTileSelected(this);
+                playerController.OnTileSelected(this);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Thief thief = other.gameObject.GetComponent<Thief>();
+            if (thief == null)
+                return;
+            thief.CheckCurrentTileLocation(this);
         }
 
         public void SetEnableForMove(bool enable)

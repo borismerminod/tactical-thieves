@@ -16,6 +16,8 @@ namespace TacticalThieves
 
         [SerializeField] private int moveRange;
         [SerializeField] private eThiefStatus status;
+        [SerializeField] private List<Vector2> currentMoveRoute;
+        [SerializeField] private int currentRouteIndex;
         
        
 
@@ -31,6 +33,30 @@ namespace TacticalThieves
         // Update is called once per frame
         void Update()
         {
+            if(status == eThiefStatus.isMoving)
+                Move();
+        }
+
+        private void Move()
+        {
+           
+            GameObject gridGO = GameObject.FindGameObjectWithTag("Grid");
+            if (gridGO == null)
+                return;
+
+            Grid grid = gridGO.GetComponent<Grid>();
+            if (grid == null)
+                return;
+
+            if (currentRouteIndex < 0 || currentRouteIndex >= currentMoveRoute.Count)
+                return;
+
+            Tile nextTileDestination = grid.GetNextTileMove(currentMoveRoute[currentRouteIndex]);
+
+            Vector3 direction = (nextTileDestination.transform.position - transform.position).normalized;
+            direction = new Vector3(direction.x, 0.0f, direction.z);
+            transform.rotation = Quaternion.LookRotation(direction);
+            transform.Translate(Vector3.forward * 1 * Time.deltaTime);
 
         }
 
@@ -65,11 +91,47 @@ namespace TacticalThieves
             if(bCanMove)
             {
                 status = eThiefStatus.isMoving;
+                currentRouteIndex = 0;
             }
             else
             {
                 status = eThiefStatus.Wait;
             }
+        }
+
+        public void SetMoveRoute(List<Vector2> moveRoute)
+        {
+            currentMoveRoute = moveRoute;
+            ProceedMovement(true);
+        }
+
+        public void CheckCurrentTileLocation(Tile tile)
+        {
+            if (status != eThiefStatus.isMoving)
+                return;
+            if (tile.X != X || tile.Y != Y)
+            {
+                X = tile.X;
+                Y = tile.Y;
+                currentRouteIndex++;
+
+                if (currentRouteIndex >= currentMoveRoute.Count)
+                {
+                    ProceedMovement(false);
+
+                    GameObject gridGO = GameObject.FindGameObjectWithTag("Grid");
+                    if (gridGO == null)
+                        return;
+
+                    Grid grid = gridGO.GetComponent<Grid>();
+                    if (grid == null)
+                        return;
+
+                    EnableMove(false, grid);
+                }
+
+            }
+            
         }
     }
 }
