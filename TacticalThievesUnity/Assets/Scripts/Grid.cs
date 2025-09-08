@@ -164,7 +164,6 @@ namespace TacticalThieves
             int posY = Mathf.Max(Mathf.Abs(thief.Y - thief.MoveRange), 1);
 
             minTileCoords = new Vector2(posX, posY);
-            Debug.Log("MIN " + minTileCoords + " " + thief);
         }
 
         private void ComputeMaxTileCoords(Thief thief)
@@ -172,7 +171,6 @@ namespace TacticalThieves
             int posX = Mathf.Min(thief.X + thief.MoveRange, width);
             int posY = Mathf.Min(thief.Y + thief.MoveRange, height);
             maxTileCoords = new Vector2(posX, posY);
-            Debug.Log("MAX " + maxTileCoords + " " + thief);
         }
 
         public List<Vector2> ComputeMoveRoute(Thief thief, Tile targetedTile)
@@ -208,12 +206,6 @@ namespace TacticalThieves
 
                 moveRoute.Add(nextMove);
                 currentLocation = nextMove;
-            }
-            
-
-            foreach (Vector2 move in moveRoute)
-            {
-                Debug.Log($"Move to: {move}");
             }
 
             return moveRoute;

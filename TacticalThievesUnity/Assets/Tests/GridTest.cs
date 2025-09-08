@@ -30,18 +30,18 @@ public class GridTest
 
         Assert.AreEqual(gridInstance.tag, "Grid");
 
-        Assert.AreEqual(gridInstance.transform.childCount, 16, "Grid should have at four children.");
+        Assert.AreEqual(gridInstance.transform.childCount, 16, "Grid should have at sixteen children.");
 
         grid.InitTilesDictionnary();
 
-       // yield return null; // Wait for the next frame to ensure the prefab is loaded
+        // yield return null; // Wait for the next frame to ensure the prefab is loaded
         Dictionary<string, Tile> tiles = grid.Tiles;
 
         for (int i = 0; i < tilesCoords.GetLength(0); i++)
         {
-           
-           string tileKey = $"{tilesCoords[i, 0]}_{tilesCoords[i, 1]}";
-           Assert.IsTrue(tiles.ContainsKey(tileKey), $"Tile with key {tileKey} should exist in the grid's tiles dictionary.");
+
+            string tileKey = $"{tilesCoords[i, 0]}_{tilesCoords[i, 1]}";
+            Assert.IsTrue(tiles.ContainsKey(tileKey), $"Tile with key {tileKey} should exist in the grid's tiles dictionary.");
 
             Tile tile = tiles[tileKey];
 
@@ -55,4 +55,5 @@ public class GridTest
 
         UnityEngine.Object.Destroy(gridInstance); // Clean up the instantiated prefab
     }
+
 }

@@ -16,8 +16,8 @@ public class ThiefTest
         Assert.IsNotNull(thief, "Thief component should be present on the instance.");
 
         Assert.AreEqual(thiefPrefab.tag, "Thief", "Thief prefab should have the correct tag.");
-        Assert.AreEqual(thief.X, 1);
-        Assert.AreEqual(thief.Y, 1);
+        Assert.AreEqual(thief.X, 2);
+        Assert.AreEqual(thief.Y, 2);
 
         yield return null; // Wait for the next frame to ensure the prefab is loaded
         UnityEngine.Object.Destroy(thief);
@@ -200,6 +200,25 @@ public class ThiefTest
         yield return null;
         UnityEngine.Object.Destroy(thief);
         UnityEngine.Object.Destroy(grid);
+    }
+
+    [UnityTest]
+    public IEnumerator ThiefTest_UsingStealthSkill()
+    {
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+
+        thief.EnableStealth(true);
+        Assert.IsTrue(thief.Stealth);
+
+        thief.EnableStealth(false);
+        Assert.IsFalse(thief.Stealth);
+
+       yield return null;
+        UnityEngine.Object.Destroy(thief);
+
     }
 
 }

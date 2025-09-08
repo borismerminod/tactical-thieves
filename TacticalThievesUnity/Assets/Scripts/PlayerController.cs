@@ -28,10 +28,14 @@ namespace TacticalThieves
             levelGrid = grid;
         }
 
-        public void OnThiefSelected(Thief thief)
+        public void OnThiefSelected(Thief thief, bool leftClickUsed)
         {
+
             selectedThief = thief;
-            thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, levelGrid);
+            if (leftClickUsed)
+                thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, levelGrid);
+            else
+                thief.EnableStealth(!thief.Stealth);
         }
 
         public void OnTileSelected(Tile tile)

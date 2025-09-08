@@ -18,6 +18,14 @@ namespace TacticalThieves
         [SerializeField] private eThiefStatus status;
         [SerializeField] private List<Vector2> currentMoveRoute;
         [SerializeField] private int currentRouteIndex;
+        [SerializeField] private bool stealth;
+        [SerializeField] private Material defaultMaterial;
+        [SerializeField] private Material stealthMaterial;
+        [SerializeField] private GameObject thiefBody;
+
+        [SerializeField] private bool moveTest; //A supprimé quand la phase de développement sera terminée
+
+        public bool Stealth { get => stealth; private set => stealth = value; }
         
        
 
@@ -67,7 +75,9 @@ namespace TacticalThieves
             if(playerControllerGO == null)
                 return;
             PlayerController playerController = playerControllerGO.GetComponent<PlayerController>();
-            playerController.OnThiefSelected(this);
+            
+            
+            playerController.OnThiefSelected(this, moveTest);
 
             
         }
@@ -107,8 +117,10 @@ namespace TacticalThieves
 
         public void CheckCurrentTileLocation(Tile tile)
         {
-            if (status != eThiefStatus.isMoving)
+
+            if (status != eThiefStatus.isMoving || tile == null)
                 return;
+            
             if (tile.X != X || tile.Y != Y)
             {
                 X = tile.X;
@@ -132,6 +144,19 @@ namespace TacticalThieves
 
             }
             
+        }
+
+        public void EnableStealth(bool enable)
+        {
+            stealth = enable;
+            if(enable)
+            {
+                thiefBody.GetComponent<Renderer>().material = stealthMaterial;
+            }
+            else
+            {
+                thiefBody.GetComponent<Renderer>().material = defaultMaterial;
+            }
         }
     }
 }
