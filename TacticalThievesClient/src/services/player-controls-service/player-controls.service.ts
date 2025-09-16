@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class PlayerControlsService {
 
-  private apiUrl = "localhost/api" //DOTO à Compléter
+  private apiUrl = "https://localhost:7186/api/Game" 
 
   constructor(private http: HttpClient) { }
 
