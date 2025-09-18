@@ -10,16 +10,19 @@ namespace TacticalThievesServer.Controllers
     {
 
         private readonly ThiefStateService thiefState;
+        private readonly WebSocketHandler webSocketHandler;
 
-        public GameController(ThiefStateService thiefState)
+        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler)
         {
             this.thiefState = thiefState;
+            this.webSocketHandler = webSocketHandler;
         }
 
         [HttpPost("move")]
         public IActionResult Move()
         {
             this.thiefState.Move();
+            webSocketHandler.Broadcast("move");
             return Ok(new { success = true });
         }
 
@@ -27,6 +30,7 @@ namespace TacticalThievesServer.Controllers
         public IActionResult Stealth()
         {
             this.thiefState.Stealth();
+            webSocketHandler.Broadcast("move");
             return Ok(new { success = true });
         }
     }

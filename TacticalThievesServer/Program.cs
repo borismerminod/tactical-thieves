@@ -12,6 +12,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddSingleton<WebSocketHandler>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -37,6 +38,14 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseStaticFiles();
 app.UseDefaultFiles();
+
+app.UseWebSockets();
+
+app.Map("/ws", async context =>
+{
+    var handler = context.RequestServices.GetRequiredService<WebSocketHandler>();
+    await handler.HandleAsync(context);
+});
 
 app.UseHttpsRedirection();
 
