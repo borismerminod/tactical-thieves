@@ -30,7 +30,7 @@ namespace TacticalThievesServer.Controllers
         public IActionResult Stealth()
         {
             this.thiefState.Stealth();
-            webSocketHandler.Broadcast("move");
+            webSocketHandler.Broadcast("stealth");
             return Ok(new { success = true });
         }
     }

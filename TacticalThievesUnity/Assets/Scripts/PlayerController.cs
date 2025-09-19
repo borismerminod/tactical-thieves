@@ -45,6 +45,33 @@ namespace TacticalThieves
 
         }
 
+        public void HandleThiefMove()
+        {
+            if (selectedThief == null)
+            {
+                GameObject thiefGO = GameObject.FindGameObjectWithTag("Thief");
+                if (thiefGO == null)
+                    return;
+                Thief thief = thiefGO.GetComponent<Thief>();
+                if (thief == null)
+                    return;
+                selectedThief = thief;
+            }
+
+            selectedThief.EnableMove(true, levelGrid);
+        }
+
+        public void HandleThiefStealth()
+        {
+            GameObject thiefGO = GameObject.FindGameObjectWithTag("Thief");
+            if (thiefGO == null)
+                return;
+            Thief thief = thiefGO.GetComponent<Thief>();
+            if (thief == null)
+                return;
+            thief.EnableStealth(!thief.Stealth);
+        }
+
     }
 }
 
