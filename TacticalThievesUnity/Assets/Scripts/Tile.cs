@@ -4,13 +4,17 @@ using UnityEngine;
 
 namespace TacticalThieves
 {
-    public class Tile : MonoBehaviour
+    public class Tile : Object
     {
-        [SerializeField] private int x;
-        [SerializeField] private int y;
+        [SerializeField] bool enableForMove;
+        [SerializeField] Material defaultMaterial;
+        [SerializeField] Material moveMaterial;
 
-        public int X { get => x; private set => x = value; }
-        public int Y { get => y; private set => y = value; }
+        public bool EnableForMove
+        {
+            get { return enableForMove; }
+            set { enableForMove = value; }
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -22,6 +26,43 @@ namespace TacticalThieves
         void Update()
         {
         
+        }
+
+        private void OnMouseUp()
+        {
+            if(EnableForMove)
+            {
+                GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
+                if (playerControllerGO == null)
+                    return;
+
+                PlayerController playerController = playerControllerGO.GetComponent<PlayerController>();
+                if (playerController == null)
+                    return;
+
+                playerController.OnTileSelected(this);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Thief thief = other.gameObject.GetComponent<Thief>();
+            if (thief == null)
+                return;
+            thief.CheckCurrentTileLocation(this);
+        }
+
+        public void SetEnableForMove(bool enable)
+        {
+            EnableForMove = enable;
+            if (enable)
+            {
+                GetComponent<Renderer>().material = moveMaterial;
+            }
+            else
+            {
+                GetComponent<Renderer>().material = defaultMaterial;
+            }
         }
     }
 }

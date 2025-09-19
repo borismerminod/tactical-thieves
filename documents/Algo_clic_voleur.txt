@@ -1,0 +1,40 @@
+Prérequis : 
+La grille permet de retrouver facilement les case via un dictionnaire et une clé 
+
+Algo du clic pour déplacement
+
+1- Le voleur reçoit un clic du joueur
+2- On regarde la portée de déplacement du joueur
+3- On calcul la case min : max(posX joueur - portée, 1) et max(posY joueur - portée, 1)
+4- On calcul la case max : min(posX joueur + portee, dimension grille) et min(posY joueur + portée, dimension grille)
+5- On fait une boucle pour le x et une boucle pour le y
+6- pour chaque case x et y on fait pow(abs(x - posX joueur), 2) + pow(abs(x - posY joueur,2) 
+7- Si la valeur de la case est inférieure ou égale à pow(portée, 2) alors la case s'illumine SINON elle reste éteinte
+
+Garder en mémoire les position min et max pour déselectionner les cases
+
+Algo de déselection 
+1- Pour chaque case x et y => si la case est marquée comme active alors on la désactive SINON on passe
+
+Algo du déplacement : 
+1- Le joueur sélectionne une tuile active pour le déplacement
+2- On mémorise les coordonnée de la tuile cible 
+3- A partir de la position du joueur : 
+	- On regarde les 4 tuiles autours :
+		- X = Max(Joueur_PosX - 1, 1) Y = Joueur_PosY
+		- X = Joueur_PosX Y = Max(Joueur_PosY - 1, 1)
+		- X = Min(Joueur_Pox + 1, Grid.Width) Y = Joueur_PosY
+		- X = Joueur_PosX Y = Min(Joueur_PosY + 1, Grid.Height) 
+	- Pour chacune des 4 tuiles : 
+		- Si la position de la tuile est égale à celle du joueur on élimine la tuile
+		- On calcule la distance entre la tuile et la tuile cible 
+			- distanceX = abs(tuile_X - tuile_cible_X)
+			- distanceY = abs(tuileY - tuile_cible_Y)
+			- distance_carre = distanceX * distanceX + distanceY * distanceY
+		- On garde les coordonnées de la tuiles dont la distance est la plus faible
+	- On ajoute les coordonnées de la tuiles dans une table
+	- On recommence en remplaçant la position du joueur par celle de la tuile sélectionnée
+	- On répète le processus jusqu'à ce que la tuile trouvée soit celle ciblée  
+
+- Autre : 
+	- Le joueur clic sur une tuile non valide pour le déplacement ==> On désactive la sélection du voleur
