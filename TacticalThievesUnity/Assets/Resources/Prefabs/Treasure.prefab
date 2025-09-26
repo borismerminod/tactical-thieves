@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6286594429973229258}
   - component: {fileID: 6286594429973229257}
+  - component: {fileID: 4082827460370525898}
   m_Layer: 0
   m_Name: Treasure
   m_TagString: Treasure
@@ -45,6 +46,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35794b7d1e4968d449369fba621d5595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gold: 0
+--- !u!135 &4082827460370525898
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6286594429973229256}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.13
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6286594431250149986
 GameObject:
   m_ObjectHideFlags: 0

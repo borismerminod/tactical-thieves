@@ -18,7 +18,7 @@ public class TreasureTest
         GameObject gameManagerPrefab = Resources.Load<GameObject>("Prefabs/GameManager");
         Assert.IsNotNull(gameManagerPrefab, "GameManager prefab should be loaded successfully.");
         GameManager gameManager = UnityEngine.Object.Instantiate(gameManagerPrefab).GetComponent<GameManager>();
-        Assert.IsNotNull(gameManager, "GameManager component should be present on the instance.");
+        Assert.IsNotNull(gameManager, "Treasure component should be present on the instance.");
 
         treasure.Gold = 100;
         Assert.AreEqual(100, treasure.Gold);

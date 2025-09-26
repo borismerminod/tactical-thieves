@@ -9,6 +9,7 @@ TagManager:
   - Thief
   - PlayerController
   - Treasure
+  - GameManager
   layers:
   - Default
   - TransparentFX

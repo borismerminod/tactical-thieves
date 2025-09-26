@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TacticalThievesServer.Services;
+using TacticalThievesServer.DTO;
 
 namespace TacticalThievesServer.Controllers
 {
@@ -32,6 +33,15 @@ namespace TacticalThievesServer.Controllers
             this.thiefState.Stealth();
             webSocketHandler.Broadcast("stealth");
             return Ok(new { success = true });
+        }
+
+        [HttpPost("collect-treasure")]
+        public IActionResult CollectTreasure([FromBody] TreasureCollectDTO dto)
+        {
+            if (dto == null || dto.Amount <= 0)
+                return BadRequest(new { success = false, message = "Invalid treasure amount" });
+
+            return Ok(new { success = true, gold = dto.Amount });
         }
     }
 }

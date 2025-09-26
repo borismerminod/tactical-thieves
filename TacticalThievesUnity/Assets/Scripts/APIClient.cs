@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+
+public class APIClient : MonoBehaviour
+{
+    [SerializeField] private string serverUrl = "http://localhost:5140/api";
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        GameManager.Instance.OnAPIClientStarted(this);        
+    }
+
+    public IEnumerator CollectTreasure(int amount)
+    {
+        Debug.Log("TEST");
+        string endpoint = $"{serverUrl}/Game/collect-treasure";
+
+        var json = JsonUtility.ToJson(new TreasureCollectDto { Amount = amount });
+        var request = new UnityWebRequest(endpoint, "POST");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Response: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+    }
+
+    class TreasureCollectDto
+    {
+        public int Amount;
+    }
+
+}
+
