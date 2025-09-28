@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TacticalThievesServer.Services;
+using Microsoft.AspNetCore.SignalR;
 using TacticalThievesServer.DTO;
+using TacticalThievesServer.Services;
 
 namespace TacticalThievesServer.Controllers
 {
@@ -12,11 +13,13 @@ namespace TacticalThievesServer.Controllers
 
         private readonly ThiefStateService thiefState;
         private readonly WebSocketHandler webSocketHandler;
+        private readonly IHubContext<ClientHub> clientHub;
 
-        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler)
+        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub)
         {
             this.thiefState = thiefState;
             this.webSocketHandler = webSocketHandler;
+            this.clientHub = clientHub;
         }
 
         [HttpPost("move")]
@@ -40,6 +43,9 @@ namespace TacticalThievesServer.Controllers
         {
             if (dto == null || dto.Amount <= 0)
                 return BadRequest(new { success = false, message = "Invalid treasure amount" });
+
+            //clientHub.SendPlayerGoldUpdate(dto.Amount);
+            clientHub.Clients.All.SendAsync("ScoreUpdated", dto.Amount);
 
             return Ok(new { success = true, gold = dto.Amount });
         }

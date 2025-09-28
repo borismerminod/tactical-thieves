@@ -1,0 +1,45 @@
+import { Injectable } from '@angular/core';
+import * as signalR from '@microsoft/signalr';
+import { BehaviorSubject } from 'rxjs';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ServerHubService {
+
+  private hubConnection!: signalR.HubConnection;
+  private readonly hubUrl = 'http://localhost:5140/scorehub';
+
+  private playerGoldSource = new BehaviorSubject<number>(0)
+  playerGold$ = this.playerGoldSource.asObservable()
+
+  constructor()
+  { 
+    this.startConnection()
+    this.onScoreUpdated()
+
+  }
+
+  public startConnection(): void {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(this.hubUrl, {
+        transport: signalR.HttpTransportType.WebSockets, // force WebSocket
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    this.hubConnection
+      .start()
+      .then(() => console.log('Connected to SignalR Hub'))
+      .catch((err) => console.error('Error while starting SignalR connection: ' + err));
+  }
+
+  // S'abonner aux mises à jour du score
+  public onScoreUpdated(): void {
+    this.hubConnection.on('ScoreUpdated', (gold: number) => {
+      console.log('Score reçu du serveur:', gold);
+      this.playerGoldSource.next(gold)
+    });
+  }
+}
