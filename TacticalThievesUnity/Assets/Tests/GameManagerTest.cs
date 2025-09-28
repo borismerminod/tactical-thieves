@@ -15,6 +15,7 @@ public class GameManagerTest
     {
         gameManagerPrefab = Resources.Load<GameObject>("Prefabs/GameManager");
         gameManager = UnityEngine.Object.Instantiate(gameManagerPrefab).GetComponent<GameManager>();
+        gameManager.TestMode = true;
     }
 
     [TearDown]
@@ -32,18 +33,27 @@ public class GameManagerTest
         Assert.IsNotNull(treasure, "Treasure component should be present on the instance.");
 
         treasure.Gold = 200;
-        treasure.Collect();
+        treasure.Collect(gameManager);
 
         Assert.AreEqual(200, gameManager.PlayerGold);
 
         treasure.gameObject.SetActive(true);
         treasure.Gold = 100;
-        treasure.Collect();
+        treasure.Collect(gameManager);
 
         Assert.AreEqual(300, gameManager.PlayerGold);
 
         yield return null; // attendre 1 frame
         UnityEngine.Object.Destroy(treasure);
 
+    }
+
+    [UnityTest]
+    public System.Collections.IEnumerator GameStateTransitionsToWinOnVictory()
+    {
+        Assert.AreEqual(GameManager.GameState.IN_GAME, gameManager.GetGameState(), "Initial game state should be IN_GAME.");
+        gameManager.OnThiefReachExit();
+        Assert.AreEqual(GameManager.GameState.WIN, gameManager.GetGameState(), "Game state should transition to WIN after victory.");
+        yield return null; // attendre 1 frame
     }
 }

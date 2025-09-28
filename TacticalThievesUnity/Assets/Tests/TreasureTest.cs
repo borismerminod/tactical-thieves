@@ -10,6 +10,8 @@ public class TreasureTest
     [UnityTest]
     public IEnumerator CollectTreasure_ShouldIncreasePlayerGold()
     {
+        bool bSuccess;
+
         GameObject treasurePrefab = Resources.Load<GameObject>("Prefabs/Treasure");
         Assert.IsNotNull(treasurePrefab, "Treasure prefab should be loaded successfully.");
         Treasure treasure = UnityEngine.Object.Instantiate(treasurePrefab).GetComponent<Treasure>();
@@ -29,7 +31,12 @@ public class TreasureTest
         treasure.Gold = 200;
         Assert.AreEqual(200, treasure.Gold);
 
-        treasure.Collect();
+        bSuccess = treasure.Collect(null);
+        Assert.IsFalse(bSuccess);
+        Assert.AreEqual(treasure.gameObject.active, true);
+
+        bSuccess = treasure.Collect(gameManager);
+        Assert.IsTrue(bSuccess);
         Assert.AreEqual(treasure.gameObject.active, false);
 
 

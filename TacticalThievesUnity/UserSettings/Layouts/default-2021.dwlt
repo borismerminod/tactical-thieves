@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Game
   m_RootView: {fileID: 10}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 53
+  controlID: 93
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 137
+  controlID: 64
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,8 +145,8 @@ MonoBehaviour:
     y: 0
     width: 194
     height: 555
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 96
+  controlID: 162
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -197,14 +197,14 @@ MonoBehaviour:
     y: 0
     width: 490
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 17}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 17}
   - {fileID: 15}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -224,8 +224,8 @@ MonoBehaviour:
     y: 610
     width: 1236
     height: 337
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 52
+  controlID: 126
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -346,8 +346,8 @@ MonoBehaviour:
     y: 0
     width: 868
     height: 610
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -373,22 +373,22 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1870
-    y: 72.66667
-    width: 689
-    height: 1278.3334
+    x: 1430
+    y: 73
+    width: 489
+    height: 926
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 180
+    ID: 374
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
-    - 906
-    - 302
+    - 642
+    - 214
     relativeSizes:
     - 0.75
     - 0.25
@@ -398,7 +398,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 1208
+    lastTotalSize: 856
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -415,7 +415,7 @@ MonoBehaviour:
       name: TacticalThieves
       fullName: TacticalThieves
       resultStatus: 1
-      duration: 0.1556781
+      duration: 0.4114072
       messages: 
       output: 
       stacktrace: 
@@ -426,12 +426,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1011
-      uniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1015
+      uniqueId: '[Tests][G:/_Bobo/MateusBubono/Courant/Projet/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
-      fullName: C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll
+      fullName: G:/_Bobo/MateusBubono/Courant/Projet/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.0445658
+      duration: 0.303168
       messages: 
       output: 
       stacktrace: 
@@ -443,11 +443,44 @@ MonoBehaviour:
       parentId: 1000
       parentUniqueId: '[TacticalThieves][suite]'
     - id: 1001
+      uniqueId: Tests.dll/[Tests][ExitTest][suite]
+      name: ExitTest
+      fullName: ExitTest
+      resultStatus: 1
+      duration: 0.0524121
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1015
+      parentUniqueId: '[Tests][G:/_Bobo/MateusBubono/Courant/Projet/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1002
+      uniqueId: Tests.dll/ExitTest/[Tests][ExitTest.ExitReachedByThief_ShouldTriggerVictory]
+      name: ExitReachedByThief_ShouldTriggerVictory
+      fullName: ExitTest.ExitReachedByThief_ShouldTriggerVictory
+      resultStatus: 1
+      duration: 0.0331472
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][ExitTest][suite]
+    - id: 1001
       uniqueId: Tests.dll/[Tests][GameManagerTest][suite]
       name: GameManagerTest
       fullName: GameManagerTest
       resultStatus: 1
-      duration: 0.0374574
+      duration: 0.0639292
       messages: 
       output: 
       stacktrace: 
@@ -463,7 +496,7 @@ MonoBehaviour:
       name: CollectingTreasureAddsGold
       fullName: GameManagerTest.CollectingTreasureAddsGold
       resultStatus: 1
-      duration: 0.0262538
+      duration: 0.0341795
       messages: 
       output: 
       stacktrace: 
@@ -475,12 +508,29 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1005
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameStateTransitionsToWinOnVictory]
+      name: GameStateTransitionsToWinOnVictory
+      fullName: GameManagerTest.GameStateTransitionsToWinOnVictory
+      resultStatus: 1
+      duration: 0.0250176
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1003
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
     - id: 1001
       uniqueId: Tests.dll/[Tests][GridTest][suite]
       name: GridTest
       fullName: GridTest
       resultStatus: 1
-      duration: 0.028849
+      duration: 0.0414234
       messages: 
       output: 
       stacktrace: 
@@ -496,7 +546,7 @@ MonoBehaviour:
       name: GridTest_GridCreation
       fullName: GridTest.GridTest_GridCreation
       resultStatus: 1
-      duration: 0.0252322
+      duration: 0.0320946
       messages: 
       output: 
       stacktrace: 
@@ -513,7 +563,7 @@ MonoBehaviour:
       name: ThiefTest
       fullName: ThiefTest
       resultStatus: 1
-      duration: 0.0966823
+      duration: 0.1163875
       messages: 
       output: 
       stacktrace: 
@@ -529,7 +579,7 @@ MonoBehaviour:
       name: ThiefTest_OnMovementProceed
       fullName: ThiefTest.ThiefTest_OnMovementProceed
       resultStatus: 1
-      duration: 0.024974
+      duration: 0.0193808
       messages: 
       output: 
       stacktrace: 
@@ -546,7 +596,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefCreation
       fullName: ThiefTest.ThiefTest_ThiefCreation
       resultStatus: 1
-      duration: 0.0100652
+      duration: 0.0153655
       messages: 
       output: 
       stacktrace: 
@@ -563,7 +613,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefMovementEnabled
       fullName: ThiefTest.ThiefTest_ThiefMovementEnabled
       resultStatus: 1
-      duration: 0.0308442
+      duration: 0.0391755
       messages: 
       output: 
       stacktrace: 
@@ -580,7 +630,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefStatus
       fullName: ThiefTest.ThiefTest_ThiefStatus
       resultStatus: 1
-      duration: 0.0140068
+      duration: 0.0156542
       messages: 
       output: 
       stacktrace: 
@@ -597,7 +647,7 @@ MonoBehaviour:
       name: ThiefTest_UsingStealthSkill
       fullName: ThiefTest.ThiefTest_UsingStealthSkill
       resultStatus: 1
-      duration: 0.0119419
+      duration: 0.016017
       messages: 
       output: 
       stacktrace: 
@@ -614,7 +664,7 @@ MonoBehaviour:
       name: TreasureTest
       fullName: TreasureTest
       resultStatus: 1
-      duration: 0.0363251
+      duration: 0.0194544
       messages: 
       output: 
       stacktrace: 
@@ -630,7 +680,7 @@ MonoBehaviour:
       name: CollectTreasure_ShouldIncreasePlayerGold
       fullName: TreasureTest.CollectTreasure_ShouldIncreasePlayerGold
       resultStatus: 1
-      duration: 0.0251917
+      duration: 0.0125205
       messages: 
       output: 
       stacktrace: 
@@ -642,12 +692,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1009
       parentUniqueId: Tests.dll/[Tests][TreasureTest][suite]
-    m_ResultText: CollectTreasure_ShouldIncreasePlayerGold (0,025s)
+    m_ResultText: TacticalThieves (0,411s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 5233b27f
-      m_LastClickedID: 2142384978
+      m_SelectedIDs: 47642edd
+      m_LastClickedID: -584162233
       m_ExpandedIDs: 9f7b7f9f396a33ca2f8c91d747642edd6a31c6f697429600e12120011e559e19b37cc93fffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -765,8 +815,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Resources/Prefabs
+    m_Folders: []
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
@@ -781,7 +830,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: a0570000
     m_LastClickedID: 22432
-    m_ExpandedIDs: 00000000a2590000a4590000a6590000a8590000aa590000ac590000
+    m_ExpandedIDs: 000000004459000046590000485900004a5900004c5900004e590000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -806,24 +855,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 84.99994}
+    scrollPos: {x: 0, y: 47}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000a2590000a4590000a6590000a8590000aa590000ac590000
+    m_ExpandedIDs: ffffffff000000004459000046590000485900004a5900004c5900004e590000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Exit
+      m_OriginalName: Exit
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 22940
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 
@@ -941,7 +990,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: bafaffff
+      m_ExpandedIDs: caaaffff1aabffffdcb3ffff6eb5ffffbeb5ffff36b7ffffc8b8ffff18b9ffff92baffff8ec2ffffdec2ffffa2cbffff30d2ffff80d2ffff42dbffffd4dcffff24ddffff8edeffffbae3ffff0ae4ffff78e5ffffc6e8ffff16e9ffff7eeaffff32fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

@@ -39,15 +39,21 @@ namespace TacticalThieves
             Thief thief = other.gameObject.GetComponent<Thief>();
             if (thief != null)
             {
-                Collect();
+                //TODO Log en cas d'erreur
+                Collect(GameManager.Instance);
             }
         }
 
-        public void Collect()
+        public bool Collect(GameManager gameManager)
         {
-       
-            GameManager.Instance.OnTreasureCollected(Gold);
+
+            if (gameManager == null)
+                return false;
+
+            gameManager.OnTreasureCollected(Gold);
             gameObject.SetActive(false);
+
+            return true;
         }
     }
 }
