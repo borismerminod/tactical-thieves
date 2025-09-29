@@ -49,5 +49,19 @@ namespace TacticalThievesServer.Controllers
 
             return Ok(new { success = true, gold = dto.Amount });
         }
+
+        [HttpPost("exit-reached")]
+        public IActionResult ExitReached()
+        {
+            clientHub.Clients.All.SendAsync("ExitReached");
+            return Ok(new { success = true});
+        }
+
+        [HttpPost("game-start")]
+        public IActionResult GameStart()
+        {
+            clientHub.Clients.All.SendAsync("GameStart");
+            return Ok(new { success = true });
+        }
     }
 }

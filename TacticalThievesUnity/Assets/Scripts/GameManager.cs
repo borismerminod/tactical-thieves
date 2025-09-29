@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
     public void OnAPIClientStarted(APIClient client)
     {
         apiClient = client;
+        OnGameStart();
     }
 
     // Update is called once per frame
@@ -75,7 +77,19 @@ public class GameManager : MonoBehaviour
     public void OnThiefReachExit()
     {
         gameState = GameState.WIN;
-        //StartCoroutine(apiClient.ThiefReachedExit());
+        StartCoroutine(apiClient.ThiefReachedExit());
+
+        Invoke("RestartLevel", 3.0f);
+    }
+
+    public void OnGameStart()
+    {
+        StartCoroutine(apiClient.GameStart());
+    }
+
+    private void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 

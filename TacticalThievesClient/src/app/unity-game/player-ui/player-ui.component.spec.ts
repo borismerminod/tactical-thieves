@@ -10,13 +10,16 @@ describe('PlayerUiComponent', () => {
   let fixture: ComponentFixture<PlayerUiComponent>;
   let mockServerHubService: jasmine.SpyObj<ServerHubService>;
   let goldSubject: BehaviorSubject<number>;
+  let gameOverSubject: BehaviorSubject<string>;
 
   beforeEach(async () => {
 
     goldSubject = new BehaviorSubject<number>(0);
+    gameOverSubject = new BehaviorSubject<string>("");
 
     mockServerHubService = jasmine.createSpyObj('ServerHubService', [], {
-      playerGold$: goldSubject.asObservable()
+      playerGold$: goldSubject.asObservable(),
+       gameOverMessage$: gameOverSubject.asObservable()
     });
 
     await TestBed.configureTestingModule({
@@ -49,4 +52,18 @@ describe('PlayerUiComponent', () => {
     const goldText = fixture.debugElement.query(By.css('p')).nativeElement.textContent;
     expect(goldText).toContain('150');
   });
+
+  it('should not show win message at game start', () => {
+    const msg = fixture.debugElement.query(By.css('#player-ui-game-over'));
+    expect(msg).toBeNull();
+  });
+
+  it('should show win message when thief reached the exit', () => {
+    gameOverSubject.next("You win !!!")
+    fixture.detectChanges();
+    const msg = fixture.debugElement.query(By.css('#player-ui-game-over')).nativeElement.textContent;
+    expect(msg).toContain("You win !!!")
+  })
+
+
 });

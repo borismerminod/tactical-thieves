@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -16,7 +17,6 @@ public class APIClient : MonoBehaviour
 
     public IEnumerator CollectTreasure(int amount)
     {
-        Debug.Log("TEST");
         string endpoint = $"{serverUrl}/Game/collect-treasure";
 
         var json = JsonUtility.ToJson(new TreasureCollectDto { Amount = amount });
@@ -26,6 +26,46 @@ public class APIClient : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
 
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Response: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+    }
+
+    public IEnumerator ThiefReachedExit()
+    {
+        string endpoint = $"{serverUrl}/Game/exit-reached";
+
+        var request = new UnityWebRequest(endpoint, "POST");
+        request.uploadHandler = new UploadHandlerRaw(new byte[0]);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Response: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+    }
+
+    public IEnumerator GameStart()
+    {
+        string endpoint = $"{serverUrl}/Game/game-start";
+
+        var request = new UnityWebRequest(endpoint, "POST");
+        request.uploadHandler = new UploadHandlerRaw(new byte[0]);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)

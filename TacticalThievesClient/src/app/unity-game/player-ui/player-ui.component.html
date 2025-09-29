@@ -1,1 +1,6 @@
-<p class="player-ui" id="player-ui-gold">Gold : {{playerGold}}</p>
+<div>
+    <p class="player-ui" id="player-ui-gold">Gold : {{playerGold}}</p>
+    <p *ngIf="gameOverMessage !== ''" class="player-ui" id="player-ui-game-over">
+        {{gameOverMessage}}
+    </p>
+</div>

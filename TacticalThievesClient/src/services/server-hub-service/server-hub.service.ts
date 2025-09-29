@@ -14,10 +14,15 @@ export class ServerHubService {
   private playerGoldSource = new BehaviorSubject<number>(0)
   playerGold$ = this.playerGoldSource.asObservable()
 
+  private gameOverMessage = new BehaviorSubject<string>("")
+  gameOverMessage$ = this.gameOverMessage.asObservable()
+
   constructor()
   { 
     this.startConnection()
     this.onScoreUpdated()
+    this.onExitReached()
+    this.onGameStart()
 
   }
 
@@ -42,4 +47,22 @@ export class ServerHubService {
       this.playerGoldSource.next(gold)
     });
   }
+
+  public onExitReached() : void 
+  {
+    this.hubConnection.on('ExitReached', () => {
+      console.log("Exit reached by thief")
+      this.gameOverMessage.next("You win !!!")
+    })
+  }
+
+  public onGameStart() : void 
+  {
+    this.hubConnection.on('GameStart', () => {
+      console.log("Game start")
+      this.gameOverMessage.next("")
+      this.playerGoldSource.next(0)
+    })
+  }
+
 }
