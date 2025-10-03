@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349.3334
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Console
   m_RootView: {fileID: 10}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 490.66663
     height: 837.3333
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 175
+  controlID: 146
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 53
+  controlID: 111
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 344
+  controlID: 144
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 174
+  controlID: 145
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -346,8 +346,8 @@ MonoBehaviour:
     y: 0
     width: 1157.3334
     height: 837.3333
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -383,7 +383,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 183
+    ID: 1152
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -415,7 +415,7 @@ MonoBehaviour:
       name: TacticalThieves
       fullName: TacticalThieves
       resultStatus: 1
-      duration: 0.4114072
+      duration: 0.1685171
       messages: 
       output: 
       stacktrace: 
@@ -430,8 +430,8 @@ MonoBehaviour:
       uniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.059817
       messages: 
       output: 
       stacktrace: 
@@ -447,7 +447,7 @@ MonoBehaviour:
       name: ExitTest
       fullName: ExitTest
       resultStatus: 1
-      duration: 0.0524121
+      duration: 0.0428434
       messages: 
       output: 
       stacktrace: 
@@ -463,7 +463,7 @@ MonoBehaviour:
       name: ExitReachedByThief_ShouldTriggerVictory
       fullName: ExitTest.ExitReachedByThief_ShouldTriggerVictory
       resultStatus: 1
-      duration: 0.0331472
+      duration: 0.0286894
       messages: 
       output: 
       stacktrace: 
@@ -480,7 +480,7 @@ MonoBehaviour:
       name: GameManagerTest
       fullName: GameManagerTest
       resultStatus: 1
-      duration: 0.0639292
+      duration: 0.0432938
       messages: 
       output: 
       stacktrace: 
@@ -496,7 +496,7 @@ MonoBehaviour:
       name: CollectingTreasureAddsGold
       fullName: GameManagerTest.CollectingTreasureAddsGold
       resultStatus: 1
-      duration: 0.0341795
+      duration: 0.0219886
       messages: 
       output: 
       stacktrace: 
@@ -513,7 +513,7 @@ MonoBehaviour:
       name: GameStateTransitionsToWinOnVictory
       fullName: GameManagerTest.GameStateTransitionsToWinOnVictory
       resultStatus: 1
-      duration: 0.0250176
+      duration: 0.0165349
       messages: 
       output: 
       stacktrace: 
@@ -530,7 +530,7 @@ MonoBehaviour:
       name: GridTest
       fullName: GridTest
       resultStatus: 1
-      duration: 0.0414234
+      duration: 0.0177445
       messages: 
       output: 
       stacktrace: 
@@ -546,7 +546,7 @@ MonoBehaviour:
       name: GridTest_GridCreation
       fullName: GridTest.GridTest_GridCreation
       resultStatus: 1
-      duration: 0.0320946
+      duration: 0.0116335
       messages: 
       output: 
       stacktrace: 
@@ -563,7 +563,7 @@ MonoBehaviour:
       name: ThiefTest
       fullName: ThiefTest
       resultStatus: 1
-      duration: 0.1163875
+      duration: 0.0536333
       messages: 
       output: 
       stacktrace: 
@@ -574,12 +574,39 @@ MonoBehaviour:
       categories: []
       parentId: 1011
       parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1011
+      uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_MovementEnabledWithUnWalkableTiles]
+      name: ThiefTest_MovementEnabledWithUnWalkableTiles
+      fullName: ThiefTest.ThiefTest_MovementEnabledWithUnWalkableTiles
+      resultStatus: 1
+      duration: 0.041242
+      messages: 
+      output: "minTileCoords (1.00, 1.00) {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\":
+        4,\n    \"status\": 1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\":
+        0,\n    \"stealth\": false,\n    \"defaultMaterial\": {\n        \"instanceID\":
+        22538\n    },\n    \"stealthMaterial\": {\n        \"instanceID\": 22822\n   
+        },\n    \"thiefBody\": {\n        \"instanceID\": -61322\n    },\n    \"moveTest\":
+        true\n}\r\nmaxTileCoords (4.00, 4.00)\r\nEnableTilesForThiefMove 1_1 2\r\nEnableTilesForThiefMove
+        1_2 1\r\nEnableTilesForThiefMove 1_3 2\r\nEnableTilesForThiefMove 1_4 3\r\nEnableTilesForThiefMove
+        2_1 1\r\nEnableTilesForThiefMove 2_2 0\r\nEnableTilesForThiefMove 2_3 1\r\nEnableTilesForThiefMove
+        2_4 2\r\nEnableTilesForThiefMove 3_1 2\r\nEnableTilesForThiefMove 3_2 5\r\nEnableTilesForThiefMove
+        3_3 2\r\nEnableTilesForThiefMove 3_4 3\r\nEnableTilesForThiefMove 4_1 3\r\nEnableTilesForThiefMove
+        4_2 4\r\nEnableTilesForThiefMove 4_3 3\r\nEnableTilesForThiefMove 4_4 4\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1008
+      parentUniqueId: Tests.dll/[Tests][ThiefTest][suite]
     - id: 1006
       uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_OnMovementProceed]
       name: ThiefTest_OnMovementProceed
       fullName: ThiefTest.ThiefTest_OnMovementProceed
       resultStatus: 1
-      duration: 0.0193808
+      duration: 0.0149562
       messages: 
       output: 
       stacktrace: 
@@ -596,7 +623,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefCreation
       fullName: ThiefTest.ThiefTest_ThiefCreation
       resultStatus: 1
-      duration: 0.0153655
+      duration: 0.0119165
       messages: 
       output: 
       stacktrace: 
@@ -613,9 +640,557 @@ MonoBehaviour:
       name: ThiefTest_ThiefMovementEnabled
       fullName: ThiefTest.ThiefTest_ThiefMovementEnabled
       resultStatus: 1
-      duration: 0.0391755
+      duration: 0.0557864
       messages: 
-      output: 
+      output: "minTileCoords (2.00, 2.00) {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\":
+        0,\n    \"status\": 1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\":
+        0,\n    \"stealth\": false,\n    \"defaultMaterial\": {\n        \"instanceID\":
+        22538\n    },\n    \"stealthMaterial\": {\n        \"instanceID\": 22822\n   
+        },\n    \"thiefBody\": {\n        \"instanceID\": -52782\n    },\n    \"moveTest\":
+        true\n}\r\nmaxTileCoords (2.00, 2.00)\r\nEnableTilesForThiefMove 2_2 0\r\nAdding
+        tile at position: 1_1 0 0 {\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_2 1 0 {\n    \"x\": 1,\n    \"y\": 2,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_3 2 0 {\n    \"x\": 1,\n    \"y\": 3,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_4 3 0 {\n    \"x\": 1,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_1 4 0 {\n    \"x\": 2,\n    \"y\": 1,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_2 5 0 {\n    \"x\": 2,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_3 6 0 {\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_4 7 0 {\n    \"x\": 2,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_1 8 0 {\n    \"x\": 3,\n    \"y\": 1,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_2 9 0 {\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_3 10 0 {\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_4 11 0 {\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_1 12 0 {\n    \"x\": 4,\n    \"y\": 1,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_2 13 0 {\n    \"x\": 4,\n    \"y\": 2,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_3 14 0 {\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_4 15 0 {\n    \"x\": 4,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 0,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -52782\n    },\n    \"moveTest\": true\n}\r\nminTileCoords
+        (1.00, 1.00) {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 1,\n   
+        \"status\": 1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\":
+        0,\n    \"stealth\": false,\n    \"defaultMaterial\": {\n        \"instanceID\":
+        22538\n    },\n    \"stealthMaterial\": {\n        \"instanceID\": 22822\n   
+        },\n    \"thiefBody\": {\n        \"instanceID\": -53030\n    },\n    \"moveTest\":
+        true\n}\r\nmaxTileCoords (3.00, 3.00)\r\nEnableTilesForThiefMove 1_1 2\r\nEnableTilesForThiefMove
+        1_2 1\r\nEnableTilesForThiefMove 1_3 2\r\nEnableTilesForThiefMove 2_1 1\r\nEnableTilesForThiefMove
+        2_2 0\r\nEnableTilesForThiefMove 2_3 1\r\nEnableTilesForThiefMove 3_1 2\r\nEnableTilesForThiefMove
+        3_2 1\r\nEnableTilesForThiefMove 3_3 2\r\nAdding tile at position: 1_1 0
+        1 {\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 1_2
+        1 1 {\n    \"x\": 1,\n    \"y\": 2,\n    \"enableForMove\": true,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 1_3
+        2 1 {\n    \"x\": 1,\n    \"y\": 3,\n    \"enableForMove\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 1_4
+        3 1 {\n    \"x\": 1,\n    \"y\": 4,\n    \"enableForMove\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 2_1
+        4 1 {\n    \"x\": 2,\n    \"y\": 1,\n    \"enableForMove\": true,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 2_2
+        5 1 {\n    \"x\": 2,\n    \"y\": 2,\n    \"enableForMove\": true,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 2_3
+        6 1 {\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\": true,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 2_4
+        7 1 {\n    \"x\": 2,\n    \"y\": 4,\n    \"enableForMove\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 3_1
+        8 1 {\n    \"x\": 3,\n    \"y\": 1,\n    \"enableForMove\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 3_2
+        9 1 {\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\": true,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\": {\n       
+        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n    \"x\": 2,\n   
+        \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n    \"currentMoveRoute\":
+        [],\n    \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
+        {\n        \"instanceID\": 22538\n    },\n    \"stealthMaterial\": {\n       
+        \"instanceID\": 22822\n    },\n    \"thiefBody\": {\n        \"instanceID\":
+        -53030\n    },\n    \"moveTest\": true\n}\r\nAdding tile at position: 3_3
+        10 1 {\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22796\n    },\n    \"walkable\": true\n} {\n   
+        \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 1,\n    \"status\": 1,\n   
+        \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53030\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_4 11 1 {\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 1,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53030\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_1 12 1 {\n    \"x\": 4,\n    \"y\": 1,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 1,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53030\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_2 13 1 {\n    \"x\": 4,\n    \"y\": 2,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 1,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53030\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_3 14 1 {\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 1,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53030\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_4 15 1 {\n    \"x\": 4,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 1,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53030\n    },\n    \"moveTest\": true\n}\r\nminTileCoords
+        (1.00, 1.00) {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n   
+        \"status\": 1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\":
+        0,\n    \"stealth\": false,\n    \"defaultMaterial\": {\n        \"instanceID\":
+        22538\n    },\n    \"stealthMaterial\": {\n        \"instanceID\": 22822\n   
+        },\n    \"thiefBody\": {\n        \"instanceID\": -53278\n    },\n    \"moveTest\":
+        true\n}\r\nmaxTileCoords (4.00, 4.00)\r\nEnableTilesForThiefMove 1_1 2\r\nEnableTilesForThiefMove
+        1_2 1\r\nEnableTilesForThiefMove 1_3 2\r\nEnableTilesForThiefMove 1_4 3\r\nEnableTilesForThiefMove
+        2_1 1\r\nEnableTilesForThiefMove 2_2 0\r\nEnableTilesForThiefMove 2_3 1\r\nEnableTilesForThiefMove
+        2_4 2\r\nEnableTilesForThiefMove 3_1 2\r\nEnableTilesForThiefMove 3_2 1\r\nEnableTilesForThiefMove
+        3_3 2\r\nEnableTilesForThiefMove 3_4 3\r\nEnableTilesForThiefMove 4_1 3\r\nEnableTilesForThiefMove
+        4_2 2\r\nEnableTilesForThiefMove 4_3 3\r\nEnableTilesForThiefMove 4_4 3\r\nAdding
+        tile at position: 1_1 0 2 {\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_2 1 2 {\n    \"x\": 1,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_3 2 2 {\n    \"x\": 1,\n    \"y\": 3,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_4 3 2 {\n    \"x\": 1,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_1 4 2 {\n    \"x\": 2,\n    \"y\": 1,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_2 5 2 {\n    \"x\": 2,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_3 6 2 {\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_4 7 2 {\n    \"x\": 2,\n    \"y\": 4,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_1 8 2 {\n    \"x\": 3,\n    \"y\": 1,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_2 9 2 {\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_3 10 2 {\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_4 11 2 {\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_1 12 2 {\n    \"x\": 4,\n    \"y\": 1,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_2 13 2 {\n    \"x\": 4,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_3 14 2 {\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_4 15 2 {\n    \"x\": 4,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 2,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53278\n    },\n    \"moveTest\": true\n}\r\nminTileCoords
+        (1.00, 1.00) {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n   
+        \"status\": 1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\":
+        0,\n    \"stealth\": false,\n    \"defaultMaterial\": {\n        \"instanceID\":
+        22538\n    },\n    \"stealthMaterial\": {\n        \"instanceID\": 22822\n   
+        },\n    \"thiefBody\": {\n        \"instanceID\": -53526\n    },\n    \"moveTest\":
+        true\n}\r\nmaxTileCoords (4.00, 4.00)\r\nEnableTilesForThiefMove 1_1 2\r\nEnableTilesForThiefMove
+        1_2 1\r\nEnableTilesForThiefMove 1_3 2\r\nEnableTilesForThiefMove 1_4 3\r\nEnableTilesForThiefMove
+        2_1 1\r\nEnableTilesForThiefMove 2_2 0\r\nEnableTilesForThiefMove 2_3 1\r\nEnableTilesForThiefMove
+        2_4 2\r\nEnableTilesForThiefMove 3_1 2\r\nEnableTilesForThiefMove 3_2 1\r\nEnableTilesForThiefMove
+        3_3 2\r\nEnableTilesForThiefMove 3_4 3\r\nEnableTilesForThiefMove 4_1 3\r\nEnableTilesForThiefMove
+        4_2 2\r\nEnableTilesForThiefMove 4_3 3\r\nEnableTilesForThiefMove 4_4 4\r\nAdding
+        tile at position: 1_1 0 3 {\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_2 1 3 {\n    \"x\": 1,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_3 2 3 {\n    \"x\": 1,\n    \"y\": 3,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 1_4 3 3 {\n    \"x\": 1,\n    \"y\": 4,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_1 4 3 {\n    \"x\": 2,\n    \"y\": 1,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_2 5 3 {\n    \"x\": 2,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_3 6 3 {\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 2_4 7 3 {\n    \"x\": 2,\n    \"y\": 4,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_1 8 3 {\n    \"x\": 3,\n    \"y\": 1,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_2 9 3 {\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_3 10 3 {\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 3_4 11 3 {\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_1 12 3 {\n    \"x\": 4,\n    \"y\": 1,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_2 13 3 {\n    \"x\": 4,\n    \"y\": 2,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_3 14 3 {\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\":
+        true,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\nAdding
+        tile at position: 4_4 15 3 {\n    \"x\": 4,\n    \"y\": 4,\n    \"enableForMove\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22794\n    },\n   
+        \"moveMaterial\": {\n        \"instanceID\": 22796\n    },\n    \"walkable\":
+        true\n} {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 3,\n    \"status\":
+        1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+        false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+        \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+        {\n        \"instanceID\": -53526\n    },\n    \"moveTest\": true\n}\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -630,9 +1205,17 @@ MonoBehaviour:
       name: ThiefTest_ThiefStatus
       fullName: ThiefTest.ThiefTest_ThiefStatus
       resultStatus: 1
-      duration: 0.0156542
+      duration: 0.0148782
       messages: 
-      output: 
+      output: "minTileCoords (1.00, 1.00) {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\":
+        1,\n    \"status\": 1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\":
+        0,\n    \"stealth\": false,\n    \"defaultMaterial\": {\n        \"instanceID\":
+        22538\n    },\n    \"stealthMaterial\": {\n        \"instanceID\": 22822\n   
+        },\n    \"thiefBody\": {\n        \"instanceID\": -53782\n    },\n    \"moveTest\":
+        false\n}\r\nmaxTileCoords (3.00, 3.00)\r\nEnableTilesForThiefMove 1_1 2\r\nEnableTilesForThiefMove
+        1_2 1\r\nEnableTilesForThiefMove 1_3 2\r\nEnableTilesForThiefMove 2_1 1\r\nEnableTilesForThiefMove
+        2_2 0\r\nEnableTilesForThiefMove 2_3 1\r\nEnableTilesForThiefMove 3_1 2\r\nEnableTilesForThiefMove
+        3_2 1\r\nEnableTilesForThiefMove 3_3 2\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -647,7 +1230,7 @@ MonoBehaviour:
       name: ThiefTest_UsingStealthSkill
       fullName: ThiefTest.ThiefTest_UsingStealthSkill
       resultStatus: 1
-      duration: 0.016017
+      duration: 0.0118949
       messages: 
       output: 
       stacktrace: 
@@ -664,7 +1247,7 @@ MonoBehaviour:
       name: TreasureTest
       fullName: TreasureTest
       resultStatus: 1
-      duration: 0.0194544
+      duration: 0.0149191
       messages: 
       output: 
       stacktrace: 
@@ -680,7 +1263,7 @@ MonoBehaviour:
       name: CollectTreasure_ShouldIncreasePlayerGold
       fullName: TreasureTest.CollectTreasure_ShouldIncreasePlayerGold
       resultStatus: 1
-      duration: 0.0125205
+      duration: 0.0098477
       messages: 
       output: 
       stacktrace: 
@@ -692,12 +1275,23 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1009
       parentUniqueId: Tests.dll/[Tests][TreasureTest][suite]
-    m_ResultText: TacticalThieves (0,411s)
+    m_ResultText: "ThiefTest_MovementEnabledWithUnWalkableTiles (0,041s)\n---\nminTileCoords
+      (1.00, 1.00) {\n    \"x\": 2,\n    \"y\": 2,\n    \"moveRange\": 4,\n    \"status\":
+      1,\n    \"currentMoveRoute\": [],\n    \"currentRouteIndex\": 0,\n    \"stealth\":
+      false,\n    \"defaultMaterial\": {\n        \"instanceID\": 22538\n    },\n   
+      \"stealthMaterial\": {\n        \"instanceID\": 22822\n    },\n    \"thiefBody\":
+      {\n        \"instanceID\": -61322\n    },\n    \"moveTest\": true\n}\r\nmaxTileCoords
+      (4.00, 4.00)\r\nEnableTilesForThiefMove 1_1 2\r\nEnableTilesForThiefMove 1_2
+      1\r\nEnableTilesForThiefMove 1_3 2\r\nEnableTilesForThiefMove 1_4 3\r\nEnableTilesForThiefMove
+      2_1 1\r\nEnableTilesForThiefMove 2_2 0\r\nEnableTilesForThiefMove 2_3 1\r\nEnableTilesForThiefMove
+      2_4 2\r\nEnableTilesForThiefMove 3_1 2\r\nEnableTilesForThiefMove 3_2 5\r\nEnableTilesForThiefMove
+      3_3 2\r\nEnableTilesForThiefMove 3_4 3\r\nEnableTilesForThiefMove 4_1 3\r\nEnableTilesForThiefMove
+      4_2 4\r\nEnableTilesForThiefMove 4_3 3\r\nEnableTilesForThiefMove 4_4 4"
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 47642edd
-      m_LastClickedID: -584162233
+      m_SelectedIDs: 4a295dbc
+      m_LastClickedID: -1134745270
       m_ExpandedIDs: 9f7b7f9f396a33ca2f8c91d747642edd6a31c6f697429600e12120011e559e19b37cc93fffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -815,8 +1409,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Scripts
+    m_Folders: []
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
@@ -831,7 +1424,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: a0570000
     m_LastClickedID: 22432
-    m_ExpandedIDs: 00000000685900006a5900006c5900006e590000705900007259000074590000
+    m_ExpandedIDs: 000000005e59000060590000625900006459000066590000685900006a590000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -856,10 +1449,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
+    scrollPos: {x: 0, y: 132.99994}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000685900006a5900006c5900006e590000705900007259000074590000
+    m_ExpandedIDs: ffffffff000000005e59000060590000625900006459000066590000685900006a590000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -991,23 +1584,23 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: e2f9ffff0afaffff06fbffff08fbffff
+      m_ExpandedIDs: ca0effffdc0effff2c0fffff8811ffff062cffff182cffff682cffff3435ffffe636ffff3637ffffae38ffff603affffb03affff1a3cffff963fffffe63fffff4e41ffff0043ffff5043ffffac45ffff0649ffff5649ffffb24bffff524effffa24efffffc50ffffd658ffff065affff565affffb05cffff625effffb25efffff663ffffaa6effffbc6effff0c6fffff4e74ffff2e78ffff7e78ffffc27dffff8485ffff9685ffffe685ffff288bffff0890ffff1a90ffff6a90ffffae95ffff5e98ffffae98fffff09dffffc29fffff12a0fffffaabffff4aacffff76b7ffffc6b7ffff18bbffff4abdffff9abdffffecc0ffffcec2ffff1ec3ffff70c6ffff62c8ffffb2c8ffff04ccffffeecdffff3eceffff98d0ffff4ad2ffff9ad2ffff76d9ffffb2dfffffc4dfffff14e0fffff2e6ffff32fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Thief
+        m_OriginalName: Thief
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: -62036
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 0}
+        m_ClientGUIView: {fileID: 6}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -1274,9 +1867,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.0752134, y: -0.5950309, z: -0.8126261}
+    m_Target: {x: 1.6000001, y: 0.064999916, z: -1.612}
     speed: 2
-    m_Value: {x: 3.0752134, y: -0.5950309, z: -0.8126261}
+    m_Value: {x: 1.6000001, y: 0.064999945, z: -1.612}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1323,13 +1916,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.33860523, y: -0.16754463, z: 0.06140553, w: -0.92385685}
+    m_Target: {x: -0.2413797, y: -0.41213354, z: 0.11419656, w: -0.87111926}
     speed: 2
-    m_Value: {x: -0.33860406, y: -0.16754405, z: 0.061405316, w: -0.92385364}
+    m_Value: {x: -0.24137874, y: -0.41213194, z: 0.114196114, w: -0.87111586}
   m_Size:
-    m_Target: 3.022492
+    m_Target: 2.9790554
     speed: 2
-    m_Value: 3.022492
+    m_Value: 2.9790554
   m_Ortho:
     m_Target: 0
     speed: 2

@@ -9,11 +9,18 @@ namespace TacticalThieves
         [SerializeField] bool enableForMove;
         [SerializeField] Material defaultMaterial;
         [SerializeField] Material moveMaterial;
+        [SerializeField] bool walkable = true;
 
         public bool EnableForMove
         {
             get { return enableForMove; }
             set { enableForMove = value; }
+        }
+
+        public bool Walkable
+        {
+            get => walkable;
+            set => walkable = value; 
         }
 
         // Start is called before the first frame update
@@ -30,7 +37,7 @@ namespace TacticalThieves
 
         private void OnMouseUp()
         {
-            if(EnableForMove)
+            if(EnableForMove && Walkable)
             {
                 GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
                 if (playerControllerGO == null)

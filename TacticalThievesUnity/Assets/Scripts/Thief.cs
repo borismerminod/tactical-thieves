@@ -26,6 +26,7 @@ namespace TacticalThieves
         [SerializeField] private bool moveTest; //A supprimé quand la phase de développement sera terminée
 
         public bool Stealth { get => stealth; private set => stealth = value; }
+        public bool MoveTest { get => moveTest; set => moveTest = value; }
         
        
 

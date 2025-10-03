@@ -77,9 +77,12 @@ public class GameManager : MonoBehaviour
     public void OnThiefReachExit()
     {
         gameState = GameState.WIN;
-        StartCoroutine(apiClient.ThiefReachedExit());
 
-        Invoke("RestartLevel", 3.0f);
+        if (apiClient != null && TestMode == false)
+        {
+            StartCoroutine(apiClient.ThiefReachedExit());
+            Invoke("RestartLevel", 3.0f);
+        }
     }
 
     public void OnGameStart()

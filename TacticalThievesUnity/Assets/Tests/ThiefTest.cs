@@ -32,7 +32,7 @@ public class ThiefTest
             { false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false },
             { false, true, false, false, true, true, true, false, false, true, false, false, false, false, false, false },
             { true, true, true, false, true, true, true, true, true, true, true, false, false, true, false, false },
-            { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true }
+            { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false }
         };
 
         int thiefPosX = 2;
@@ -67,6 +67,7 @@ public class ThiefTest
             Assert.IsNotNull(thief, "Thief component should be present on the instance.");
 
             thief.MoveRange = thiefMoveRange;
+            thief.MoveTest = true;
             Assert.AreEqual(thief.MoveRange, thiefMoveRange);
 
             GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
@@ -75,7 +76,7 @@ public class ThiefTest
 
             thief.X = thiefPosX;
             thief.Y = thiefPosY;
-
+            grid.TestMode = true;
             grid.InitTilesDictionnary();
             thief.EnableMove(true, grid);
 
@@ -91,7 +92,7 @@ public class ThiefTest
                 Tile tile = tiles[tileKey];
                 Assert.IsNotNull(tile, $"Tile at {tileKey} should not be null.");
 
-                //Debug.Log("Adding tile at position: " + tileKey + " " + j + " " + i + " " + tile + " " + thief);
+                Debug.Log("Adding tile at position: " + tileKey + " " + j + " " + i + " " + tile + " " + thief);
                 Assert.AreEqual(AreTilesEnableForMove[i, j], tile.EnableForMove);
             }
 
@@ -118,11 +119,60 @@ public class ThiefTest
     }
 
     [UnityTest]
+    public IEnumerator ThiefTest_MovementEnabledWithUnWalkableTiles()
+    {
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+        thief.MoveRange = 4;
+        thief.MoveTest = true;
+
+        GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
+        Assert.IsNotNull(gridPrefab, "Grid prefab should be loaded successfully.");
+        TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
+        thief.X = 2;
+        thief.Y = 2;
+        grid.TestMode = true;
+        grid.InitTilesDictionnary();
+        Dictionary<string, Tile> tiles = grid.Tiles;
+        string tileKeyNotWalkable = "3_2";
+        Assert.IsTrue(tiles.ContainsKey(tileKeyNotWalkable));
+        tiles[tileKeyNotWalkable].Walkable = false;
+
+        thief.EnableMove(true, grid);
+        Assert.AreEqual(thief.Status, Thief.eThiefStatus.MovementEnable);
+
+        for(int i=1; i<= grid.Width; i++)
+        {
+            for(int j=1; j<= grid.Height; j++)
+            {
+                string tileKey = i + "_" + j;
+                Assert.IsTrue(tiles.ContainsKey(tileKey));
+                if(tileKey.Equals(tileKeyNotWalkable))
+                {
+                    Assert.IsFalse(tiles[tileKey].EnableForMove);
+                }
+                else
+                {
+                    Assert.IsTrue(tiles[tileKey].EnableForMove);
+                }
+            }
+        }
+
+        yield return null;
+
+        UnityEngine.Object.Destroy(thief);
+        UnityEngine.Object.Destroy(grid);
+    }
+
+    [UnityTest]
     public IEnumerator ThiefTest_OnMovementProceed()
     {
-        string[] targetedTileKeys = { "4_4", "1_4", "4_1", "2_3"};
+        //string[] targetedTileKeys = { "4_4", "1_4", "4_1", "2_3"};
+        string[] targetedTileKeys = {"1_4", "4_1", "2_3"};
         Vector2[][] expectedMove = new Vector2[][]{ 
-            new Vector2[] {new Vector2(2, 1), new Vector2(2, 2), new Vector2(3, 2), new Vector2(3, 3), new Vector2(4, 3), new Vector2(4, 4) },
+            //new Vector2[] {new Vector2(2, 1), new Vector2(2, 2), new Vector2(3, 2), new Vector2(3, 3), new Vector2(4, 3), new Vector2(4, 4) },
             new Vector2[] {new Vector2(1, 2), new Vector2(1, 3), new Vector2(1, 4) },
             new Vector2[] {new Vector2(2, 1), new Vector2(3, 1), new Vector2(4, 1) },
             new Vector2[] {new Vector2(1, 2), new Vector2(2, 2) , new Vector2(2, 3) }

@@ -12,7 +12,9 @@ namespace TacticalThieves
         [SerializeField] int height;
         [SerializeField] private Vector2 minTileCoords;
         [SerializeField] private Vector2 maxTileCoords;
+        [SerializeField] private bool testMode;
 
+        public bool TestMode { get => testMode; set => testMode = value; }
         public Vector2 MinTileCoords { get => minTileCoords; private set => minTileCoords = value; }
         public Vector2 MaxTileCoords { get => maxTileCoords; private set => maxTileCoords = value; }
 
@@ -66,6 +68,9 @@ namespace TacticalThieves
             foreach (GameObject tileGO in tilesGO)
             {
                 Tile tile = tileGO.GetComponent<Tile>();
+                if(TestMode)
+                    tile.Walkable = true;
+
                 if (tile != null)
                 {
                     if(tile.X > width)
@@ -136,7 +141,18 @@ namespace TacticalThieves
                     if(tiles.ContainsKey(tileKey))
                     {
                         Tile tile = tiles[tileKey];
-                        if(tile != null)
+                        //Debug.Log(tile);
+                       List<Vector2> routes = ComputeMoveRoute(thief, tile);
+                        Debug.Log("EnableTilesForThiefMove "+ tileKey + " "+ routes.Count);
+                        if(routes.Count <= thief.MoveRange)
+                        {
+                            tile.SetEnableForMove(true);
+                        }
+                        else
+                        {
+                            tile.SetEnableForMove(false);
+                        }
+                        /*if(tile != null)
                         {
                             int distanceX = Mathf.Abs(tile.X - thief.X);
                             int distanceY = Mathf.Abs(tile.Y - thief.Y);
@@ -152,7 +168,7 @@ namespace TacticalThieves
                             {
                                 tile.SetEnableForMove(false);
                             }
-                        }
+                        }*/
                     }
                 }
             }
@@ -160,10 +176,11 @@ namespace TacticalThieves
 
         private void ComputeMinTileCoords(Thief thief)
         {
-            int posX = Mathf.Max(Mathf.Abs(thief.X - thief.MoveRange), 1);
-            int posY = Mathf.Max(Mathf.Abs(thief.Y - thief.MoveRange), 1);
+            int posX = Mathf.Max(thief.X - thief.MoveRange, 1);
+            int posY = Mathf.Max(thief.Y - thief.MoveRange, 1);
 
             minTileCoords = new Vector2(posX, posY);
+            Debug.Log("minTileCoords " + minTileCoords + " "+thief);
         }
 
         private void ComputeMaxTileCoords(Thief thief)
@@ -171,6 +188,7 @@ namespace TacticalThieves
             int posX = Mathf.Min(thief.X + thief.MoveRange, width);
             int posY = Mathf.Min(thief.Y + thief.MoveRange, height);
             maxTileCoords = new Vector2(posX, posY);
+            Debug.Log("maxTileCoords " + maxTileCoords);
         }
 
         public List<Vector2> ComputeMoveRoute(Thief thief, Tile targetedTile)
@@ -178,7 +196,9 @@ namespace TacticalThieves
             List<Vector2> moveRoute = new List<Vector2>();
             Vector2 currentLocation = new Vector2(thief.X, thief.Y);
             Vector2 targetLocation = new Vector2(targetedTile.X, targetedTile.Y);
-            while(currentLocation != targetLocation)
+
+            for(int i=0; i<=thief.MoveRange && currentLocation != targetLocation; i++)
+            //while(currentLocation != targetLocation)
             {
                 Vector2[] possibleMoves = new Vector2[4];
                 possibleMoves[0] = new Vector2(Mathf.Max(currentLocation.x -1, 1),  currentLocation.y); // Left
@@ -186,18 +206,24 @@ namespace TacticalThieves
                 possibleMoves[2] = new Vector2(Mathf.Min(currentLocation.x + 1, width), currentLocation.y); // Right
                 possibleMoves[3] = new Vector2(currentLocation.x, Mathf.Min(currentLocation.y + 1, height)); // Up
 
-                Vector2 nextMove = possibleMoves[0];
-                float minDistance = Vector2.Distance(nextMove, targetLocation);
+                Vector2 nextMove = Vector2.zero; //possibleMoves[0];
+                float minDistance = -1.0f; //Vector2.Distance(nextMove, targetLocation);
 
                 foreach (Vector2 move in possibleMoves)
                 {
-                    if(move == currentLocation)
+                    string tileKey = move.x + "_" + move.y;
+                    if (tiles.ContainsKey(tileKey) && tiles[tileKey].Walkable == false)
+                    {
+                        continue;
+                    }
+                    
+                    if (move == currentLocation)
                     {
                         continue; // Skip the current location
                     }
 
                     float distance = Vector2.Distance(move, targetLocation);
-                    if (distance < minDistance)
+                    if (minDistance == -1.0f || distance < minDistance)
                     {
                         minDistance = distance;
                         nextMove = move;
@@ -205,6 +231,7 @@ namespace TacticalThieves
                 }
 
                 moveRoute.Add(nextMove);
+
                 currentLocation = nextMove;
             }
 
