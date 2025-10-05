@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TacticalThieves
 {
-    public class Thief : Object
+    public class Thief : Character
     {
 
         public enum eThiefStatus
@@ -14,7 +14,7 @@ namespace TacticalThieves
             isMoving = 2 
         }
 
-        [SerializeField] private int moveRange;
+        
         [SerializeField] private eThiefStatus status;
         [SerializeField] private List<Vector2> currentMoveRoute;
         [SerializeField] private int currentRouteIndex;
@@ -29,8 +29,6 @@ namespace TacticalThieves
         public bool MoveTest { get => moveTest; set => moveTest = value; }
         
        
-
-        public int MoveRange { get => moveRange; set => moveRange = value; }
         public eThiefStatus Status { get => status; private set => status = value; }
 
         // Start is called before the first frame update

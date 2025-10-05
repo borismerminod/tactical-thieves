@@ -11,10 +11,19 @@ namespace TacticalThieves
         [SerializeField] Material moveMaterial;
         [SerializeField] bool walkable = true;
 
+        [SerializeField] bool enableForAttack;
+
+
         public bool EnableForMove
         {
             get { return enableForMove; }
             set { enableForMove = value; }
+        }
+
+        public bool EnableForAttack
+        {
+            get { return enableForAttack; }
+            set { enableForAttack = value; }
         }
 
         public bool Walkable
@@ -70,6 +79,11 @@ namespace TacticalThieves
             {
                 GetComponent<Renderer>().material = defaultMaterial;
             }
+        }
+
+        public void SetEnableForAttack(bool enable)
+        {
+            EnableForAttack = enable;
         }
     }
 }

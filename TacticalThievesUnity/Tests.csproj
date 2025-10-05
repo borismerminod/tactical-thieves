@@ -59,8 +59,10 @@
     <Compile Include="Assets\Tests\TreasureTest.cs" />
     <Compile Include="Assets\Tests\ThiefTest.cs" />
     <Compile Include="Assets\Tests\GridTest.cs" />
+    <Compile Include="Assets\Tests\MonsterTest.cs" />
     <Compile Include="Assets\Tests\ExitTest.cs" />
     <Compile Include="Assets\Tests\GameManagerTest.cs" />
+    <Compile Include="Assets\Tests\TileTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Tests\Tests.asmdef" />

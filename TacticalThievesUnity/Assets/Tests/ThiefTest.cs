@@ -211,7 +211,7 @@ public class ThiefTest
             Tile targetedTile = tiles[targetedTileKey];
             Assert.IsNotNull(targetedTile, $"Tile at {targetedTileKey} should not be null.");
 
-            List<Vector2> moveRoute = grid.ComputeMoveRoute(thief, targetedTile);
+            List<Vector2> moveRoute = grid.ComputeMoveRoute(thief, targetedTile, thief.MoveRange);
             Assert.AreEqual(expectedMove.Length, moveRoute.Count, "Move route should have the expected number of steps.");
             for (int i = 0; i < moveRoute.Count; i++)
             {

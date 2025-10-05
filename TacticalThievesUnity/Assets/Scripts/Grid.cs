@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.TextCore.Text;
 
 namespace TacticalThieves
 {
@@ -101,9 +102,9 @@ namespace TacticalThieves
                 return;
             }
 
-            ComputeMinTileCoords(thief);
-            ComputeMaxTileCoords(thief);
-            EnableTilesForThiefMove(thief);
+            ComputeMinTileCoords(thief, thief.MoveRange);
+            ComputeMaxTileCoords(thief, thief.MoveRange);
+            EnableTilesForCharacterAction(thief, false);
 
         }
 
@@ -113,6 +114,19 @@ namespace TacticalThieves
             DisableTileForThiefMove();
             minTileCoords = Vector2.zero;
             maxTileCoords = Vector2.zero;
+        }
+
+        public void OnMonsterAttackEnable(Monster monster)
+        {
+            if (monster == null || tiles == null || tiles.Count == 0)
+            {
+                return;
+            }
+            
+            ComputeMinTileCoords(monster, monster.AttackRange);
+            ComputeMaxTileCoords(monster, monster.AttackRange);
+            EnableTilesForCharacterAction(monster, true);
+
         }
 
         private void DisableTileForThiefMove()
@@ -130,74 +144,88 @@ namespace TacticalThieves
             }
         }
 
-        private void EnableTilesForThiefMove(Thief thief)
+        private void EnableTilesForCharacterAction(Character character, bool actionIsAttack)
         {
-            int squareMoveRange = thief.MoveRange * thief.MoveRange;
+            int squareMoveRange = character.MoveRange * character.MoveRange;
             for(int x =(int)minTileCoords.x; x <= (int) maxTileCoords.x; x++)
             {
                 for(int y = (int)minTileCoords.y; y <= (int)maxTileCoords.y; y++)
                 {
-                    string tileKey = x + "_" + y;
-                    if(tiles.ContainsKey(tileKey))
+                    if (actionIsAttack)
                     {
-                        Tile tile = tiles[tileKey];
-                        //Debug.Log(tile);
-                       List<Vector2> routes = ComputeMoveRoute(thief, tile);
-                        Debug.Log("EnableTilesForThiefMove "+ tileKey + " "+ routes.Count);
-                        if(routes.Count <= thief.MoveRange)
-                        {
-                            tile.SetEnableForMove(true);
-                        }
-                        else
-                        {
-                            tile.SetEnableForMove(false);
-                        }
-                        /*if(tile != null)
-                        {
-                            int distanceX = Mathf.Abs(tile.X - thief.X);
-                            int distanceY = Mathf.Abs(tile.Y - thief.Y);
-
-                            int squareDistance = distanceX * distanceX + distanceY * distanceY;
-                            //Debug.Log($"Tile {tileKey} - Position: ({tile.X}, {tile.Y}), Distance: {squareDistance}, Move Range: {squareMoveRange}");
-
-                            if (squareDistance <= squareMoveRange)
-                            {
-                                tile.SetEnableForMove(true);
-                            }
-                            else
-                            {
-                                tile.SetEnableForMove(false);
-                            }
-                        }*/
+                        Monster monster = (Monster)character;
+                        HandleTileAttackToggle(monster, x, y);
+                    }
+                    else
+                    {
+                        HandleTileMoveToggle(character, x,y);
                     }
                 }
             }
         }
 
-        private void ComputeMinTileCoords(Thief thief)
+        private void HandleTileMoveToggle(Character character, int x, int y)
         {
-            int posX = Mathf.Max(thief.X - thief.MoveRange, 1);
-            int posY = Mathf.Max(thief.Y - thief.MoveRange, 1);
+            string tileKey = x + "_" + y;
+            if (tiles.ContainsKey(tileKey))
+            {
+                Tile tile = tiles[tileKey];
+                List<Vector2> routes = ComputeMoveRoute(character, tile, character.MoveRange);
+                if (routes.Count <= character.MoveRange)
+                {
+                    tile.SetEnableForMove(true);
+                }
+                else
+                {
+                    tile.SetEnableForMove(false);
+                }
+            }
+        }
+
+        private void HandleTileAttackToggle(Monster monster, int x, int y)
+        {
+            string tileKey = x + "_" + y;
+            if (tiles.ContainsKey(tileKey))
+            {
+                Tile tile = tiles[tileKey];
+                List<Vector2> routes = ComputeMoveRoute(monster, tile, monster.AttackRange);
+
+                Debug.Log(routes.Count);
+                if (routes.Count <= monster.AttackRange)
+                {
+                    tile.SetEnableForAttack(true);
+                }
+                else
+                {
+                    tile.SetEnableForAttack(false);
+                }
+            }
+        }
+
+        private void ComputeMinTileCoords(Character character, int range)
+        {
+            int posX = Mathf.Max(character.X - range, 1);
+            int posY = Mathf.Max(character.Y - range, 1);
 
             minTileCoords = new Vector2(posX, posY);
-            Debug.Log("minTileCoords " + minTileCoords + " "+thief);
+            //Debug.Log("minTileCoords " + minTileCoords + " "+ character);
         }
 
-        private void ComputeMaxTileCoords(Thief thief)
+        private void ComputeMaxTileCoords(Character character, int range)
         {
-            int posX = Mathf.Min(thief.X + thief.MoveRange, width);
-            int posY = Mathf.Min(thief.Y + thief.MoveRange, height);
+            int posX = Mathf.Min(character.X + range, width);
+            int posY = Mathf.Min(character.Y + range, height);
             maxTileCoords = new Vector2(posX, posY);
-            Debug.Log("maxTileCoords " + maxTileCoords);
+           // Debug.Log("maxTileCoords " + maxTileCoords);
         }
 
-        public List<Vector2> ComputeMoveRoute(Thief thief, Tile targetedTile)
+        public List<Vector2> ComputeMoveRoute(Character character, Tile targetedTile, int range)
         {
             List<Vector2> moveRoute = new List<Vector2>();
-            Vector2 currentLocation = new Vector2(thief.X, thief.Y);
+            Vector2 currentLocation = new Vector2(character.X, character.Y);
             Vector2 targetLocation = new Vector2(targetedTile.X, targetedTile.Y);
 
-            for(int i=0; i<=thief.MoveRange && currentLocation != targetLocation; i++)
+            for(int i=0; i<= range && currentLocation != targetLocation; i++)
             //while(currentLocation != targetLocation)
             {
                 Vector2[] possibleMoves = new Vector2[4];

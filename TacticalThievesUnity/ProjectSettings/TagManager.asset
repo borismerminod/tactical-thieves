@@ -11,6 +11,7 @@ TagManager:
   - Treasure
   - GameManager
   - Exit
+  - Monster
   layers:
   - Default
   - TransparentFX
