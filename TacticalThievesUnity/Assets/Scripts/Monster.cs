@@ -10,6 +10,7 @@ namespace TacticalThieves
 
         public enum eActionPhase
         {
+            WAIT,
             PHASE1_FIRST_ATTACK
         }
 
@@ -17,7 +18,7 @@ namespace TacticalThieves
         public bool TestMode {get => testMode; set => testMode = value; }
 
         [SerializeField] eActionPhase actionPhase;
-        public eActionPhase ActionPhase { get => actionPhase; private set => actionPhase = value; }
+        public eActionPhase ActionPhase { get => actionPhase; set => actionPhase = value; }
 
         [SerializeField] int attackRange;
         public int AttackRange
@@ -35,7 +36,12 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
-        
+            Init();
+        }
+
+        public void Init()
+        {
+            ActionPhase = eActionPhase.WAIT;
         }
 
         // Update is called once per frame

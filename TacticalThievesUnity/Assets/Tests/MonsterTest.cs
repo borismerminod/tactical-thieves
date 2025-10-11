@@ -65,6 +65,10 @@ public class MonsterTest
     [UnityTest]
     public IEnumerator MonsterTest_MonsterFirstActionShouldBeAttack()
     {
+
+        monster.Init();
+        Assert.AreEqual(monster.ActionPhase, Monster.eActionPhase.WAIT);
+
         monster.TryFirstAttack();
         Assert.AreEqual(Monster.eActionPhase.PHASE1_FIRST_ATTACK, monster.ActionPhase);
 

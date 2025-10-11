@@ -5,95 +5,107 @@ using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+namespace TacticalThieves
 {
-    public enum GameState
+    public class GameManager : MonoBehaviour
     {
-        IN_GAME,
-        WIN
-    }
-
-    public static GameManager Instance { get; private set; }
-
-    [SerializeField] private int playerGold;
-    [SerializeField] private WebSocketClient webSocketClient;
-    [SerializeField] private APIClient apiClient;
-    [SerializeField] private GameState gameState;
-    [SerializeField] private bool testMode;
-
-    public bool TestMode { get => testMode; set => testMode = value; }
-
-
-    public GameState GetGameState() => gameState;
-
-    public int PlayerGold
-    {
-        get => playerGold;
-        private set
+        public enum GameState
         {
-            playerGold = value;
-            if(playerGold < 0)
-                playerGold = 0;
+            IN_GAME,
+            WIN
         }
-    }
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+        public static GameManager Instance { get; private set; }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameState = GameState.IN_GAME;
-    }
+        [SerializeField] private int playerGold;
+        [SerializeField] private WebSocketClient webSocketClient;
+        [SerializeField] private APIClient apiClient;
+        [SerializeField] private GameState gameState;
+        [SerializeField] private Grid currentGrid;
+        [SerializeField] private bool testMode;
 
-    public void OnWebSocketClientStarted(WebSocketClient client)
-    {
-        webSocketClient = client;
-    }
+        public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
 
-    public void OnAPIClientStarted(APIClient client)
-    {
-        apiClient = client;
-        OnGameStart();
-    }
+        public bool TestMode { get => testMode; set => testMode = value; }
 
-    // Update is called once per frame
-    void Update()
-    {
+
+        public GameState GetGameState() => gameState;
+
+        public int PlayerGold
+        {
+            get => playerGold;
+            private set
+            {
+                playerGold = value;
+                if(playerGold < 0)
+                    playerGold = 0;
+            }
+        }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            gameState = GameState.IN_GAME;
+        }
+
+        public void OnWebSocketClientStarted(WebSocketClient client)
+        {
+            webSocketClient = client;
+        }
+
+        public void OnAPIClientStarted(APIClient client)
+        {
+            apiClient = client;
+            OnGameStart();
+        }
+
+        public void OnGridStarted(Grid grid)
+        {
+            currentGrid = grid;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
         
-    }
-
-    public void OnTreasureCollected(int gold)
-    {
-        PlayerGold += gold;
-
-        //TODO Log en cas d'échec de l'appel
-        if (apiClient != null && TestMode == false)
-            StartCoroutine(apiClient.CollectTreasure(PlayerGold));
-    }
-
-    public void OnThiefReachExit()
-    {
-        gameState = GameState.WIN;
-
-        if (apiClient != null && TestMode == false)
-        {
-            StartCoroutine(apiClient.ThiefReachedExit());
-            Invoke("RestartLevel", 3.0f);
         }
-    }
 
-    public void OnGameStart()
-    {
-        StartCoroutine(apiClient.GameStart());
-    }
+        public void OnTreasureCollected(int gold)
+        {
+            PlayerGold += gold;
 
-    private void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+            //TODO Log en cas d'échec de l'appel
+            if (apiClient != null && TestMode == false)
+                StartCoroutine(apiClient.CollectTreasure(PlayerGold));
+        }
 
+        public void OnThiefReachExit()
+        {
+            gameState = GameState.WIN;
+
+            if (apiClient != null && TestMode == false)
+            {
+                StartCoroutine(apiClient.ThiefReachedExit());
+                Invoke("RestartLevel", 3.0f);
+            }
+        }
+
+        public void OnGameStart()
+        {
+            StartCoroutine(apiClient.GameStart());
+        }
+
+        private void RestartLevel()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+
+    }
 
 }

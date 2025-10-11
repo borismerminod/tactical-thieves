@@ -9,6 +9,7 @@ namespace TacticalThieves
         [SerializeField] bool enableForMove;
         [SerializeField] Material defaultMaterial;
         [SerializeField] Material moveMaterial;
+        [SerializeField] Material attackMaterial;
         [SerializeField] bool walkable = true;
 
         [SerializeField] bool enableForAttack;
@@ -84,6 +85,14 @@ namespace TacticalThieves
         public void SetEnableForAttack(bool enable)
         {
             EnableForAttack = enable;
+            if (enable)
+            {
+                GetComponent<Renderer>().material = attackMaterial;
+            }
+            else
+            {
+                GetComponent<Renderer>().material = defaultMaterial;
+            }
         }
     }
 }

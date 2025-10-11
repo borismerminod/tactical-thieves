@@ -41,6 +41,7 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
+            GameManager.Instance.OnGridStarted(this);
             InitTilesDictionnary();
             SendGridToPlayerController();
         }
@@ -116,16 +117,19 @@ namespace TacticalThieves
             maxTileCoords = Vector2.zero;
         }
 
-        public void OnMonsterAttackEnable(Monster monster)
+        public bool OnMonsterAttackEnable(Monster monster)
         {
             if (monster == null || tiles == null || tiles.Count == 0)
             {
-                return;
+                return false;
             }
-            
+
             ComputeMinTileCoords(monster, monster.AttackRange);
             ComputeMaxTileCoords(monster, monster.AttackRange);
+            Debug.Log("TEST "+ minTileCoords + " "+ maxTileCoords + " "+ monster);
             EnableTilesForCharacterAction(monster, true);
+
+            return true;
 
         }
 
@@ -190,7 +194,6 @@ namespace TacticalThieves
                 Tile tile = tiles[tileKey];
                 List<Vector2> routes = ComputeMoveRoute(monster, tile, monster.AttackRange);
 
-                Debug.Log(routes.Count);
                 if (routes.Count <= monster.AttackRange)
                 {
                     tile.SetEnableForAttack(true);
