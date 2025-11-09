@@ -11,7 +11,8 @@ namespace TacticalThieves
         public enum eActionPhase
         {
             WAIT,
-            PHASE1_FIRST_ATTACK
+            PHASE1_FIRST_ATTACK,
+            PHASE2_MOVE
         }
 
         [SerializeField] bool testMode;
@@ -53,6 +54,11 @@ namespace TacticalThieves
         public void TryFirstAttack()
         {
             ActionPhase = eActionPhase.PHASE1_FIRST_ATTACK;
+        }
+
+        public void OnFirstAttackFailed()
+        {
+            ActionPhase = eActionPhase.PHASE2_MOVE;
         }
     }
 

@@ -271,4 +271,21 @@ public class ThiefTest
 
     }
 
+    [Test] 
+    public void ThiefTest_ThiefShouldDieIfAttacked()
+    {
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+
+        thief.OnThiefStarted();
+        Assert.AreEqual(thief.Status, Thief.eThiefStatus.Wait);
+
+        thief.OnThiefAttacked();
+        Assert.AreEqual(thief.Status, Thief.eThiefStatus.Dead);
+
+    }
+        
+
 }

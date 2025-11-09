@@ -112,28 +112,36 @@ namespace TacticalThieves
         public void OnThiefMoveDisable()
         {
 
-            DisableTileForThiefMove();
+            DisableTileForCharacterAction(false);
             minTileCoords = Vector2.zero;
             maxTileCoords = Vector2.zero;
         }
 
-        public bool OnMonsterAttackEnable(Monster monster)
+        public List<Vector2> OnMonsterAttackEnable(Monster monster)
         {
+            List<Vector2> enablesTiles = new List<Vector2>();
             if (monster == null || tiles == null || tiles.Count == 0)
             {
-                return false;
+                return enablesTiles;
             }
 
             ComputeMinTileCoords(monster, monster.AttackRange);
             ComputeMaxTileCoords(monster, monster.AttackRange);
-            Debug.Log("TEST "+ minTileCoords + " "+ maxTileCoords + " "+ monster);
-            EnableTilesForCharacterAction(monster, true);
+            //Debug.Log("TEST "+ minTileCoords + " "+ maxTileCoords + " "+ monster);
+            enablesTiles = EnableTilesForCharacterAction(monster, true);
 
-            return true;
+            return enablesTiles;
 
         }
 
-        private void DisableTileForThiefMove()
+        public void OnMonsterAttackDisable()
+        {
+            DisableTileForCharacterAction(true);
+            minTileCoords = Vector2.zero;
+            maxTileCoords = Vector2.zero;
+        }
+
+        private void DisableTileForCharacterAction(bool actionIsAttack)
         {
             for (int x = (int)minTileCoords.x; x <= (int)maxTileCoords.x; x++)
             {
@@ -142,14 +150,18 @@ namespace TacticalThieves
                     string tileKey = x + "_" + y;
                     if (tiles.ContainsKey(tileKey))
                     {
-                        tiles[tileKey].SetEnableForMove(false);
+                        if(actionIsAttack)
+                            tiles[tileKey].SetEnableForAttack(false);
+                        else
+                            tiles[tileKey].SetEnableForMove(false);
                     }
                 }
             }
         }
 
-        private void EnableTilesForCharacterAction(Character character, bool actionIsAttack)
+        private List<Vector2> EnableTilesForCharacterAction(Character character, bool actionIsAttack)
         {
+            List<Vector2> enabledTiles = new List<Vector2>();
             int squareMoveRange = character.MoveRange * character.MoveRange;
             for(int x =(int)minTileCoords.x; x <= (int) maxTileCoords.x; x++)
             {
@@ -158,7 +170,12 @@ namespace TacticalThieves
                     if (actionIsAttack)
                     {
                         Monster monster = (Monster)character;
-                        HandleTileAttackToggle(monster, x, y);
+                        Tile enabledTile = HandleTileAttackToggle(monster, x, y);
+                        if(enabledTile != null)
+                        {
+                            Vector2 enabledTilePos = new Vector2(enabledTile.X, enabledTile.Y);
+                            enabledTiles.Add(enabledTilePos);
+                        }
                     }
                     else
                     {
@@ -166,6 +183,10 @@ namespace TacticalThieves
                     }
                 }
             }
+
+            Debug.Log(enabledTiles.Count);
+
+            return enabledTiles;
         }
 
         private void HandleTileMoveToggle(Character character, int x, int y)
@@ -186,8 +207,9 @@ namespace TacticalThieves
             }
         }
 
-        private void HandleTileAttackToggle(Monster monster, int x, int y)
+        private Tile HandleTileAttackToggle(Monster monster, int x, int y)
         {
+            Tile enabledTile = null;
             string tileKey = x + "_" + y;
             if (tiles.ContainsKey(tileKey))
             {
@@ -197,12 +219,15 @@ namespace TacticalThieves
                 if (routes.Count <= monster.AttackRange)
                 {
                     tile.SetEnableForAttack(true);
+                    enabledTile = tile;
                 }
                 else
                 {
                     tile.SetEnableForAttack(false);
                 }
             }
+
+            return enabledTile;
         }
 
         private void ComputeMinTileCoords(Character character, int range)
@@ -278,6 +303,26 @@ namespace TacticalThieves
 
             return tiles[tileKey];
 
+        }
+
+        public bool IsTargetOnEnabledTiles(List<Vector2> enabledTilesPos, Character character)
+        {
+            bool result = false;
+            foreach(Vector2 tilePos in enabledTilesPos)
+            {
+                string key = tilePos.x+ "_" + tilePos.y;
+                if (tiles.ContainsKey(key) == true)
+                {
+                    Tile tile = tiles[key];
+                    if(tile.EnableForAttack && tile.X == character.X && tile.Y == character.Y)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         // Update is called once per frame

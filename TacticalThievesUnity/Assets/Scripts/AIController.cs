@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace TacticalThieves
@@ -7,6 +8,7 @@ namespace TacticalThieves
     public class AIController : MonoBehaviour
     {
         [SerializeField] private Monster currentMonster;
+        [SerializeField] private List<Vector2> tilesEnabledPos;
 
         public Monster CurrentMonster {  get =>  currentMonster; set => currentMonster = value;}
 
@@ -17,12 +19,14 @@ namespace TacticalThieves
             GameObject monsterGO = GameObject.FindGameObjectWithTag("Monster");
             CurrentMonster = monsterGO.GetComponent<Monster>();
             OnMonsterSelected(CurrentMonster);
+
+            InvokeRepeating("ProcessMonsterActions", 0.1f, 0.5f);
         }
 
         // Update is called once per frame
         void Update()
         {
-            ProcessMonsterActions();
+            //ProcessMonsterActions();
         }
 
         private void ProcessMonsterActions()
@@ -33,7 +37,10 @@ namespace TacticalThieves
             switch(currentMonster.ActionPhase)
             {
                 case Monster.eActionPhase.WAIT:
-                    SetMonsterFirstAttack(currentMonster, GameManager.Instance.CurrentGrid);
+                    tilesEnabledPos = SetMonsterFirstAttack(currentMonster, GameManager.Instance.CurrentGrid);
+                    break;
+                case Monster.eActionPhase.PHASE1_FIRST_ATTACK:
+                    Attack();
                     break;
             }
         }
@@ -47,14 +54,56 @@ namespace TacticalThieves
             return true;
         }
 
-        public bool SetMonsterFirstAttack(Monster monster, Grid grid)
+        public List<Vector2> SetMonsterFirstAttack(Monster monster, Grid grid)
         {
-            if(monster == null) return false;
-            if(grid == null) return false;
+            List<Vector2> tiles = new List<Vector2>();
+            if(monster != null && grid != null)
+            {
+                monster.TryFirstAttack();
+                tiles = grid.OnMonsterAttackEnable(monster);
+            }
 
-            monster.TryFirstAttack();
-            return grid.OnMonsterAttackEnable(monster);
+            return tiles;
         }
+
+        public bool Attack(List<Vector2> tiles, Thief thief, Grid grid)
+        {
+            bool thiefIsAttacked = false;
+            thiefIsAttacked = grid.IsTargetOnEnabledTiles(tiles, thief);
+
+            if (thiefIsAttacked)
+            {
+                thief.OnThiefAttacked();
+            }
+
+
+            return thiefIsAttacked;
+        }
+
+        private void Attack()
+        {
+            bool thiefAttacked = false;
+            foreach(Thief thief in GameManager.Instance.Thieves)
+            {
+                thiefAttacked = Attack(tilesEnabledPos, thief, GameManager.Instance.CurrentGrid);
+                if(thiefAttacked) 
+                    break;
+            }
+
+            if(thiefAttacked)
+            {
+                currentMonster.Init();
+            }
+            else
+            {
+                currentMonster.OnFirstAttackFailed();
+            }
+
+            GameManager.Instance.CurrentGrid.OnMonsterAttackDisable();
+        }
+
+
+
     }
 }
 

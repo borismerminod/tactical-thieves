@@ -37,6 +37,9 @@ public class AIControllerTest
         GameObject monsterPrefab = Resources.Load<GameObject>("Prefabs/Monster");
         Monster monster = UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
         monster.TestMode = true;
+        monster.AttackRange = 1;
+        monster.X = 3;
+        monster.Y = 3;
 
         GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
         TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
@@ -49,20 +52,68 @@ public class AIControllerTest
         Assert.IsTrue(result);
 
         //Case 2 AI controller drive monster onto its first attack
-        result = aiController.SetMonsterFirstAttack(monster, grid);
+        List<Vector2> tiles = new List<Vector2>();
+        tiles = aiController.SetMonsterFirstAttack(monster, grid);
         Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.PHASE1_FIRST_ATTACK);
-        Assert.IsTrue(result);
+        Assert.AreEqual(5, tiles.Count);
+
 
         //Case 3 grid is null
-        result = aiController.SetMonsterFirstAttack(monster, null);
-        Assert.IsFalse(result);
+        tiles = aiController.SetMonsterFirstAttack(monster, null);
+        Assert.AreEqual(tiles.Count, 0);
 
         //Case 4 monster is null
         result = aiController.OnMonsterSelected(null);
         Assert.IsFalse(result);
 
-        result = aiController.SetMonsterFirstAttack(null, grid);
+        tiles = aiController.SetMonsterFirstAttack(null, grid);
         Assert.IsFalse(result);
+        Assert.AreEqual(tiles.Count, 0);
+
+    }
+
+    [Test]
+    public void AIControllerTest_AIControllerTryFirstAttackWithMonster()
+    {
+        GameObject monsterPrefab = Resources.Load<GameObject>("Prefabs/Monster");
+        Monster monster = UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
+        monster.TestMode = true;
+        monster.AttackRange = 1;
+        monster.X = 3;
+        monster.Y = 3;
+
+        GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
+        TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
+        grid.InitTilesDictionnary();
+
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        TacticalThieves.Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<TacticalThieves.Thief>();
+        thief.X = 2;
+        thief.Y = 3;
+
+        //Step 1 : Monster is "selected"
+        bool result = aiController.OnMonsterSelected(monster);
+        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.WAIT);
+        Assert.AreEqual(aiController.CurrentMonster, monster);
+        Assert.IsTrue(result);
+
+        //Step 2 AI controller drive monster onto its first attack
+        List<Vector2> tiles = new List<Vector2>();
+        tiles = aiController.SetMonsterFirstAttack(monster, grid);
+        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.PHASE1_FIRST_ATTACK);
+        Assert.AreEqual(5, tiles.Count);
+
+        //Case 1 : Cas nominal  AI controller try to attack the thief on the selected tiles
+        result = aiController.Attack(tiles, thief, grid);
+        Assert.IsTrue(result);
+
+        //Case 2 : There is no thief on selected tiles
+        thief.X = 1;
+        thief.Y = 1;
+       
+        result = aiController.Attack(tiles, thief, grid);
+        Assert.IsFalse(result);
+
 
     }
 

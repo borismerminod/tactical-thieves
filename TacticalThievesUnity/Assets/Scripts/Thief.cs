@@ -9,9 +9,10 @@ namespace TacticalThieves
 
         public enum eThiefStatus
         {
-            Wait = 0,
-            MovementEnable = 1,
-            isMoving = 2 
+            Dead = 0,
+            Wait = 1,
+            MovementEnable = 2,
+            isMoving = 3 
         }
 
         
@@ -34,7 +35,8 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
-
+            OnThiefStarted();
+            GameManager.Instance.OnThiefStarted(this);
         }
 
         // Update is called once per frame
@@ -158,6 +160,16 @@ namespace TacticalThieves
             {
                 thiefBody.GetComponent<Renderer>().material = defaultMaterial;
             }
+        }
+
+        public void OnThiefAttacked()
+        {
+            status = eThiefStatus.Dead;
+        }
+
+        public void OnThiefStarted()
+        {
+            status = eThiefStatus.Wait;
         }
     }
 }

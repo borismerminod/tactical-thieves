@@ -23,10 +23,13 @@ namespace TacticalThieves
         [SerializeField] private GameState gameState;
         [SerializeField] private Grid currentGrid;
         [SerializeField] private bool testMode;
+        [SerializeField] private List<Thief> thieves;
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
 
         public bool TestMode { get => testMode; set => testMode = value; }
+
+        public List<Thief> Thieves { get => thieves; private set => thieves = value; }
 
 
         public GameState GetGameState() => gameState;
@@ -67,6 +70,11 @@ namespace TacticalThieves
         public void OnGridStarted(Grid grid)
         {
             currentGrid = grid;
+        }
+
+        public void OnThiefStarted(Thief thief)
+        {
+            thieves.Add(thief);
         }
 
         // Update is called once per frame

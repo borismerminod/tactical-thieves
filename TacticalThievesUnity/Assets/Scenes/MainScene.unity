@@ -971,6 +971,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2130379422847953306, guid: cde6950e49ce99743ac8af63db91eb2f, type: 3}
+      propertyPath: y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2130379422847953306, guid: cde6950e49ce99743ac8af63db91eb2f, type: 3}
       propertyPath: moveTest
       value: 1
       objectReference: {fileID: 0}
