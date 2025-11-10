@@ -117,5 +117,54 @@ public class AIControllerTest
 
     }
 
+    [Test]
+    public void AIControllerTest_AIControllerEnableMonsterMove()
+    {
+        GameObject monsterPrefab = Resources.Load<GameObject>("Prefabs/Monster");
+        Monster monster = UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
+        monster.TestMode = true;
+        monster.MoveRange = 1;
+        monster.AttackRange = 1;
+        monster.X = 3;
+        monster.Y = 3;
+
+        GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
+        TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
+        grid.InitTilesDictionnary();
+
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        TacticalThieves.Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<TacticalThieves.Thief>();
+        thief.X = 1;
+        thief.Y = 1;
+
+        //Step 1 : Monster is "selected"
+        bool result = aiController.OnMonsterSelected(monster);
+        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.WAIT);
+        Assert.AreEqual(aiController.CurrentMonster, monster);
+        Assert.IsTrue(result);
+
+        //Step 2 AI controller drive monster onto its first attack
+        List<Vector2> tiles = new List<Vector2>();
+        tiles = aiController.SetMonsterFirstAttack(monster, grid);
+        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.PHASE1_FIRST_ATTACK);
+        Assert.AreEqual(5, tiles.Count);
+
+        //Step 3 : AI controller try to attack the thief on the selected tiles
+        result = aiController.Attack(tiles, thief, grid);
+        Assert.IsFalse(result);
+
+        //Case 1 : AI Controller try to move the monster 
+        tiles = aiController.SetMonsterMove(monster, grid);
+        Assert.AreEqual(5, tiles.Count);
+
+        //Case 2 : Monster is null
+        tiles = aiController.SetMonsterMove(null, grid);
+        Assert.AreEqual(0, tiles.Count);
+
+        //Case 3 : Grid is null
+        tiles = aiController.SetMonsterMove(monster, null);
+        Assert.AreEqual(0, tiles.Count);
+    }
+
 
 }

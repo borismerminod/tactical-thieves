@@ -75,4 +75,17 @@ public class MonsterTest
         yield return null;
     }
 
+    [UnityTest]
+    public IEnumerator MonsterTest_MonsterTryingToMove()
+    {
+
+        monster.Init();
+        Assert.AreEqual(monster.ActionPhase, Monster.eActionPhase.WAIT);
+
+        monster.OnFirstAttackFailed();
+        Assert.AreEqual(Monster.eActionPhase.PHASE2_MOVE, monster.ActionPhase);
+
+        yield return null;
+    }
+
 }

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349.3334
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Hierarchy
   m_RootView: {fileID: 10}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 75
+  controlID: 116
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 120
+  controlID: 44
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 157
+  controlID: 81
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 74
+  controlID: 115
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -383,7 +383,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 419
+    ID: 234
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -414,9 +414,9 @@ MonoBehaviour:
       uniqueId: '[TacticalThieves][suite]'
       name: TacticalThieves
       fullName: TacticalThieves
-      resultStatus: 2
-      duration: 0.2420665
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.2031496
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -430,9 +430,9 @@ MonoBehaviour:
       uniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 2
-      duration: 0.1322014
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0977559
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -447,7 +447,7 @@ MonoBehaviour:
       name: AIControllerTest
       fullName: AIControllerTest
       resultStatus: 1
-      duration: 0.0335028
+      duration: 0.0388475
       messages: 
       output: 
       stacktrace: 
@@ -463,11 +463,28 @@ MonoBehaviour:
       name: AIControllerTest_AIControllerCanSelectAMonster
       fullName: AIControllerTest.AIControllerTest_AIControllerCanSelectAMonster
       resultStatus: 1
-      duration: 0.0175356
+      duration: 0.0173075
       messages: 
       output: '5
 
 '
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1005
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AIControllerTest_AIControllerEnableMonsterMove]
+      name: AIControllerTest_AIControllerEnableMonsterMove
+      fullName: AIControllerTest.AIControllerTest_AIControllerEnableMonsterMove
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -482,7 +499,7 @@ MonoBehaviour:
       name: AIControllerTest_AIControllerTryFirstAttackWithMonster
       fullName: AIControllerTest.AIControllerTest_AIControllerTryFirstAttackWithMonster
       resultStatus: 1
-      duration: 0.0026634
+      duration: 0.0038098
       messages: 
       output: '5
 
@@ -501,7 +518,7 @@ MonoBehaviour:
       name: AIControllerTest_ShouldBeCreated
       fullName: AIControllerTest.AIControllerTest_ShouldBeCreated
       resultStatus: 1
-      duration: 0.0013179
+      duration: 0.0022723
       messages: 
       output: 
       stacktrace: 
@@ -518,10 +535,13 @@ MonoBehaviour:
       name: ExitTest
       fullName: ExitTest
       resultStatus: 1
-      duration: 0.030309
+      duration: 0.0355121
       messages: 
       output: 'NullReferenceException: Object reference not set to an instance of
         an object
+
+        NullReferenceException: Object reference not set to an
+        instance of an object
 
 '
       stacktrace: 
@@ -537,7 +557,7 @@ MonoBehaviour:
       name: ExitReachedByThief_ShouldTriggerVictory
       fullName: ExitTest.ExitReachedByThief_ShouldTriggerVictory
       resultStatus: 1
-      duration: 0.0173572
+      duration: 0.0206007
       messages: 
       output: 
       stacktrace: 
@@ -554,7 +574,7 @@ MonoBehaviour:
       name: GameManagerTest
       fullName: GameManagerTest
       resultStatus: 1
-      duration: 0.0502494
+      duration: 0.0515328
       messages: 
       output: 
       stacktrace: 
@@ -570,7 +590,7 @@ MonoBehaviour:
       name: CollectingTreasureAddsGold
       fullName: GameManagerTest.CollectingTreasureAddsGold
       resultStatus: 1
-      duration: 0.0182209
+      duration: 0.0158522
       messages: 
       output: 
       stacktrace: 
@@ -587,7 +607,7 @@ MonoBehaviour:
       name: GameStateTransitionsToWinOnVictory
       fullName: GameManagerTest.GameStateTransitionsToWinOnVictory
       resultStatus: 1
-      duration: 0.0213849
+      duration: 0.0215519
       messages: 
       output: 
       stacktrace: 
@@ -604,7 +624,7 @@ MonoBehaviour:
       name: GridTest
       fullName: GridTest
       resultStatus: 1
-      duration: 0.0365192
+      duration: 0.0527927
       messages: 
       output: 
       stacktrace: 
@@ -620,7 +640,7 @@ MonoBehaviour:
       name: GridTest_GridCreation
       fullName: GridTest.GridTest_GridCreation
       resultStatus: 1
-      duration: 0.0095264
+      duration: 0.0128574
       messages: 
       output: 
       stacktrace: 
@@ -637,9 +657,9 @@ MonoBehaviour:
       name: GridTest_GridShouldEnableTilesForMonsterAttack
       fullName: GridTest.GridTest_GridShouldEnableTilesForMonsterAttack
       resultStatus: 1
-      duration: 0.020602
+      duration: 0.0174048
       messages: 
-      output: "{\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
+      output: "5\r\n{\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
@@ -663,7 +683,7 @@ MonoBehaviour:
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
-        false\n}\r\n{\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\": false,\n   
+        false\n}\r\n{\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
@@ -675,15 +695,15 @@ MonoBehaviour:
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
-        false\n}\r\n{\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
+        false\n}\r\n{\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\": true,\n   
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
-        true\n}\r\n{\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\": false,\n   
+        true\n}\r\n{\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
-        true\n}\r\n{\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
+        true\n}\r\n{\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\": true,\n   
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
@@ -695,7 +715,7 @@ MonoBehaviour:
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
-        false\n}\r\n{\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\": false,\n   
+        false\n}\r\n{\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
         \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
         {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
@@ -713,12 +733,93 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1006
       parentUniqueId: Tests.dll/[Tests][GridTest][suite]
+    - id: 1014
+      uniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GridShouldEnableTilesForMove]
+      name: GridTest_GridShouldEnableTilesForMove
+      fullName: GridTest.GridTest_GridShouldEnableTilesForMove
+      resultStatus: 1
+      duration: 0.0164974
+      messages: 
+      output: "5\r\n{\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 1,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 1,\n    \"y\": 3,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 1,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 2,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 2,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        true\n}\r\n{\n    \"x\": 2,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 3,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\": true,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        true\n}\r\n{\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        true\n}\r\n{\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\": true,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        true\n}\r\n{\n    \"x\": 4,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 4,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n{\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        true\n}\r\n{\n    \"x\": 4,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
+        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
+        false\n}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1011
+      parentUniqueId: Tests.dll/[Tests][GridTest][suite]
     - id: 1008
       uniqueId: Tests.dll/[Tests][MonsterTest][suite]
       name: MonsterTest
       fullName: MonsterTest
       resultStatus: 1
-      duration: 0.0466153
+      duration: 0.0919305
       messages: 
       output: 
       stacktrace: 
@@ -734,7 +835,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterCreation
       fullName: MonsterTest.MonsterTest_MonsterCreation
       resultStatus: 1
-      duration: 0.0113978
+      duration: 0.0290641
       messages: 
       output: 
       stacktrace: 
@@ -751,7 +852,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterFirstActionShouldBeAttack
       fullName: MonsterTest.MonsterTest_MonsterFirstActionShouldBeAttack
       resultStatus: 1
-      duration: 0.0114258
+      duration: 0.0187583
       messages: 
       output: 
       stacktrace: 
@@ -768,7 +869,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange
       resultStatus: 1
-      duration: 0.0073794
+      duration: 0.0068348
       messages: 
       output: 
       stacktrace: 
@@ -784,7 +885,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(1,1)
       resultStatus: 1
-      duration: 0.0005033
+      duration: 0.0020302
       messages: 
       output: 
       stacktrace: 
@@ -801,7 +902,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(2,2)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(2,2)
       resultStatus: 1
-      duration: 0.0001767
+      duration: 0.0001301
       messages: 
       output: 
       stacktrace: 
@@ -818,7 +919,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(100,100)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(100,100)
       resultStatus: 1
-      duration: 0.0001557
+      duration: 0.0001205
       messages: 
       output: 
       stacktrace: 
@@ -835,7 +936,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(0,0)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(0,0)
       resultStatus: 1
-      duration: 0.0001557
+      duration: 0.0001114
       messages: 
       output: 
       stacktrace: 
@@ -852,7 +953,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(-1,0)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(-1,0)
       resultStatus: 1
-      duration: 0.0001544
+      duration: 0.0001106
       messages: 
       output: 
       stacktrace: 
@@ -869,7 +970,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords
       resultStatus: 1
-      duration: 0.0086709
+      duration: 0.0043638
       messages: 
       output: 
       stacktrace: 
@@ -885,7 +986,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(1,1,1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(1,1,1,1)
       resultStatus: 1
-      duration: 0.00045
+      duration: 0.0004405
       messages: 
       output: 
       stacktrace: 
@@ -902,7 +1003,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(4,2,4,2)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(4,2,4,2)
       resultStatus: 1
-      duration: 0.0002339
+      duration: 0.0001199
       messages: 
       output: 
       stacktrace: 
@@ -919,7 +1020,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(3,4,3,4)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(3,4,3,4)
       resultStatus: 1
-      duration: 0.0002286
+      duration: 0.0001211
       messages: 
       output: 
       stacktrace: 
@@ -936,7 +1037,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(0,0,1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(0,0,1,1)
       resultStatus: 1
-      duration: 0.000189
+      duration: 0.0001129
       messages: 
       output: 
       stacktrace: 
@@ -953,7 +1054,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(-5,-5,1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(-5,-5,1,1)
       resultStatus: 1
-      duration: 0.0001864
+      duration: 0.0001063
       messages: 
       output: 
       stacktrace: 
@@ -965,12 +1066,29 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1015
       parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords][suite]
+    - id: 1029
+      uniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterTryingToMove]
+      name: MonsterTest_MonsterTryingToMove
+      fullName: MonsterTest.MonsterTest_MonsterTryingToMove
+      resultStatus: 1
+      duration: 0.0213951
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: Tests.dll/[Tests][MonsterTest][suite]
     - id: 1003
       uniqueId: Tests.dll/[Tests][ThiefTest][suite]
       name: ThiefTest
       fullName: ThiefTest
       resultStatus: 2
-      duration: 0.1216464
+      duration: 0.0855725
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -985,21 +1103,13 @@ MonoBehaviour:
       uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_MovementEnabledWithUnWalkableTiles]
       name: ThiefTest_MovementEnabledWithUnWalkableTiles
       fullName: ThiefTest.ThiefTest_MovementEnabledWithUnWalkableTiles
-      resultStatus: 2
-      duration: 0.0365086
-      messages: 'Unhandled log message: ''[Exception] NullReferenceException: Object
-        reference not set to an instance of an object''. Use UnityEngine.TestTools.LogAssert.Expect'
-      output: '0
-
-        NullReferenceException: Object reference not set to an
-        instance of an object
+      resultStatus: 1
+      duration: 0.0117322
+      messages: 
+      output: '15
 
 '
-      stacktrace: 'TacticalThieves.Grid.Start () (at Assets/Scripts/Grid.cs:44)
-
-        
-
-'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1012,19 +1122,11 @@ MonoBehaviour:
       uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_OnMovementProceed]
       name: ThiefTest_OnMovementProceed
       fullName: ThiefTest.ThiefTest_OnMovementProceed
-      resultStatus: 2
-      duration: 0.0222023
-      messages: 'Unhandled log message: ''[Exception] NullReferenceException: Object
-        reference not set to an instance of an object''. Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'NullReferenceException: Object reference not set to an instance of
-        an object
-
-'
-      stacktrace: 'TacticalThieves.Grid.Start () (at Assets/Scripts/Grid.cs:44)
-
-        
-
-'
+      resultStatus: 1
+      duration: 0.014457
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1038,7 +1140,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefCreation
       fullName: ThiefTest.ThiefTest_ThiefCreation
       resultStatus: 1
-      duration: 0.0148877
+      duration: 0.0107424
       messages: 
       output: 
       stacktrace: 
@@ -1055,9 +1157,9 @@ MonoBehaviour:
       name: ThiefTest_ThiefMovementEnabled
       fullName: ThiefTest.ThiefTest_ThiefMovementEnabled
       resultStatus: 2
-      duration: 0.0179542
+      duration: 0.0128974
       messages: "  Expected: False\r\n  But was:  True\r\n"
-      output: "0\r\nAdding tile at position: 1_1 0 0 {\n    \"x\": 1,\n    \"y\":
+      output: "1\r\nAdding tile at position: 1_1 0 0 {\n    \"x\": 1,\n    \"y\":
         1,\n    \"enableForMove\": true,\n    \"defaultMaterial\": {\n        \"instanceID\":
         22830\n    },\n    \"moveMaterial\": {\n        \"instanceID\": 22832\n   
         },\n    \"attackMaterial\": {\n        \"instanceID\": 0\n    },\n    \"walkable\":
@@ -1066,7 +1168,7 @@ MonoBehaviour:
         \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
         {\n        \"instanceID\": 22574\n    },\n    \"stealthMaterial\": {\n       
         \"instanceID\": 22868\n    },\n    \"thiefBody\": {\n        \"instanceID\":
-        -52294\n    },\n    \"moveTest\": true\n}\r\n"
+        -26670\n    },\n    \"moveTest\": true\n}\r\n"
       stacktrace: 'at ThiefTest+<ThiefTest_ThiefMovementEnabled>d__1.MoveNext ()
         [0x00390] in C:\Users\Bobo\Documents\Projets\tactical-thieves\TacticalThievesUnity\Assets\Tests\ThiefTest.cs:96
 
@@ -1088,7 +1190,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefShouldDieIfAttacked
       fullName: ThiefTest.ThiefTest_ThiefShouldDieIfAttacked
       resultStatus: 1
-      duration: 0.0014708
+      duration: 0.0004498
       messages: 
       output: 
       stacktrace: 
@@ -1105,16 +1207,15 @@ MonoBehaviour:
       name: ThiefTest_ThiefStatus
       fullName: ThiefTest.ThiefTest_ThiefStatus
       resultStatus: 2
-      duration: 0.0050192
-      messages: 'Unhandled log message: ''[Exception] NullReferenceException: Object
-        reference not set to an instance of an object''. Use UnityEngine.TestTools.LogAssert.Expect'
-      output: 'NullReferenceException: Object reference not set to an instance of
-        an object
+      duration: 0.0152545
+      messages: "  Expected: Dead\r\n  But was:  Wait\r\n"
+      output: 
+      stacktrace: 'at ThiefTest+<ThiefTest_ThiefStatus>d__4.MoveNext () [0x000bd]
+        in C:\Users\Bobo\Documents\Projets\tactical-thieves\TacticalThievesUnity\Assets\Tests\ThiefTest.cs:239
 
-'
-      stacktrace: 'TacticalThieves.Grid.Start () (at Assets/Scripts/Grid.cs:44)
-
-        
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\Users\Bobo\Documents\Projets\tactical-thieves\TacticalThievesUnity\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
 
 '
       notRunnable: 0
@@ -1130,7 +1231,7 @@ MonoBehaviour:
       name: ThiefTest_UsingStealthSkill
       fullName: ThiefTest.ThiefTest_UsingStealthSkill
       resultStatus: 1
-      duration: 0.0105102
+      duration: 0.012815
       messages: 
       output: 
       stacktrace: 
@@ -1147,7 +1248,7 @@ MonoBehaviour:
       name: TileTest
       fullName: TileTest
       resultStatus: 1
-      duration: 0.0117066
+      duration: 0.0113429
       messages: 
       output: 
       stacktrace: 
@@ -1163,7 +1264,7 @@ MonoBehaviour:
       name: TileTest_TileCouldBeEnableForAttack
       fullName: TileTest.TileTest_TileCouldBeEnableForAttack
       resultStatus: 1
-      duration: 0.0050891
+      duration: 0.0050826
       messages: 
       output: 
       stacktrace: 
@@ -1179,7 +1280,7 @@ MonoBehaviour:
       name: TileTest_TileCouldBeEnableForAttack(True,True)
       fullName: TileTest.TileTest_TileCouldBeEnableForAttack(True,True)
       resultStatus: 1
-      duration: 0.0010278
+      duration: 0.0011206
       messages: 
       output: 
       stacktrace: 
@@ -1196,7 +1297,7 @@ MonoBehaviour:
       name: TileTest_TileCouldBeEnableForAttack(False,False)
       fullName: TileTest.TileTest_TileCouldBeEnableForAttack(False,False)
       resultStatus: 1
-      duration: 0.0002367
+      duration: 0.0001861
       messages: 
       output: 
       stacktrace: 
@@ -1213,7 +1314,7 @@ MonoBehaviour:
       name: TileTest_TileShouldBeCreated
       fullName: TileTest.TileTest_TileShouldBeCreated
       resultStatus: 1
-      duration: 0.0002916
+      duration: 0.000251
       messages: 
       output: 
       stacktrace: 
@@ -1230,7 +1331,7 @@ MonoBehaviour:
       name: TreasureTest
       fullName: TreasureTest
       resultStatus: 1
-      duration: 0.020311
+      duration: 0.0137562
       messages: 
       output: 
       stacktrace: 
@@ -1246,7 +1347,7 @@ MonoBehaviour:
       name: CollectTreasure_ShouldIncreasePlayerGold
       fullName: TreasureTest.CollectTreasure_ShouldIncreasePlayerGold
       resultStatus: 1
-      duration: 0.0143536
+      duration: 0.0089999
       messages: 
       output: 
       stacktrace: 
@@ -1258,34 +1359,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1009
       parentUniqueId: Tests.dll/[Tests][TreasureTest][suite]
-    m_ResultText: 'ThiefTest_MovementEnabledWithUnWalkableTiles (0,037s)
-
-      ---
-
-      Unhandled
-      log message: ''[Exception] NullReferenceException: Object reference not set
-      to an instance of an object''. Use UnityEngine.TestTools.LogAssert.Expect
-
-      ---
-
-      TacticalThieves.Grid.Start
-      () (at Assets/Scripts/Grid.cs:44)
-
-      ---
-
-      0
-
-      NullReferenceException:
-      Object reference not set to an instance of an object'
-    m_ResultStacktrace: 'TacticalThieves.Grid.Start () (at Assets/Scripts/Grid.cs:44)
-
-      
-
-'
+    m_ResultText: MonsterTest (0,092s)
+    m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 4a295dbc
-      m_LastClickedID: -1134745270
+      m_SelectedIDs: 8f0781ab
+      m_LastClickedID: -1417607281
       m_ExpandedIDs: 9f7b7f9f8f0781abcfe95dc6396a33ca6b4e23d32f8c91d747642edd6a31c6f697429600e12120011e559e195db0b52db37cc93fffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1443,7 +1522,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 248.99994}
+    scrollPos: {x: 0, y: 488.99994}
     m_SelectedIDs: 
     m_LastClickedID: 0
     m_ExpandedIDs: ffffffff000000008c5900008e5900009059000092590000945900009659000098590000
@@ -1576,9 +1655,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: a030ffff
-      m_LastClickedID: -53088
-      m_ExpandedIDs: a030ffffae30ffffe431ffff3432ffffe636ffff8442ffffd442ffff5446ffff0449ffff5449ffffd44cffffbe5dffff0e5effff7e60ffff1a63ffff6a63ffffd865ffff9e67ffffee67ffff4c6affff887effffd87effff3681ffff108dffff608dffffbe8fffff5293ffffa293ffff0096ffff9498ffffe498ffff429bffff3c9fffff8c9fffffe8a1ffff0ea4ffff5ea4ffffbca6ffff32abffff44abffff94abfffff2adffffe6b0ffff36b1ffff94b3ffff48b6ffff98b6fffff4b8ffff3abbffff8abbffffe8bdffffd6c0ffff26c1ffff84c3ffff0cc7ffff5cc7ffffb8c9ffffeecbffff3eccffff9cceffff44d1ffff8ed1ffff06d2ffff6ee4ffffbee4ffff10e8ffffd6e9ffff26eaffff64f4ffff32fbffff
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: ec84ffff3c85ffffb487ffffda89ffff2a8affffa48cffffa494fffff494ffff82a2ffff98a4ffffe8a4ffff58a7ffff08acffff58acffffc6aeffffe4b0ffff34b1ffffa4b3ffff48b6ffff98b6ffff08b9ffffb4bbffff04bcffff74beffff28c1ffff78c1ffffe8c3ffffd0c7ffff20c8ffff60ccffff26ceffff76ceffffced0ffff96d3ffffe6d3ffff3ed6ffff54d9ffffa4d9fffffcdbffff6cecffffbcecffff2ceffffff0f1ffff40f2ffffbef4ffff32fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

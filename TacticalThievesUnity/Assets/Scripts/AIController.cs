@@ -37,10 +37,13 @@ namespace TacticalThieves
             switch(currentMonster.ActionPhase)
             {
                 case Monster.eActionPhase.WAIT:
-                    tilesEnabledPos = SetMonsterFirstAttack(currentMonster, GameManager.Instance.CurrentGrid);
+                    tilesEnabledPos = SetMonsterFirstAttack(currentMonster, GameManager.Instance?.CurrentGrid);
                     break;
                 case Monster.eActionPhase.PHASE1_FIRST_ATTACK:
                     Attack();
+                    break;
+                case Monster.eActionPhase.PHASE2_MOVE:
+                    tilesEnabledPos = SetMonsterMove(currentMonster, GameManager.Instance?.CurrentGrid);
                     break;
             }
         }
@@ -66,7 +69,7 @@ namespace TacticalThieves
             return tiles;
         }
 
-        public bool Attack(List<Vector2> tiles, Thief thief, Grid grid)
+        public bool  Attack(List<Vector2> tiles, Thief thief, Grid grid)
         {
             bool thiefIsAttacked = false;
             thiefIsAttacked = grid.IsTargetOnEnabledTiles(tiles, thief);
@@ -100,6 +103,18 @@ namespace TacticalThieves
             }
 
             GameManager.Instance.CurrentGrid.OnMonsterAttackDisable();
+        }
+
+        public List<Vector2> SetMonsterMove(Monster monster, Grid grid)
+        {
+            List<Vector2> enabledTiles = new List<Vector2>();
+
+            if(grid != null && monster != null)
+            {
+                enabledTiles = grid.OnMonsterMoveEnable(monster);
+            }
+
+            return enabledTiles;
         }
 
 
