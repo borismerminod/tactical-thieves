@@ -36,7 +36,7 @@ namespace TacticalThieves
         void Start()
         {
             OnThiefStarted();
-            GameManager.Instance.OnThiefStarted(this);
+            GameManager.Instance?.OnThiefStarted(this);
         }
 
         // Update is called once per frame

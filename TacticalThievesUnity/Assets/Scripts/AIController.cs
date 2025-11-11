@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace TacticalThieves
 {
@@ -42,8 +43,8 @@ namespace TacticalThieves
                 case Monster.eActionPhase.PHASE1_FIRST_ATTACK:
                     Attack();
                     break;
-                case Monster.eActionPhase.PHASE2_MOVE:
-                    tilesEnabledPos = SetMonsterMove(currentMonster, GameManager.Instance?.CurrentGrid);
+                case Monster.eActionPhase.PHASE2_MOVE_SELECT:
+                    MoveSelect();
                     break;
             }
         }
@@ -115,6 +116,65 @@ namespace TacticalThieves
             }
 
             return enabledTiles;
+        }
+
+        public List<Vector2> SelectShortestMoveRoute(Monster monster, Grid grid, List<Thief> thieves)
+        {
+            bool bSelectedRouteInit = true;
+            List<Vector2> selectedMoveRoute = new List<Vector2>();
+
+            foreach(Thief thief in thieves)
+            {
+                Vector2 thiefLoc = new Vector2(thief.X, thief.Y);
+                List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height);
+
+                if (moveRoute != null)
+                {
+                    if(bSelectedRouteInit == true)
+                    {
+                        selectedMoveRoute = moveRoute;
+                        bSelectedRouteInit = false;
+                    }
+                    else if( moveRoute.Count < selectedMoveRoute.Count)
+                    {
+                        selectedMoveRoute = moveRoute;
+                    }
+                }
+            }
+
+            return selectedMoveRoute;
+        }
+
+        public List<Vector2> AdjustRouteFromMoveRange(List<Vector2> moveRoute, int moveRange)
+        {
+
+            if(moveRoute == null || moveRoute.Count <= moveRange)
+            {
+                return moveRoute;
+            }
+
+            List<Vector2> adjustedMoveRoute = new List<Vector2>();
+
+            foreach(Vector2 tileLoc in moveRoute)
+            {
+                adjustedMoveRoute.Add(tileLoc);
+                if(adjustedMoveRoute.Count >= moveRange)
+                {
+                    break;
+                }
+            }
+
+            return adjustedMoveRoute;
+        }
+
+        private void MoveSelect()
+        {
+            tilesEnabledPos = SetMonsterMove(currentMonster, GameManager.Instance?.CurrentGrid);
+            List<Vector2> moveRoute = SelectShortestMoveRoute(currentMonster, GameManager.Instance?.CurrentGrid, GameManager.Instance?.Thieves);
+            moveRoute = AdjustRouteFromMoveRange(moveRoute, currentMonster.MoveRange);
+
+            currentMonster.OnMonsterMoveRouteSelected(moveRoute);
+
         }
 
 

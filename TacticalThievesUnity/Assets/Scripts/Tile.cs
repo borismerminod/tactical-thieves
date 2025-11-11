@@ -64,9 +64,19 @@ namespace TacticalThieves
         private void OnTriggerEnter(Collider other)
         {
             Thief thief = other.gameObject.GetComponent<Thief>();
-            if (thief == null)
+            if (thief != null)
+            {
+                thief.CheckCurrentTileLocation(this);
                 return;
-            thief.CheckCurrentTileLocation(this);
+            }
+
+            Monster monster = other.gameObject.GetComponent<Monster>();
+            if (monster != null)
+            {
+                monster.CheckCurrentTileLocation(this);
+            }
+
+
         }
 
         public void SetEnableForMove(bool enable)

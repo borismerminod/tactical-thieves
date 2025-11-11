@@ -83,7 +83,7 @@ public class MonsterTest
         Assert.AreEqual(monster.ActionPhase, Monster.eActionPhase.WAIT);
 
         monster.OnFirstAttackFailed();
-        Assert.AreEqual(Monster.eActionPhase.PHASE2_MOVE, monster.ActionPhase);
+        Assert.AreEqual(Monster.eActionPhase.PHASE2_MOVE_SELECT, monster.ActionPhase);
 
         yield return null;
     }

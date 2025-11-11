@@ -151,6 +151,14 @@ namespace TacticalThieves
             maxTileCoords = Vector2.zero;
         }
 
+        //TODO : A tester
+        public void OnMonsterMoveDisable()
+        {
+            DisableTileForCharacterAction(false);
+            minTileCoords = Vector2.zero;
+            maxTileCoords = Vector2.zero;
+        }
+
         private void DisableTileForCharacterAction(bool actionIsAttack)
         {
             for (int x = (int)minTileCoords.x; x <= (int)maxTileCoords.x; x++)
@@ -211,7 +219,8 @@ namespace TacticalThieves
             if (tiles.ContainsKey(tileKey))
             {
                 Tile tile = tiles[tileKey];
-                List<Vector2> routes = ComputeMoveRoute(character, tile, character.MoveRange);
+                Vector2 tileLocation = new Vector2(tile.X, tile.Y);
+                List<Vector2> routes = ComputeMoveRoute(character, tileLocation, character.MoveRange);
                 if (routes.Count <= character.MoveRange)
                 {
                     tile.SetEnableForMove(true);
@@ -232,7 +241,8 @@ namespace TacticalThieves
             if (tiles.ContainsKey(tileKey))
             {
                 Tile tile = tiles[tileKey];
-                List<Vector2> routes = ComputeMoveRoute(monster, tile, monster.AttackRange);
+                Vector2 tileLocation = new Vector2(tile.X, tile.Y);
+                List<Vector2> routes = ComputeMoveRoute(monster, tileLocation, monster.AttackRange);
 
                 if (routes.Count <= monster.AttackRange)
                 {
@@ -265,11 +275,11 @@ namespace TacticalThieves
            // Debug.Log("maxTileCoords " + maxTileCoords);
         }
 
-        public List<Vector2> ComputeMoveRoute(Character character, Tile targetedTile, int range)
+        public List<Vector2> ComputeMoveRoute(Character character, Vector2 targetLocation, int range)
         {
             List<Vector2> moveRoute = new List<Vector2>();
             Vector2 currentLocation = new Vector2(character.X, character.Y);
-            Vector2 targetLocation = new Vector2(targetedTile.X, targetedTile.Y);
+            //Vector2 targetLocation = new Vector2(targetedTile.X, targetedTile.Y);
 
             for(int i=0; i<= range && currentLocation != targetLocation; i++)
             //while(currentLocation != targetLocation)

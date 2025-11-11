@@ -40,7 +40,8 @@ namespace TacticalThieves
 
         public void OnTileSelected(Tile tile)
         {
-            List<Vector2> moveRoute = levelGrid.ComputeMoveRoute(selectedThief, tile, selectedThief.MoveRange);
+            Vector2 tileLoc = new Vector2(tile.X, tile.Y);
+            List<Vector2> moveRoute = levelGrid.ComputeMoveRoute(selectedThief, tileLoc, selectedThief.MoveRange); 
             selectedThief.SetMoveRoute(moveRoute);
 
         }
