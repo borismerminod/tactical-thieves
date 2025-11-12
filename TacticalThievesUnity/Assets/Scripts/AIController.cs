@@ -10,16 +10,20 @@ namespace TacticalThieves
     {
         [SerializeField] private Monster currentMonster;
         [SerializeField] private List<Vector2> tilesEnabledPos;
+        [SerializeField] private bool bTestMode = true;
 
         public Monster CurrentMonster {  get =>  currentMonster; set => currentMonster = value;}
 
         // Start is called before the first frame update
         void Start()
         {
-            //TODO : Test à supprimer
-            GameObject monsterGO = GameObject.FindGameObjectWithTag("Monster");
-            CurrentMonster = monsterGO.GetComponent<Monster>();
-            OnMonsterSelected(CurrentMonster);
+            if (bTestMode)
+            {
+                //TODO : Test à supprimer
+                GameObject monsterGO = GameObject.FindGameObjectWithTag("Monster");
+                CurrentMonster = monsterGO.GetComponent<Monster>();
+                OnMonsterSelected(CurrentMonster);
+            }
 
             InvokeRepeating("ProcessMonsterActions", 0.1f, 0.5f);
         }
@@ -38,13 +42,20 @@ namespace TacticalThieves
             switch(currentMonster.ActionPhase)
             {
                 case Monster.eActionPhase.WAIT:
-                    tilesEnabledPos = SetMonsterFirstAttack(currentMonster, GameManager.Instance?.CurrentGrid);
+                    AttackSelect();
+                    //tilesEnabledPos = SetMonsterFirstAttack(currentMonster, GameManager.Instance?.CurrentGrid);
                     break;
                 case Monster.eActionPhase.PHASE1_FIRST_ATTACK:
                     Attack();
                     break;
                 case Monster.eActionPhase.PHASE2_MOVE_SELECT:
                     MoveSelect();
+                    break;
+                case Monster.eActionPhase.PHASE4_ATTACK_SELECT :
+                    AttackSelect();
+                    break;
+                case Monster.eActionPhase.PHASE5_ATTACK:
+                    Attack();
                     break;
             }
         }
@@ -58,16 +69,28 @@ namespace TacticalThieves
             return true;
         }
 
-        public List<Vector2> SetMonsterFirstAttack(Monster monster, Grid grid)
+        public List<Vector2> SetMonsterAttack(Monster monster, Grid grid)
         {
             List<Vector2> tiles = new List<Vector2>();
             if(monster != null && grid != null)
             {
-                monster.TryFirstAttack();
                 tiles = grid.OnMonsterAttackEnable(monster);
             }
 
             return tiles;
+        }
+
+        private void AttackSelect()
+        {
+            tilesEnabledPos = SetMonsterAttack(CurrentMonster, GameManager.Instance?.CurrentGrid);
+
+            if(tilesEnabledPos != null && tilesEnabledPos.Count > 0)
+            {
+                if (CurrentMonster.ActionPhase == Monster.eActionPhase.WAIT)
+                    CurrentMonster.TryFirstAttack();
+                else if (CurrentMonster.ActionPhase == Monster.eActionPhase.PHASE4_ATTACK_SELECT)
+                    CurrentMonster.TrySecondAttack();
+            }
         }
 
         public bool  Attack(List<Vector2> tiles, Thief thief, Grid grid)
@@ -94,16 +117,16 @@ namespace TacticalThieves
                     break;
             }
 
-            if(thiefAttacked)
+            if(thiefAttacked || currentMonster.ActionPhase == Monster.eActionPhase.PHASE5_ATTACK)
             {
                 currentMonster.Init();
             }
-            else
+            else if(currentMonster.ActionPhase == Monster.eActionPhase.PHASE1_FIRST_ATTACK)
             {
                 currentMonster.OnFirstAttackFailed();
             }
 
-            GameManager.Instance.CurrentGrid.OnMonsterAttackDisable();
+                GameManager.Instance.CurrentGrid.OnMonsterAttackDisable();
         }
 
         public List<Vector2> SetMonsterMove(Monster monster, Grid grid)

@@ -54,20 +54,19 @@ public class AIControllerTest
 
         //Case 2 AI controller drive monster onto its first attack
         List<Vector2> tiles = new List<Vector2>();
-        tiles = aiController.SetMonsterFirstAttack(monster, grid);
-        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.PHASE1_FIRST_ATTACK);
+        tiles = aiController.SetMonsterAttack(monster, grid);
         Assert.AreEqual(5, tiles.Count);
 
 
         //Case 3 grid is null
-        tiles = aiController.SetMonsterFirstAttack(monster, null);
+        tiles = aiController.SetMonsterAttack(monster, null);
         Assert.AreEqual(tiles.Count, 0);
 
         //Case 4 monster is null
         result = aiController.OnMonsterSelected(null);
         Assert.IsFalse(result);
 
-        tiles = aiController.SetMonsterFirstAttack(null, grid);
+        tiles = aiController.SetMonsterAttack(null, grid);
         Assert.IsFalse(result);
         Assert.AreEqual(tiles.Count, 0);
 
@@ -100,8 +99,7 @@ public class AIControllerTest
 
         //Step 2 AI controller drive monster onto its first attack
         List<Vector2> tiles = new List<Vector2>();
-        tiles = aiController.SetMonsterFirstAttack(monster, grid);
-        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.PHASE1_FIRST_ATTACK);
+        tiles = aiController.SetMonsterAttack(monster, grid);
         Assert.AreEqual(5, tiles.Count);
 
         //Case 1 : Cas nominal  AI controller try to attack the thief on the selected tiles
@@ -146,8 +144,7 @@ public class AIControllerTest
 
         //Step 2 AI controller drive monster onto its first attack
         List<Vector2> tiles = new List<Vector2>();
-        tiles = aiController.SetMonsterFirstAttack(monster, grid);
-        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.PHASE1_FIRST_ATTACK);
+        tiles = aiController.SetMonsterAttack(monster, grid);
         Assert.AreEqual(5, tiles.Count);
 
         //Step 3 : AI controller try to attack the thief on the selected tiles
@@ -199,8 +196,7 @@ public class AIControllerTest
 
         //Step 2 AI controller drive monster onto its first attack
         List<Vector2> tiles = new List<Vector2>();
-        tiles = aiController.SetMonsterFirstAttack(monster, grid);
-        Assert.AreEqual(aiController.CurrentMonster.ActionPhase, Monster.eActionPhase.PHASE1_FIRST_ATTACK);
+        tiles = aiController.SetMonsterAttack(monster, grid);
         Assert.AreEqual(5, tiles.Count);
 
         //Step 3 : AI controller try to attack the thief on the selected tiles

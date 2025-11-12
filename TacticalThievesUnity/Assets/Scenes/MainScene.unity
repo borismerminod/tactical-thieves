@@ -848,6 +848,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AIController
       objectReference: {fileID: 0}
+    - target: {fileID: 7510736274913092926, guid: 0da74c997cab52140b5d267645828bf6, type: 3}
+      propertyPath: bTestMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7510736274913092927, guid: 0da74c997cab52140b5d267645828bf6, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -911,7 +915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2439254574987369987, guid: 0a8707b389b0ee840b101746390ac599, type: 3}
       propertyPath: moveRange
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2439254574987369987, guid: 0a8707b389b0ee840b101746390ac599, type: 3}
       propertyPath: attackRange

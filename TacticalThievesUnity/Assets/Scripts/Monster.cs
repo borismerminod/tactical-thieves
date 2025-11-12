@@ -14,7 +14,9 @@ namespace TacticalThieves
             WAIT,
             PHASE1_FIRST_ATTACK,
             PHASE2_MOVE_SELECT, 
-            PHASE3_MOVE
+            PHASE3_MOVE,
+            PHASE4_ATTACK_SELECT,
+            PHASE5_ATTACK
         }
 
         [SerializeField] bool testMode;
@@ -62,6 +64,12 @@ namespace TacticalThieves
             ActionPhase = eActionPhase.PHASE1_FIRST_ATTACK;
         }
 
+        //TODO : A tester
+        public void TrySecondAttack()
+        {
+            ActionPhase = eActionPhase.PHASE5_ATTACK;
+        }
+
         public void OnFirstAttackFailed()
         {
             ActionPhase = eActionPhase.PHASE2_MOVE_SELECT;
@@ -106,7 +114,7 @@ namespace TacticalThieves
 
                 if (currentRouteIndex >= currentMoveRoute.Count)
                 {
-                    ActionPhase = eActionPhase.WAIT;
+                    ActionPhase = eActionPhase.PHASE4_ATTACK_SELECT;
                     currentRouteIndex = 0;
 
 
