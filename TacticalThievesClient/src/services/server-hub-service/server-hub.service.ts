@@ -23,6 +23,7 @@ export class ServerHubService {
     this.onScoreUpdated()
     this.onExitReached()
     this.onGameStart()
+    this.onThievesDied()
 
   }
 
@@ -62,6 +63,14 @@ export class ServerHubService {
       console.log("Game start")
       this.gameOverMessage.next("")
       this.playerGoldSource.next(0)
+    })
+  }
+
+  public onThievesDied() : void 
+  {
+    this.hubConnection.on("ThievesDied", () => {
+      console.log("All thieves died")
+      this.gameOverMessage.next("Try again !!!")
     })
   }
 

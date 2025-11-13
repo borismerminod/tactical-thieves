@@ -165,6 +165,7 @@ namespace TacticalThieves
         public void OnThiefAttacked()
         {
             status = eThiefStatus.Dead;
+            GameManager.Instance?.OnThiefDied();
         }
 
         public void OnThiefStarted()

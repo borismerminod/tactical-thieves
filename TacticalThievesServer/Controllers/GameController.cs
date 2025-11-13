@@ -54,13 +54,20 @@ namespace TacticalThievesServer.Controllers
         public IActionResult ExitReached()
         {
             clientHub.Clients.All.SendAsync("ExitReached");
-            return Ok(new { success = true});
+            return Ok(new { success = true });
         }
 
         [HttpPost("game-start")]
         public IActionResult GameStart()
         {
             clientHub.Clients.All.SendAsync("GameStart");
+            return Ok(new { success = true });
+        }
+
+        [HttpPost("thieves-died")]
+        public IActionResult ThievesDied()
+        {
+            clientHub.Clients.All.SendAsync("ThievesDied");
             return Ok(new { success = true });
         }
     }

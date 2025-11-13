@@ -56,4 +56,38 @@ public class GameManagerTest
         Assert.AreEqual(GameManager.GameState.WIN, gameManager.GetGameState(), "Game state should transition to WIN after victory.");
         yield return null; // attendre 1 frame
     }
+
+    [Test]
+    public void GameManagerTest_GameStateChangeWhenAllThievesDied()
+    {
+        Assert.AreEqual(GameManager.GameState.IN_GAME, gameManager.GetGameState(), "Initial game state should be IN_GAME.");
+
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+        Thief thief2 = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief2, "Thief component should be present on the instance.");
+        thief.OnThiefStarted();
+        thief2.OnThiefStarted();
+        List<Thief> thieves = new List<Thief>();
+        thieves.Add(thief);
+        thieves.Add(thief2);
+
+        //Case 1 : There's no dead thief
+        bool bAllThievesAreDead = gameManager.OnThiefDied(thieves);
+        Assert.IsFalse(bAllThievesAreDead);
+
+        //Case 2 : Just one thief is dead 
+        thieves[0].OnThiefAttacked();
+        bAllThievesAreDead = gameManager.OnThiefDied(thieves);
+        Assert.IsFalse(bAllThievesAreDead);
+
+        //Case 3 : All thieves are dead
+        thieves[1].OnThiefAttacked();
+        bAllThievesAreDead = gameManager.OnThiefDied(thieves);
+        Assert.IsTrue(bAllThievesAreDead);
+
+
+    }
 }

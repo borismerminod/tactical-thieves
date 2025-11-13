@@ -61,6 +61,26 @@ namespace TacticalThieves
             }
         }
 
+        public IEnumerator AllThievesDied()
+        {
+            string endpoint = $"{serverUrl}/Game/thieves-died";
+
+            var request = new UnityWebRequest(endpoint, "POST");
+            request.uploadHandler = new UploadHandlerRaw(new byte[0]);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Response: " + request.downloadHandler.text);
+            }
+            else
+            {
+                Debug.LogError("Error: " + request.error);
+            }
+        }
+
         public IEnumerator GameStart()
         {
             string endpoint = $"{serverUrl}/Game/game-start";

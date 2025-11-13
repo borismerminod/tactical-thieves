@@ -12,7 +12,8 @@ namespace TacticalThieves
         public enum GameState
         {
             IN_GAME,
-            WIN
+            WIN,
+            LOSE
         }
 
         public static GameManager Instance { get; private set; }
@@ -100,6 +101,36 @@ namespace TacticalThieves
             {
                 StartCoroutine(apiClient.ThiefReachedExit());
                 Invoke("RestartLevel", 3.0f);
+            }
+        }
+
+        public bool OnThiefDied(List<Thief> thiefList)
+        {
+            bool AllThievesAreDead = true;
+            
+            foreach(Thief thief in thiefList)
+            {
+                if (thief.Status != Thief.eThiefStatus.Dead)
+                {
+                    AllThievesAreDead = false;
+                    break;
+                }
+            }
+
+            return AllThievesAreDead;
+
+        }
+
+        public void OnThiefDied()
+        {
+            if(OnThiefDied(thieves))
+            {
+                gameState = GameState.LOSE;
+
+                if(apiClient != null)
+                {
+                    StartCoroutine(apiClient.AllThievesDied());
+                }
             }
         }
 
