@@ -24,13 +24,16 @@ namespace TacticalThieves
         [SerializeField] private GameState gameState;
         [SerializeField] private Grid currentGrid;
         [SerializeField] private bool testMode;
-        [SerializeField] private List<Thief> thieves;
+        [SerializeField] private List<Character> characters;
+        [SerializeField] private int characterTurnIndex;
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private AIController aiController;
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
 
         public bool TestMode { get => testMode; set => testMode = value; }
 
-        public List<Thief> Thieves { get => thieves; private set => thieves = value; }
+        public List<Character> Characters { get => characters; private set => characters = value; }
 
 
         public GameState GetGameState() => gameState;
@@ -46,6 +49,8 @@ namespace TacticalThieves
             }
         }
 
+        public int CharacterTurnIndex { get => characterTurnIndex; set => characterTurnIndex = value; }
+
         private void Awake()
         {
             Instance = this;
@@ -55,11 +60,23 @@ namespace TacticalThieves
         void Start()
         {
             gameState = GameState.IN_GAME;
+
+            Invoke("InitCharacterTurnIndex", 1.0f);
         }
 
         public void OnWebSocketClientStarted(WebSocketClient client)
         {
             webSocketClient = client;
+        }
+
+        public void OnPlayerControllerStarted(PlayerController controller)
+        {
+            playerController = controller;
+        }
+
+        public void OnAIControllerStarted(AIController controller)
+        {
+            aiController = controller;
         }
 
         public void OnAPIClientStarted(APIClient client)
@@ -73,9 +90,10 @@ namespace TacticalThieves
             currentGrid = grid;
         }
 
-        public void OnThiefStarted(Thief thief)
+
+        public void OnCharacterStarted(Character character)
         {
-            thieves.Add(thief);
+            characters.Add(character);
         }
 
         // Update is called once per frame
@@ -104,12 +122,14 @@ namespace TacticalThieves
             }
         }
 
-        public bool OnThiefDied(List<Thief> thiefList)
+        public bool OnThiefDied(List<Character> characterList)
         {
             bool AllThievesAreDead = true;
             
-            foreach(Thief thief in thiefList)
+            foreach(Character character in characterList)
             {
+                Thief thief = character as Thief;
+                if (thief == null) continue;
                 if (thief.Status != Thief.eThiefStatus.Dead)
                 {
                     AllThievesAreDead = false;
@@ -123,15 +143,21 @@ namespace TacticalThieves
 
         public void OnThiefDied()
         {
-            if(OnThiefDied(thieves))
+            if(OnThiefDied(characters))
             {
                 gameState = GameState.LOSE;
 
                 if(apiClient != null)
                 {
                     StartCoroutine(apiClient.AllThievesDied());
+                    Invoke("RestartLevel", 3.0f);
                 }
             }
+        }
+
+        public void SetCharacterTurn(Character character, bool isYourTurn)
+        {
+            character.IsYourTurn = isYourTurn;
         }
 
         public void OnGameStart()
@@ -143,6 +169,51 @@ namespace TacticalThieves
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        public void InitCharacterTurnIndex()
+        {
+            characterTurnIndex = 0;
+
+            Character character = characters[characterTurnIndex];
+            Thief thief = character as Thief;
+            if (thief != null)
+            {
+                playerController.OnThiefSelected(thief, true);
+                return;
+            }
+
+            Monster monster = character as Monster;
+            if (monster != null)
+            {
+                aiController.OnMonsterSelected(monster);
+            }
+
+        }
+
+        public void IncrementCharacterTurnIndex()
+        {
+            characterTurnIndex++;
+            if (characterTurnIndex >= characters.Count)
+                characterTurnIndex = 0;
+
+            playerController.OnThiefSelected(null, true);
+            aiController.OnMonsterSelected(null);
+            Debug.Log(characterTurnIndex + " "+ characters.Count);
+            Character character = characters[characterTurnIndex];
+            Thief thief = character as Thief;
+            if (thief != null)
+            {
+                playerController.OnThiefSelected(thief, true);
+                return;
+            }
+
+            Monster monster = character as Monster;
+            if (monster != null)
+            {
+                aiController.OnMonsterSelected(monster);
+            }
+        }
+
 
 
     }

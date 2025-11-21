@@ -36,7 +36,7 @@ namespace TacticalThieves
         void Start()
         {
             OnThiefStarted();
-            GameManager.Instance?.OnThiefStarted(this);
+            GameManager.Instance?.OnCharacterStarted(this);
         }
 
         // Update is called once per frame
@@ -96,6 +96,8 @@ namespace TacticalThieves
             {
                 status = eThiefStatus.Wait;
                 grid.OnThiefMoveDisable();
+                Debug.Log("TEST");
+                GameManager.Instance?.IncrementCharacterTurnIndex();
             }       
         }
 

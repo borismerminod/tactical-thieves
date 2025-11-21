@@ -14,7 +14,7 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
-
+            GameManager.Instance?.OnPlayerControllerStarted(this);
         }
 
         // Update is called once per frame
@@ -32,10 +32,15 @@ namespace TacticalThieves
         {
 
             selectedThief = thief;
-            if (leftClickUsed)
-                thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, levelGrid);
-            else
-                thief.EnableStealth(!thief.Stealth);
+            
+            if(thief != null)
+            {
+                if (leftClickUsed)
+                    thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, levelGrid);
+                else
+                    thief.EnableStealth(!thief.Stealth);
+            }
+
         }
 
         public void OnTileSelected(Tile tile)

@@ -207,7 +207,6 @@ namespace TacticalThieves
                 }
             }
 
-            Debug.Log(enabledTiles.Count);
 
             return enabledTiles;
         }
@@ -351,6 +350,15 @@ namespace TacticalThieves
             }
 
             return result;
+        }
+
+        public List<Vector2> GetRandomMoveRoute()
+        {
+            List<Vector2> randomMoveRoute = new List<Vector2>();
+
+
+
+            return randomMoveRoute;
         }
 
         // Update is called once per frame

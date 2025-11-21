@@ -16,7 +16,8 @@ namespace TacticalThieves
             PHASE2_MOVE_SELECT, 
             PHASE3_MOVE,
             PHASE4_ATTACK_SELECT,
-            PHASE5_ATTACK
+            PHASE5_ATTACK,
+            END_TURN
         }
 
         [SerializeField] bool testMode;
@@ -45,6 +46,7 @@ namespace TacticalThieves
         void Start()
         {
             Init();
+            GameManager.Instance?.OnCharacterStarted(this);
         }
 
         public void Init()
@@ -68,6 +70,11 @@ namespace TacticalThieves
         public void TrySecondAttack()
         {
             ActionPhase = eActionPhase.PHASE5_ATTACK;
+        }
+
+        public void EndTurn()
+        {
+            ActionPhase = eActionPhase.END_TURN;
         }
 
         public void OnFirstAttackFailed()

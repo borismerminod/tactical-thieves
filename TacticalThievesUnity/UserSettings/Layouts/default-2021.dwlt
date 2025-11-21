@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 0
-    y: 42.666668
-    width: 2560
-    height: 1349.3334
+    x: 7.3333335
+    y: 50
+    width: 2545.3335
+    height: 1334.6667
   m_ShowMode: 4
   m_Title: Game
   m_RootView: {fileID: 10}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
-  m_Maximized: 1
+  m_Maximized: 0
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -39,10 +39,10 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1062.6666
+    x: 1056
     y: 0
-    width: 449.33337
-    height: 837.3333
+    width: 447.33337
+    height: 828
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
@@ -69,12 +69,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1512
-    height: 837.3333
+    width: 1503.3334
+    height: 828
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 118
+  controlID: 102
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -91,9 +91,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 761.3333
-    width: 406.66663
-    height: 538.00006
+    y: 752.6667
+    width: 403.33325
+    height: 531.99994
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
   m_ActualView: {fileID: 16}
@@ -118,14 +118,14 @@ MonoBehaviour:
   - {fileID: 4}
   m_Position:
     serializedVersion: 2
-    x: 1512
+    x: 1503.3334
     y: 0
-    width: 406.66663
-    height: 1299.3334
+    width: 403.33325
+    height: 1284.6666
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 80
+  controlID: 54
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,8 +143,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 406.66663
-    height: 761.3333
+    width: 403.33325
+    height: 752.6667
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
@@ -172,12 +172,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
-    width: 2560
-    height: 1299.3334
+    width: 2545.3333
+    height: 1284.6666
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 127
+  controlID: 21
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,23 +188,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestRunnerWindow
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1918.6666
+    x: 1906.6666
     y: 0
-    width: 641.3334
-    height: 1299.3334
-  m_MinSize: {x: 100, y: 100}
+    width: 638.6666
+    height: 1284.6666
+  m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 15}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 15}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -221,9 +221,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 837.3333
-    width: 1512
-    height: 462.00006
+    y: 828
+    width: 1503.3334
+    height: 456.66663
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
@@ -251,8 +251,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 2560
-    height: 1349.3334
+    width: 2545.3333
+    height: 1334.6666
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -276,7 +276,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 2560
+    width: 2545.3333
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -297,8 +297,8 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 1329.3334
-    width: 2560
+    y: 1314.6666
+    width: 2545.3333
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -321,12 +321,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1512
-    height: 1299.3334
+    width: 1503.3334
+    height: 1284.6666
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 117
+  controlID: 101
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -344,8 +344,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1062.6666
-    height: 837.3333
+    width: 1056
+    height: 828
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 19}
@@ -383,7 +383,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 668
+    ID: 191
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -415,7 +415,7 @@ MonoBehaviour:
       name: TacticalThieves
       fullName: TacticalThieves
       resultStatus: 1
-      duration: 0.135156
+      duration: 0.1421207
       messages: 
       output: 
       stacktrace: 
@@ -431,7 +431,7 @@ MonoBehaviour:
       name: Tests.dll
       fullName: C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll
       resultStatus: 1
-      duration: 0.0301171
+      duration: 0.0324721
       messages: 
       output: 
       stacktrace: 
@@ -446,9 +446,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][AIControllerTest][suite]
       name: AIControllerTest
       fullName: AIControllerTest
-      resultStatus: 2
-      duration: 0.0308674
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0353468
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
       name: AIControllerTest_AIControllerCanSelectAMonster
       fullName: AIControllerTest.AIControllerTest_AIControllerCanSelectAMonster
       resultStatus: 1
-      duration: 0.0167222
+      duration: 0.0160053
       messages: 
       output: '5
 
@@ -482,7 +482,7 @@ MonoBehaviour:
       name: AIControllerTest_AIControllerEnableMonsterMove
       fullName: AIControllerTest.AIControllerTest_AIControllerEnableMonsterMove
       resultStatus: 1
-      duration: 0.0032336
+      duration: 0.00296
       messages: 
       output: '5
 
@@ -503,7 +503,7 @@ MonoBehaviour:
       name: AIControllerTest_AIControllerMakeMonsterMove
       fullName: AIControllerTest.AIControllerTest_AIControllerMakeMonsterMove
       resultStatus: 1
-      duration: 0.0023304
+      duration: 0.0022161
       messages: 
       output: '5
 
@@ -523,16 +523,13 @@ MonoBehaviour:
       uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AIControllerTest_AIControllerTryFirstAttackWithMonster]
       name: AIControllerTest_AIControllerTryFirstAttackWithMonster
       fullName: AIControllerTest.AIControllerTest_AIControllerTryFirstAttackWithMonster
-      resultStatus: 2
-      duration: 0.0186244
-      messages: "  Expected: WAIT\r\n  But was:  PHASE1_FIRST_ATTACK\r\n"
+      resultStatus: 1
+      duration: 0.0011974
+      messages: 
       output: '5
 
 '
-      stacktrace: 'at AIControllerTest.AIControllerTest_AIControllerTryFirstAttackWithMonster
-        () [0x000e1] in C:\Users\Bobo\Documents\Projets\tactical-thieves\TacticalThievesUnity\Assets\Tests\AIControllerTest.cs:103
-
-'
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -546,7 +543,7 @@ MonoBehaviour:
       name: AIControllerTest_ShouldBeCreated
       fullName: AIControllerTest.AIControllerTest_ShouldBeCreated
       resultStatus: 1
-      duration: 0.0012394
+      duration: 0.0012247
       messages: 
       output: 
       stacktrace: 
@@ -563,7 +560,7 @@ MonoBehaviour:
       name: ExitTest
       fullName: ExitTest
       resultStatus: 1
-      duration: 0.0277913
+      duration: 0.0386385
       messages: 
       output: 
       stacktrace: 
@@ -579,7 +576,7 @@ MonoBehaviour:
       name: ExitReachedByThief_ShouldTriggerVictory
       fullName: ExitTest.ExitReachedByThief_ShouldTriggerVictory
       resultStatus: 1
-      duration: 0.0176066
+      duration: 0.0162744
       messages: 
       output: 
       stacktrace: 
@@ -596,7 +593,7 @@ MonoBehaviour:
       name: GameManagerTest
       fullName: GameManagerTest
       resultStatus: 1
-      duration: 0.0242811
+      duration: 0.0263133
       messages: 
       output: 
       stacktrace: 
@@ -612,7 +609,74 @@ MonoBehaviour:
       name: CollectingTreasureAddsGold
       fullName: GameManagerTest.CollectingTreasureAddsGold
       resultStatus: 1
-      duration: 0.0174055
+      duration: 0.0332892
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1016
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn][suite]
+      name: GameManagerTest_GameManagerSetCharacterTurn
+      fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1009
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1014
+      uniqueId: Tests.dll/GameManagerTest/GameManagerTest_GameManagerSetCharacterTurn/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(True)]
+      name: GameManagerTest_GameManagerSetCharacterTurn(True)
+      fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn][suite]
+    - id: 1015
+      uniqueId: Tests.dll/GameManagerTest/GameManagerTest_GameManagerSetCharacterTurn/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(False)]
+      name: GameManagerTest_GameManagerSetCharacterTurn(False)
+      fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(False)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn][suite]
+    - id: 1013
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerShouldKnowCharacters]
+      name: GameManagerTest_GameManagerShouldKnowCharacters
+      fullName: GameManagerTest.GameManagerTest_GameManagerShouldKnowCharacters
+      resultStatus: 1
+      duration: 0.0149302
       messages: 
       output: 
       stacktrace: 
@@ -629,7 +693,24 @@ MonoBehaviour:
       name: GameManagerTest_GameStateChangeWhenAllThievesDied
       fullName: GameManagerTest.GameManagerTest_GameStateChangeWhenAllThievesDied
       resultStatus: 1
-      duration: 0.0137438
+      duration: 0.0011307
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1017
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_UpdateCharacterTurnIndex]
+      name: GameManagerTest_UpdateCharacterTurnIndex
+      fullName: GameManagerTest.GameManagerTest_UpdateCharacterTurnIndex
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -646,7 +727,7 @@ MonoBehaviour:
       name: GameStateTransitionsToWinOnVictory
       fullName: GameManagerTest.GameStateTransitionsToWinOnVictory
       resultStatus: 1
-      duration: 0.0211142
+      duration: 0.0173346
       messages: 
       output: 
       stacktrace: 
@@ -663,7 +744,7 @@ MonoBehaviour:
       name: GridTest
       fullName: GridTest
       resultStatus: 1
-      duration: 0.0552789
+      duration: 0.0527082
       messages: 
       output: 
       stacktrace: 
@@ -679,7 +760,7 @@ MonoBehaviour:
       name: GridTest_GridCreation
       fullName: GridTest.GridTest_GridCreation
       resultStatus: 1
-      duration: 0.0126697
+      duration: 0.0100679
       messages: 
       output: 
       stacktrace: 
@@ -696,71 +777,71 @@ MonoBehaviour:
       name: GridTest_GridShouldEnableTilesForMonsterAttack
       fullName: GridTest.GridTest_GridShouldEnableTilesForMonsterAttack
       resultStatus: 1
-      duration: 0.0183761
+      duration: 0.0159177
       messages: 
       output: "5\r\n{\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 1,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 1,\n    \"y\": 3,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 1,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 2,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 2,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 2,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 3,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 4,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 4,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 4,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n"
       stacktrace: 
@@ -777,71 +858,71 @@ MonoBehaviour:
       name: GridTest_GridShouldEnableTilesForMove
       fullName: GridTest.GridTest_GridShouldEnableTilesForMove
       resultStatus: 1
-      duration: 0.0179901
+      duration: 0.0207277
       messages: 
       output: "5\r\n{\n    \"x\": 1,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 1,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 1,\n    \"y\": 3,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 1,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 2,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 2,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 2,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 2,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 3,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 3,\n    \"y\": 2,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 3,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 3,\n    \"y\": 4,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 4,\n    \"y\": 1,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 4,\n    \"y\": 2,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n{\n    \"x\": 4,\n    \"y\": 3,\n    \"enableForMove\": true,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         true\n}\r\n{\n    \"x\": 4,\n    \"y\": 4,\n    \"enableForMove\": false,\n   
-        \"defaultMaterial\": {\n        \"instanceID\": 22830\n    },\n    \"moveMaterial\":
-        {\n        \"instanceID\": 22832\n    },\n    \"attackMaterial\": {\n       
+        \"defaultMaterial\": {\n        \"instanceID\": 22832\n    },\n    \"moveMaterial\":
+        {\n        \"instanceID\": 22834\n    },\n    \"attackMaterial\": {\n       
         \"instanceID\": 0\n    },\n    \"walkable\": true,\n    \"enableForAttack\":
         false\n}\r\n"
       stacktrace: 
@@ -858,7 +939,7 @@ MonoBehaviour:
       name: MonsterTest
       fullName: MonsterTest
       resultStatus: 1
-      duration: 0.0633832
+      duration: 0.0511928
       messages: 
       output: 
       stacktrace: 
@@ -874,7 +955,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterCreation
       fullName: MonsterTest.MonsterTest_MonsterCreation
       resultStatus: 1
-      duration: 0.0159946
+      duration: 0.0107999
       messages: 
       output: 
       stacktrace: 
@@ -891,7 +972,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterFirstActionShouldBeAttack
       fullName: MonsterTest.MonsterTest_MonsterFirstActionShouldBeAttack
       resultStatus: 1
-      duration: 0.0104002
+      duration: 0.0118063
       messages: 
       output: 
       stacktrace: 
@@ -908,7 +989,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange
       resultStatus: 1
-      duration: 0.0085939
+      duration: 0.0063139
       messages: 
       output: 
       stacktrace: 
@@ -924,7 +1005,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(1,1)
       resultStatus: 1
-      duration: 0.0005509
+      duration: 0.0004429
       messages: 
       output: 
       stacktrace: 
@@ -941,7 +1022,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(2,2)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(2,2)
       resultStatus: 1
-      duration: 0.0002032
+      duration: 0.0001621
       messages: 
       output: 
       stacktrace: 
@@ -958,7 +1039,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(100,100)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(100,100)
       resultStatus: 1
-      duration: 0.0001886
+      duration: 0.0001503
       messages: 
       output: 
       stacktrace: 
@@ -975,7 +1056,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(0,0)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(0,0)
       resultStatus: 1
-      duration: 0.0001817
+      duration: 0.0001507
       messages: 
       output: 
       stacktrace: 
@@ -992,7 +1073,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldHaveAnAttackRange(-1,0)
       fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(-1,0)
       resultStatus: 1
-      duration: 0.0001887
+      duration: 0.0001463
       messages: 
       output: 
       stacktrace: 
@@ -1009,7 +1090,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords
       resultStatus: 1
-      duration: 0.0078906
+      duration: 0.0059881
       messages: 
       output: 
       stacktrace: 
@@ -1025,7 +1106,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(1,1,1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(1,1,1,1)
       resultStatus: 1
-      duration: 0.0005823
+      duration: 0.0004168
       messages: 
       output: 
       stacktrace: 
@@ -1042,7 +1123,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(4,2,4,2)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(4,2,4,2)
       resultStatus: 1
-      duration: 0.0002004
+      duration: 0.0001613
       messages: 
       output: 
       stacktrace: 
@@ -1059,7 +1140,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(3,4,3,4)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(3,4,3,4)
       resultStatus: 1
-      duration: 0.0001884
+      duration: 0.0001524
       messages: 
       output: 
       stacktrace: 
@@ -1076,7 +1157,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(0,0,1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(0,0,1,1)
       resultStatus: 1
-      duration: 0.0001653
+      duration: 0.0001551
       messages: 
       output: 
       stacktrace: 
@@ -1093,7 +1174,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterShouldUseGridCoords(-5,-5,1,1)
       fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(-5,-5,1,1)
       resultStatus: 1
-      duration: 0.000139
+      duration: 0.0001573
       messages: 
       output: 
       stacktrace: 
@@ -1110,7 +1191,7 @@ MonoBehaviour:
       name: MonsterTest_MonsterTryingToMove
       fullName: MonsterTest.MonsterTest_MonsterTryingToMove
       resultStatus: 1
-      duration: 0.0123023
+      duration: 0.0102902
       messages: 
       output: 
       stacktrace: 
@@ -1127,7 +1208,7 @@ MonoBehaviour:
       name: ThiefTest
       fullName: ThiefTest
       resultStatus: 2
-      duration: 0.0837489
+      duration: 0.0666627
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1143,7 +1224,7 @@ MonoBehaviour:
       name: ThiefTest_MovementEnabledWithUnWalkableTiles
       fullName: ThiefTest.ThiefTest_MovementEnabledWithUnWalkableTiles
       resultStatus: 1
-      duration: 0.010909
+      duration: 0.0092127
       messages: 
       output: '15
 
@@ -1162,7 +1243,7 @@ MonoBehaviour:
       name: ThiefTest_OnMovementProceed
       fullName: ThiefTest.ThiefTest_OnMovementProceed
       resultStatus: 1
-      duration: 0.014009
+      duration: 0.014051
       messages: 
       output: 
       stacktrace: 
@@ -1179,7 +1260,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefCreation
       fullName: ThiefTest.ThiefTest_ThiefCreation
       resultStatus: 1
-      duration: 0.0118768
+      duration: 0.0094119
       messages: 
       output: 
       stacktrace: 
@@ -1196,18 +1277,18 @@ MonoBehaviour:
       name: ThiefTest_ThiefMovementEnabled
       fullName: ThiefTest.ThiefTest_ThiefMovementEnabled
       resultStatus: 2
-      duration: 0.0103438
+      duration: 0.0102852
       messages: "  Expected: False\r\n  But was:  True\r\n"
       output: "1\r\nAdding tile at position: 1_1 0 0 {\n    \"x\": 1,\n    \"y\":
         1,\n    \"enableForMove\": true,\n    \"defaultMaterial\": {\n        \"instanceID\":
-        22830\n    },\n    \"moveMaterial\": {\n        \"instanceID\": 22832\n   
+        22832\n    },\n    \"moveMaterial\": {\n        \"instanceID\": 22834\n   
         },\n    \"attackMaterial\": {\n        \"instanceID\": 0\n    },\n    \"walkable\":
         true,\n    \"enableForAttack\": false\n} {\n    \"x\": 2,\n    \"y\": 2,\n   
         \"moveRange\": 0,\n    \"status\": 2,\n    \"currentMoveRoute\": [],\n   
         \"currentRouteIndex\": 0,\n    \"stealth\": false,\n    \"defaultMaterial\":
-        {\n        \"instanceID\": 22574\n    },\n    \"stealthMaterial\": {\n       
+        {\n        \"instanceID\": 22576\n    },\n    \"stealthMaterial\": {\n       
         \"instanceID\": 22872\n    },\n    \"thiefBody\": {\n        \"instanceID\":
-        -12336\n    },\n    \"moveTest\": true\n}\r\n"
+        -8214\n    },\n    \"moveTest\": true\n}\r\n"
       stacktrace: 'at ThiefTest+<ThiefTest_ThiefMovementEnabled>d__1.MoveNext ()
         [0x00390] in C:\Users\Bobo\Documents\Projets\tactical-thieves\TacticalThievesUnity\Assets\Tests\ThiefTest.cs:96
 
@@ -1229,7 +1310,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefShouldDieIfAttacked
       fullName: ThiefTest.ThiefTest_ThiefShouldDieIfAttacked
       resultStatus: 1
-      duration: 0.0003952
+      duration: 0.0003171
       messages: 
       output: 
       stacktrace: 
@@ -1246,7 +1327,7 @@ MonoBehaviour:
       name: ThiefTest_ThiefStatus
       fullName: ThiefTest.ThiefTest_ThiefStatus
       resultStatus: 2
-      duration: 0.0152733
+      duration: 0.0092096
       messages: "  Expected: Dead\r\n  But was:  Wait\r\n"
       output: 
       stacktrace: 'at ThiefTest+<ThiefTest_ThiefStatus>d__4.MoveNext () [0x000bd]
@@ -1270,7 +1351,7 @@ MonoBehaviour:
       name: ThiefTest_UsingStealthSkill
       fullName: ThiefTest.ThiefTest_UsingStealthSkill
       resultStatus: 1
-      duration: 0.0133537
+      duration: 0.0091798
       messages: 
       output: 
       stacktrace: 
@@ -1287,7 +1368,7 @@ MonoBehaviour:
       name: TileTest
       fullName: TileTest
       resultStatus: 1
-      duration: 0.008534
+      duration: 0.0125553
       messages: 
       output: 
       stacktrace: 
@@ -1303,7 +1384,7 @@ MonoBehaviour:
       name: TileTest_TileCouldBeEnableForAttack
       fullName: TileTest.TileTest_TileCouldBeEnableForAttack
       resultStatus: 1
-      duration: 0.0037079
+      duration: 0.0055406
       messages: 
       output: 
       stacktrace: 
@@ -1319,7 +1400,7 @@ MonoBehaviour:
       name: TileTest_TileCouldBeEnableForAttack(True,True)
       fullName: TileTest.TileTest_TileCouldBeEnableForAttack(True,True)
       resultStatus: 1
-      duration: 0.0008389
+      duration: 0.0008712
       messages: 
       output: 
       stacktrace: 
@@ -1336,7 +1417,7 @@ MonoBehaviour:
       name: TileTest_TileCouldBeEnableForAttack(False,False)
       fullName: TileTest.TileTest_TileCouldBeEnableForAttack(False,False)
       resultStatus: 1
-      duration: 0.0001491
+      duration: 0.0001685
       messages: 
       output: 
       stacktrace: 
@@ -1353,7 +1434,7 @@ MonoBehaviour:
       name: TileTest_TileShouldBeCreated
       fullName: TileTest.TileTest_TileShouldBeCreated
       resultStatus: 1
-      duration: 0.0002177
+      duration: 0.0002442
       messages: 
       output: 
       stacktrace: 
@@ -1370,7 +1451,7 @@ MonoBehaviour:
       name: TreasureTest
       fullName: TreasureTest
       resultStatus: 1
-      duration: 0.0130972
+      duration: 0.0128609
       messages: 
       output: 
       stacktrace: 
@@ -1386,7 +1467,7 @@ MonoBehaviour:
       name: CollectTreasure_ShouldIncreasePlayerGold
       fullName: TreasureTest.CollectTreasure_ShouldIncreasePlayerGold
       resultStatus: 1
-      duration: 0.0079966
+      duration: 0.0086189
       messages: 
       output: 
       stacktrace: 
@@ -1398,12 +1479,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1045
       parentUniqueId: Tests.dll/[Tests][TreasureTest][suite]
-    m_ResultText: GameManagerTest_GameStateChangeWhenAllThievesDied (0,014s)
+    m_ResultText: GameManagerTest_GameManagerShouldKnowCharacters (0,015s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 36f9afc3
-      m_LastClickedID: -1011877578
+      m_SelectedIDs: 7fb1ad25
+      m_LastClickedID: 632140159
       m_ExpandedIDs: 9f7b7f9f8f0781abcfe95dc6396a33ca6b4e23d32f8c91d747642edd6a31c6f697429600e12120011e559e195db0b52db37cc93fffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -1502,10 +1583,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1512
-    y: 834
-    width: 404.66663
-    height: 517.00006
+    x: 1510.6667
+    y: 832.6667
+    width: 401.33325
+    height: 510.99994
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1521,7 +1602,8 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders: []
+    m_Folders:
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
@@ -1561,7 +1643,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 280.99994}
+    scrollPos: {x: 0, y: 400.99994}
     m_SelectedIDs: 
     m_LastClickedID: 0
     m_ExpandedIDs: ffffffff0000000090590000925900009459000096590000985900009a5900009c590000
@@ -1640,10 +1722,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1918.6667
-    y: 72.66667
-    width: 640.3334
-    height: 1278.3334
+    x: 1914
+    y: 80
+    width: 637.6666
+    height: 1263.6666
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1682,10 +1764,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1512
-    y: 72.66667
-    width: 404.66663
-    height: 740.3333
+    x: 1510.6667
+    y: 80
+    width: 401.33325
+    height: 731.6667
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1694,9 +1776,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: cce0ffff1ce1ffffaae2fffffae6ffff4ae7ffffcae8ffff32fbffff
+      m_SelectedIDs: 0cfbffff
+      m_LastClickedID: -1268
+      m_ExpandedIDs: 20fbffff32fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1740,10 +1822,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 72.66667
-    width: 1061.6666
-    height: 816.3333
+    x: 7.3333335
+    y: 80
+    width: 1055
+    height: 807
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1979,9 +2061,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 2.1347926, y: 0.09991109, z: -2.7100716}
+    m_Target: {x: 1.2696795, y: -0.07676315, z: -1.7250855}
     speed: 2
-    m_Value: {x: 2.1347926, y: 0.09991109, z: -2.7100716}
+    m_Value: {x: 1.2696795, y: -0.07676315, z: -1.7250855}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -2079,10 +2161,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1062.6667
-    y: 72.66667
-    width: 447.33337
-    height: 816.3333
+    x: 1063.3334
+    y: 80
+    width: 445.33337
+    height: 807
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -2094,7 +2176,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 447.33337, y: 795.3333}
+  m_TargetSize: {x: 445.33337, y: 786}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -2109,10 +2191,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -149.11113
-    m_HBaseRangeMax: 149.11113
-    m_VBaseRangeMin: -265.1111
-    m_VBaseRangeMax: 265.1111
+    m_HBaseRangeMin: -148.44446
+    m_HBaseRangeMax: 148.44446
+    m_VBaseRangeMin: -262
+    m_VBaseRangeMax: 262
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -2130,23 +2212,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 447.33337
-      height: 795.3333
+      width: 445.33337
+      height: 786
     m_Scale: {x: 2.2027998, y: 2.2027998}
-    m_Translation: {x: 214.45975, y: 364.40085}
+    m_Translation: {x: 213.45975, y: 359.7342}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -97.3578
-      y: -165.42622
-      width: 203.0749
-      height: 361.05566
+      x: -96.90383
+      y: -163.30771
+      width: 202.16698
+      height: 356.81863
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 671.00006, y: 1224.5}
+  m_LastWindowPixelSize: {x: 668.00006, y: 1210.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -2172,10 +2254,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 910
-    width: 1511
-    height: 441.00006
+    x: 7.3333335
+    y: 908
+    width: 1502.3334
+    height: 435.66663
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default

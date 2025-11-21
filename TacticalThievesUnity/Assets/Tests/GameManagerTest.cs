@@ -70,7 +70,7 @@ public class GameManagerTest
         Assert.IsNotNull(thief2, "Thief component should be present on the instance.");
         thief.OnThiefStarted();
         thief2.OnThiefStarted();
-        List<Thief> thieves = new List<Thief>();
+        List<Character> thieves = new List<Character>();
         thieves.Add(thief);
         thieves.Add(thief2);
 
@@ -79,15 +79,108 @@ public class GameManagerTest
         Assert.IsFalse(bAllThievesAreDead);
 
         //Case 2 : Just one thief is dead 
-        thieves[0].OnThiefAttacked();
+        thief.OnThiefAttacked();
         bAllThievesAreDead = gameManager.OnThiefDied(thieves);
         Assert.IsFalse(bAllThievesAreDead);
 
         //Case 3 : All thieves are dead
-        thieves[1].OnThiefAttacked();
+        thief2.OnThiefAttacked();
         bAllThievesAreDead = gameManager.OnThiefDied(thieves);
         Assert.IsTrue(bAllThievesAreDead);
+    }
+
+    [Test]
+    public void GameManagerTest_GameManagerShouldKnowCharacters()
+    {
+        Assert.AreEqual(GameManager.GameState.IN_GAME, gameManager.GetGameState(), "Initial game state should be IN_GAME.");
+
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+        Thief thief2 = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief2, "Thief component should be present on the instance.");
+
+        GameObject monsterPrefab = Resources.Load<GameObject>("Prefabs/Monster");
+        Assert.IsNotNull(monsterPrefab, "Monster prefab should be loaded successfully.");
+        Monster monster= UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
+        Assert.IsNotNull(monster, "Monster component should be present on the instance.");
+        Monster monster2 = UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
+        Assert.IsNotNull(monster2, "Monster component should be present on the instance.");
+
+        gameManager.OnCharacterStarted(thief);
+        gameManager.OnCharacterStarted(thief2);
+        gameManager.OnCharacterStarted(monster);
+        gameManager.OnCharacterStarted(monster2);
+
+        Assert.AreEqual((Thief)gameManager.Characters[0], thief);
+        Assert.AreEqual((Thief)gameManager.Characters[1], thief2);
+        Assert.AreEqual((Monster)gameManager.Characters[2], monster);
+        Assert.AreEqual((Monster)gameManager.Characters[3], monster2);
+        
+    }
+
+    [TestCase(true)] 
+    [TestCase(false)] 
+    public void GameManagerTest_GameManagerSetCharacterTurn(bool expectedValue)
+    {
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+
+        GameObject monsterPrefab = Resources.Load<GameObject>("Prefabs/Monster");
+        Assert.IsNotNull(monsterPrefab, "Monster prefab should be loaded successfully.");
+        Monster monster = UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
+        Assert.IsNotNull(monster, "Monster component should be present on the instance.");
+
+        gameManager.SetCharacterTurn(thief, expectedValue);
+        Assert.AreEqual(thief.IsYourTurn, expectedValue);
+
+        gameManager.SetCharacterTurn(monster, expectedValue);
+        Assert.AreEqual(monster.IsYourTurn, expectedValue);
+    }
+
+    [Test]
+    public void GameManagerTest_UpdateCharacterTurnIndex()
+    {
+        Assert.AreEqual(GameManager.GameState.IN_GAME, gameManager.GetGameState(), "Initial game state should be IN_GAME.");
+
+        GameObject thiefPrefab = Resources.Load<GameObject>("Prefabs/Thief");
+        Assert.IsNotNull(thiefPrefab, "Thief prefab should be loaded successfully.");
+        Thief thief = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief, "Thief component should be present on the instance.");
+        Thief thief2 = UnityEngine.Object.Instantiate(thiefPrefab).GetComponent<Thief>();
+        Assert.IsNotNull(thief2, "Thief component should be present on the instance.");
+
+        GameObject monsterPrefab = Resources.Load<GameObject>("Prefabs/Monster");
+        Assert.IsNotNull(monsterPrefab, "Monster prefab should be loaded successfully.");
+        Monster monster = UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
+        Assert.IsNotNull(monster, "Monster component should be present on the instance.");
+        Monster monster2 = UnityEngine.Object.Instantiate(monsterPrefab).GetComponent<Monster>();
+        Assert.IsNotNull(monster2, "Monster component should be present on the instance.");
+
+        gameManager.OnCharacterStarted(thief);
+        gameManager.OnCharacterStarted(thief2);
+        gameManager.OnCharacterStarted(monster);
+        gameManager.OnCharacterStarted(monster2);
+        gameManager.InitCharacterTurnIndex();
+
+        Assert.AreEqual(0, gameManager.CharacterTurnIndex);
+
+        gameManager.IncrementCharacterTurnIndex();
+        Assert.AreEqual(1, gameManager.CharacterTurnIndex);
+
+        gameManager.IncrementCharacterTurnIndex();
+        Assert.AreEqual(2, gameManager.CharacterTurnIndex);
+
+        gameManager.IncrementCharacterTurnIndex();
+        Assert.AreEqual(3, gameManager.CharacterTurnIndex);
+
+        gameManager.IncrementCharacterTurnIndex();
+        Assert.AreEqual(0, gameManager.CharacterTurnIndex);
 
 
     }
+
 }

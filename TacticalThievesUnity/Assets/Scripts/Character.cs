@@ -8,6 +8,9 @@ namespace TacticalThieves
     {
         [SerializeField] protected int moveRange;
         public int MoveRange { get => moveRange; set => moveRange = value; }
+
+        [SerializeField] protected bool bIsYourTurn;
+        public bool IsYourTurn { get => bIsYourTurn; set => bIsYourTurn = value; }
     }
 
 }

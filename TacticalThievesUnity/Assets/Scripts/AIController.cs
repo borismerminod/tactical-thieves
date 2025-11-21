@@ -26,12 +26,13 @@ namespace TacticalThieves
             }
 
             InvokeRepeating("ProcessMonsterActions", 0.1f, 0.5f);
+
+            GameManager.Instance?.OnAIControllerStarted(this);
         }
 
         // Update is called once per frame
         void Update()
         {
-            //ProcessMonsterActions();
         }
 
         private void ProcessMonsterActions()
@@ -43,7 +44,6 @@ namespace TacticalThieves
             {
                 case Monster.eActionPhase.WAIT:
                     AttackSelect();
-                    //tilesEnabledPos = SetMonsterFirstAttack(currentMonster, GameManager.Instance?.CurrentGrid);
                     break;
                 case Monster.eActionPhase.PHASE1_FIRST_ATTACK:
                     Attack();
@@ -89,7 +89,11 @@ namespace TacticalThieves
                 if (CurrentMonster.ActionPhase == Monster.eActionPhase.WAIT)
                     CurrentMonster.TryFirstAttack();
                 else if (CurrentMonster.ActionPhase == Monster.eActionPhase.PHASE4_ATTACK_SELECT)
+                {
                     CurrentMonster.TrySecondAttack();
+                    //GameManager.Instance?.IncrementCharacterTurnIndex();
+
+                }
             }
         }
 
@@ -110,23 +114,28 @@ namespace TacticalThieves
         private void Attack()
         {
             bool thiefAttacked = false;
-            foreach(Thief thief in GameManager.Instance.Thieves)
+            foreach(Character character in GameManager.Instance.Characters)
             {
+                Thief thief = character as Thief;
+                if(thief == null)
+                    continue;
                 thiefAttacked = Attack(tilesEnabledPos, thief, GameManager.Instance.CurrentGrid);
                 if(thiefAttacked) 
                     break;
             }
 
+            GameManager.Instance?.CurrentGrid.OnMonsterAttackDisable();
             if(thiefAttacked || currentMonster.ActionPhase == Monster.eActionPhase.PHASE5_ATTACK)
             {
-                currentMonster.Init();
+                currentMonster.EndTurn();
+                GameManager.Instance?.IncrementCharacterTurnIndex();
             }
             else if(currentMonster.ActionPhase == Monster.eActionPhase.PHASE1_FIRST_ATTACK)
             {
                 currentMonster.OnFirstAttackFailed();
             }
 
-                GameManager.Instance.CurrentGrid.OnMonsterAttackDisable();
+
         }
 
         public List<Vector2> SetMonsterMove(Monster monster, Grid grid)
@@ -148,6 +157,9 @@ namespace TacticalThieves
 
             foreach(Thief thief in thieves)
             {
+                if (thief.Stealth == true)
+                    continue;
+
                 Vector2 thiefLoc = new Vector2(thief.X, thief.Y);
                 List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height);
 
@@ -193,7 +205,20 @@ namespace TacticalThieves
         private void MoveSelect()
         {
             tilesEnabledPos = SetMonsterMove(currentMonster, GameManager.Instance?.CurrentGrid);
-            List<Vector2> moveRoute = SelectShortestMoveRoute(currentMonster, GameManager.Instance?.CurrentGrid, GameManager.Instance?.Thieves);
+            List<Thief> thieves = new List<Thief>();
+            foreach(Character character in GameManager.Instance?.Characters)
+            {
+                Thief thief = character as Thief;
+                if (thief != null)
+                    thieves.Add(thief);
+            }
+            List<Vector2> moveRoute = SelectShortestMoveRoute(currentMonster, GameManager.Instance?.CurrentGrid, thieves);
+
+            if(moveRoute.Count ==0)
+            {
+                moveRoute = GameManager.Instance?.CurrentGrid.GetRandomMoveRoute();
+            }
+
             moveRoute = AdjustRouteFromMoveRange(moveRoute, currentMonster.MoveRange);
 
             currentMonster.OnMonsterMoveRouteSelected(moveRoute);
