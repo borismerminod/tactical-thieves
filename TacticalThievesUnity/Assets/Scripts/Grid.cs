@@ -352,14 +352,35 @@ namespace TacticalThieves
             return result;
         }
 
-        public List<Vector2> GetRandomMoveRoute()
+        public List<Vector2> GetRandomMoveRoute(Character character)
         {
-            List<Vector2> randomMoveRoute = new List<Vector2>();
-
-
-
+            Vector2 randomTileLocation = GetRandomTileLocation(1, 1, Width, Height);
+            List<Vector2> randomMoveRoute =  ComputeMoveRoute(character, randomTileLocation, character.MoveRange);
+            
             return randomMoveRoute;
         }
+
+        public Vector2 GetRandomTileLocation(int xMin, int yMin, int xMax, int yMax)
+        {
+            if(xMin > xMax)
+            {
+                int temp = xMin;
+                xMin = xMax;
+                xMax = temp;
+            }
+
+            if(yMin > yMax)
+            {
+                int temp = yMin;
+                yMin = yMax;
+                yMax = temp;
+            }
+
+            float x = Mathf.Round(Random.Range((float)xMin, (float)xMax));
+            float y = Mathf.Round(Random.Range((float)yMin, (float)yMax));
+            return new Vector2(x, y);
+        }
+
 
         // Update is called once per frame
         void Update()

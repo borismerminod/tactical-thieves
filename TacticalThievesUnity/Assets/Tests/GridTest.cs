@@ -168,4 +168,27 @@ public class GridTest
         UnityEngine.Object.Destroy(grid);
         UnityEngine.Object.Destroy(monster);
     }
+
+    [TestCase(1, 1, 4, 4)]
+    [TestCase(-2, -2, 4, 4)]
+    [TestCase(1, 1, 1, 1)]
+    [TestCase(4, 4, 4, 4)]
+    public void GridTest_GetARandomTileLocation(int xMin, int yMin, int xMax, int yMax)
+    {
+        GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
+        Assert.IsNotNull(gridPrefab, "Grid prefab should be loaded successfully.");
+
+        GameObject gridInstance = UnityEngine.Object.Instantiate(gridPrefab);
+        Assert.IsNotNull(gridInstance, "Prefab instance is null");
+
+        TacticalThieves.Grid grid = gridInstance.GetComponent<TacticalThieves.Grid>();
+        Assert.IsNotNull(grid, "Grid component should be attached to the prefab instance.");
+
+        Vector2 randomTileLocation = grid.GetRandomTileLocation(xMin, xMax, yMin, yMax);
+
+        Assert.GreaterOrEqual(randomTileLocation.x, xMin);
+        Assert.GreaterOrEqual(randomTileLocation.y, yMin);
+        Assert.LessOrEqual(randomTileLocation.x, xMax);
+        Assert.LessOrEqual(randomTileLocation.y, yMax);
+    }
 }

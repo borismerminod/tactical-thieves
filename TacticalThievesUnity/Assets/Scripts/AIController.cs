@@ -157,8 +157,8 @@ namespace TacticalThieves
 
             foreach(Thief thief in thieves)
             {
-                if (thief.Stealth == true)
-                    continue;
+                //if (thief.Stealth == true)
+                //    continue;
 
                 Vector2 thiefLoc = new Vector2(thief.X, thief.Y);
                 List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height);
@@ -216,10 +216,12 @@ namespace TacticalThieves
 
             if(moveRoute.Count ==0)
             {
-                moveRoute = GameManager.Instance?.CurrentGrid.GetRandomMoveRoute();
+                moveRoute = GameManager.Instance?.CurrentGrid.GetRandomMoveRoute(currentMonster);
             }
-
-            moveRoute = AdjustRouteFromMoveRange(moveRoute, currentMonster.MoveRange);
+            else
+            {
+                moveRoute = AdjustRouteFromMoveRange(moveRoute, currentMonster.MoveRange);
+            }
 
             currentMonster.OnMonsterMoveRouteSelected(moveRoute);
 
