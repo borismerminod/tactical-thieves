@@ -4,17 +4,18 @@ using UnityEngine;
 
 namespace TacticalThieves
 {
-    public class Thief : Object
+    public class Thief : Character
     {
 
         public enum eThiefStatus
         {
-            Wait = 0,
-            MovementEnable = 1,
-            isMoving = 2 
+            Dead = 0,
+            Wait = 1,
+            MovementEnable = 2,
+            isMoving = 3 
         }
 
-        [SerializeField] private int moveRange;
+        
         [SerializeField] private eThiefStatus status;
         [SerializeField] private List<Vector2> currentMoveRoute;
         [SerializeField] private int currentRouteIndex;
@@ -26,16 +27,16 @@ namespace TacticalThieves
         [SerializeField] private bool moveTest; //A supprimé quand la phase de développement sera terminée
 
         public bool Stealth { get => stealth; private set => stealth = value; }
+        public bool MoveTest { get => moveTest; set => moveTest = value; }
         
        
-
-        public int MoveRange { get => moveRange; set => moveRange = value; }
         public eThiefStatus Status { get => status; private set => status = value; }
 
         // Start is called before the first frame update
         void Start()
         {
-
+            OnThiefStarted();
+            GameManager.Instance?.OnCharacterStarted(this);
         }
 
         // Update is called once per frame
@@ -95,6 +96,8 @@ namespace TacticalThieves
             {
                 status = eThiefStatus.Wait;
                 grid.OnThiefMoveDisable();
+                Debug.Log("TEST");
+                GameManager.Instance?.IncrementCharacterTurnIndex();
             }       
         }
 
@@ -159,6 +162,17 @@ namespace TacticalThieves
             {
                 thiefBody.GetComponent<Renderer>().material = defaultMaterial;
             }
+        }
+
+        public void OnThiefAttacked()
+        {
+            status = eThiefStatus.Dead;
+            GameManager.Instance?.OnThiefDied();
+        }
+
+        public void OnThiefStarted()
+        {
+            status = eThiefStatus.Wait;
         }
     }
 }

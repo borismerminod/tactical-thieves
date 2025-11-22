@@ -13,9 +13,22 @@ namespace TacticalThieves
 
         public int X { 
             get => x;
-            set => x = value;
+            set 
+            {
+                x = value;
+                if(x <=0)
+                    x = 1;
+            }
         }
-        public int Y { get => y;  set => y = value; }
+        public int Y {
+            get => y;
+            set
+            {
+                y = value;
+                if(y <=0) 
+                    y = 1;  
+            }
+        }
 
         // Start is called before the first frame update
         void Start()

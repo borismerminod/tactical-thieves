@@ -9,11 +9,28 @@ namespace TacticalThieves
         [SerializeField] bool enableForMove;
         [SerializeField] Material defaultMaterial;
         [SerializeField] Material moveMaterial;
+        [SerializeField] Material attackMaterial;
+        [SerializeField] bool walkable = true;
+
+        [SerializeField] bool enableForAttack;
+
 
         public bool EnableForMove
         {
             get { return enableForMove; }
             set { enableForMove = value; }
+        }
+
+        public bool EnableForAttack
+        {
+            get { return enableForAttack; }
+            set { enableForAttack = value; }
+        }
+
+        public bool Walkable
+        {
+            get => walkable;
+            set => walkable = value; 
         }
 
         // Start is called before the first frame update
@@ -30,7 +47,7 @@ namespace TacticalThieves
 
         private void OnMouseUp()
         {
-            if(EnableForMove)
+            if(EnableForMove && Walkable)
             {
                 GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
                 if (playerControllerGO == null)
@@ -47,9 +64,19 @@ namespace TacticalThieves
         private void OnTriggerEnter(Collider other)
         {
             Thief thief = other.gameObject.GetComponent<Thief>();
-            if (thief == null)
+            if (thief != null)
+            {
+                thief.CheckCurrentTileLocation(this);
                 return;
-            thief.CheckCurrentTileLocation(this);
+            }
+
+            Monster monster = other.gameObject.GetComponent<Monster>();
+            if (monster != null)
+            {
+                monster.CheckCurrentTileLocation(this);
+            }
+
+
         }
 
         public void SetEnableForMove(bool enable)
@@ -58,6 +85,19 @@ namespace TacticalThieves
             if (enable)
             {
                 GetComponent<Renderer>().material = moveMaterial;
+            }
+            else
+            {
+                GetComponent<Renderer>().material = defaultMaterial;
+            }
+        }
+
+        public void SetEnableForAttack(bool enable)
+        {
+            EnableForAttack = enable;
+            if (enable)
+            {
+                GetComponent<Renderer>().material = attackMaterial;
             }
             else
             {

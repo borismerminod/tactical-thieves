@@ -1,0 +1,14 @@
+Approche d'action des monstres 
+1- Lorsque son tour se déclenche le monstre tente d'attaquer : 
+	1- Ses possibilités d'attaque s'affiche
+	2- Si un joueur est dans la zone, il le cible et attaque
+	3- Si aucun joueur n'est dans la zone aucune attaque n'est possible
+2- Si le monstre a pu attaquer il termine son tour ==> RETOUR
+3- Si le monstre n'a pas pu attaquer alors les possibilités de déplacements du monstres s'activent et sont visibles du joueur
+4- Le monstre va analyser chaque case 
+	1-Si le joueur est en mode furtif alors on choisi une case aléatoire pour se déplacer
+	2- Sinon, on va choisir celle qui le rapproche le plus du joueur
+5- A la suite de la sélection le monstre se déplace jusqu'à atteindre la case cible
+6- Les possibilités d'attaque sont alors activée dans la foulée 
+7- Si le joueur se trouve dans la zone d'attaque le monstre le cible et l'attaque
+8- Le monstre termine son tour

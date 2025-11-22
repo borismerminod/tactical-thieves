@@ -8,6 +8,10 @@ TagManager:
   - Tile
   - Thief
   - PlayerController
+  - Treasure
+  - GameManager
+  - Exit
+  - Monster
   layers:
   - Default
   - TransparentFX

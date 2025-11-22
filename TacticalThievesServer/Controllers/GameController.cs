@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using TacticalThievesServer.DTO;
 using TacticalThievesServer.Services;
 
 namespace TacticalThievesServer.Controllers
@@ -11,11 +13,13 @@ namespace TacticalThievesServer.Controllers
 
         private readonly ThiefStateService thiefState;
         private readonly WebSocketHandler webSocketHandler;
+        private readonly IHubContext<ClientHub> clientHub;
 
-        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler)
+        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub)
         {
             this.thiefState = thiefState;
             this.webSocketHandler = webSocketHandler;
+            this.clientHub = clientHub;
         }
 
         [HttpPost("move")]
@@ -31,6 +35,39 @@ namespace TacticalThievesServer.Controllers
         {
             this.thiefState.Stealth();
             webSocketHandler.Broadcast("stealth");
+            return Ok(new { success = true });
+        }
+
+        [HttpPost("collect-treasure")]
+        public IActionResult CollectTreasure([FromBody] TreasureCollectDTO dto)
+        {
+            if (dto == null || dto.Amount <= 0)
+                return BadRequest(new { success = false, message = "Invalid treasure amount" });
+
+            //clientHub.SendPlayerGoldUpdate(dto.Amount);
+            clientHub.Clients.All.SendAsync("ScoreUpdated", dto.Amount);
+
+            return Ok(new { success = true, gold = dto.Amount });
+        }
+
+        [HttpPost("exit-reached")]
+        public IActionResult ExitReached()
+        {
+            clientHub.Clients.All.SendAsync("ExitReached");
+            return Ok(new { success = true });
+        }
+
+        [HttpPost("game-start")]
+        public IActionResult GameStart()
+        {
+            clientHub.Clients.All.SendAsync("GameStart");
+            return Ok(new { success = true });
+        }
+
+        [HttpPost("thieves-died")]
+        public IActionResult ThievesDied()
+        {
+            clientHub.Clients.All.SendAsync("ThievesDied");
             return Ok(new { success = true });
         }
     }

@@ -19,6 +19,8 @@ public class WebSocketClient : MonoBehaviour
         _cts = new CancellationTokenSource();
         _webSocket = new ClientWebSocket();
 
+        GameManager.Instance.OnWebSocketClientStarted(this);
+
         try
         {
             Debug.Log("Connecting to WebSocket server...");
