@@ -28,6 +28,8 @@ namespace TacticalThieves
         [SerializeField] private int characterTurnIndex;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private AIController aiController;
+        [SerializeField] private LevelManager levelManager;
+
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
 
@@ -167,7 +169,7 @@ namespace TacticalThieves
 
         private void RestartLevel()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            levelManager.RestartLevel();
         }
 
         public void InitCharacterTurnIndex()
@@ -212,6 +214,20 @@ namespace TacticalThieves
             {
                 aiController.OnMonsterSelected(monster);
             }
+        }
+
+        public bool OnLevelLoaded(GameObject level)
+        {
+            if (level == null)
+                return false;
+
+            level.transform.SetParent(gameObject.transform);
+            return true;
+        }
+
+        public void OnLevelManagerStarted(LevelManager levelManager)
+        {
+            this.levelManager = levelManager;
         }
 
 

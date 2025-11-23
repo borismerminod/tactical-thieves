@@ -64,6 +64,7 @@
     <Compile Include="Assets\Tests\AIControllerTest.cs" />
     <Compile Include="Assets\Tests\ExitTest.cs" />
     <Compile Include="Assets\Tests\GameManagerTest.cs" />
+    <Compile Include="Assets\Tests\LevelManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Tests\Tests.asmdef" />
