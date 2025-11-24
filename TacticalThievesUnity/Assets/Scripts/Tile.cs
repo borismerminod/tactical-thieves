@@ -49,15 +49,7 @@ namespace TacticalThieves
         {
             if(EnableForMove && Walkable)
             {
-                GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
-                if (playerControllerGO == null)
-                    return;
-
-                PlayerController playerController = playerControllerGO.GetComponent<PlayerController>();
-                if (playerController == null)
-                    return;
-
-                playerController.OnTileSelected(this);
+                GameManager.Instance?.CurrentPlayerController.OnTileSelected(this);
             }
         }
 
@@ -67,6 +59,7 @@ namespace TacticalThieves
             if (thief != null)
             {
                 thief.CheckCurrentTileLocation(this);
+                walkable = false;
                 return;
             }
 
@@ -74,10 +67,27 @@ namespace TacticalThieves
             if (monster != null)
             {
                 monster.CheckCurrentTileLocation(this);
+                walkable = false;
             }
 
 
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            Thief thief = other.gameObject.GetComponent<Thief>();
+            if (thief != null)
+            {
+                walkable = true;
+                return;
+            }
+            Monster monster = other.gameObject.GetComponent<Monster>();
+            if (monster != null)
+            {
+                walkable = true;
+            }
+        }
+        
 
         public void SetEnableForMove(bool enable)
         {

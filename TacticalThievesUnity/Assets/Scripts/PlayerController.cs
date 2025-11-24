@@ -45,8 +45,11 @@ namespace TacticalThieves
 
         public void OnTileSelected(Tile tile)
         {
+            if (selectedThief == null || selectedThief.Status != eThiefStatus.MovementEnable)
+                return;
+
             Vector2 tileLoc = new Vector2(tile.X, tile.Y);
-            List<Vector2> moveRoute = levelGrid.ComputeMoveRoute(selectedThief, tileLoc, selectedThief.MoveRange); 
+            List<Vector2> moveRoute = levelGrid.ComputeMoveRoute(selectedThief, tileLoc, selectedThief.MoveRange, true ); 
             selectedThief.SetMoveRoute(moveRoute);
 
         }

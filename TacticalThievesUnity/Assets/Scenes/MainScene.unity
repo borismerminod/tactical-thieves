@@ -366,7 +366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6157631158174219530, guid: 82feb68cc04392f449ab9f2ea400ab95, type: 3}
       propertyPath: moveRange
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8548847367082265890, guid: 82feb68cc04392f449ab9f2ea400ab95, type: 3}
       propertyPath: x

@@ -53,6 +53,8 @@ namespace TacticalThieves
 
         public int CharacterTurnIndex { get => characterTurnIndex; set => characterTurnIndex = value; }
 
+        public PlayerController CurrentPlayerController { get => playerController; private set => playerController = value; }
+
         private void Awake()
         {
             Instance = this;
@@ -174,6 +176,9 @@ namespace TacticalThieves
 
         public void InitCharacterTurnIndex()
         {
+            if(gameState != GameState.IN_GAME)
+                return;
+
             characterTurnIndex = 0;
 
             Character character = characters[characterTurnIndex];
@@ -194,6 +199,9 @@ namespace TacticalThieves
 
         public void IncrementCharacterTurnIndex()
         {
+            if (gameState != GameState.IN_GAME)
+                return;
+
             characterTurnIndex++;
             if (characterTurnIndex >= characters.Count)
                 characterTurnIndex = 0;
