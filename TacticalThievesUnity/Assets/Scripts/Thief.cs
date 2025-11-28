@@ -48,19 +48,11 @@ namespace TacticalThieves
 
         private void Move()
         {
-           
-            GameObject gridGO = GameObject.FindGameObjectWithTag("Grid");
-            if (gridGO == null)
-                return;
-
-            Grid grid = gridGO.GetComponent<Grid>();
-            if (grid == null)
-                return;
 
             if (currentRouteIndex < 0 || currentRouteIndex >= currentMoveRoute.Count)
                 return;
 
-            Tile nextTileDestination = grid.GetNextTileMove(currentMoveRoute[currentRouteIndex]);
+            Tile nextTileDestination = GameManager.Instance?.CurrentGrid.GetNextTileMove(currentMoveRoute[currentRouteIndex]);
 
             Vector3 direction = (nextTileDestination.transform.position - transform.position).normalized;
             direction = new Vector3(direction.x, 0.0f, direction.z);
@@ -136,15 +128,7 @@ namespace TacticalThieves
                 {
                     ProceedMovement(false);
 
-                    GameObject gridGO = GameObject.FindGameObjectWithTag("Grid");
-                    if (gridGO == null)
-                        return;
-
-                    Grid grid = gridGO.GetComponent<Grid>();
-                    if (grid == null)
-                        return;
-
-                    EnableMove(false, grid);
+                    EnableMove(false, GameManager.Instance?.CurrentGrid);
                 }
 
             }

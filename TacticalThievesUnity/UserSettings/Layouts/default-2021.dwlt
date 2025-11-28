@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2545.3335
     height: 1334.6667
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Game
   m_RootView: {fileID: 10}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -39,12 +39,12 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1056
+    x: 934
     y: 0
-    width: 447.33337
+    width: 684
     height: 828
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -69,12 +69,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1503.3334
+    width: 1618
     height: 828
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 137
+  controlID: 80
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -92,7 +92,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 752.6667
-    width: 403.33325
+    width: 288.66663
     height: 531.99994
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
@@ -118,14 +118,14 @@ MonoBehaviour:
   - {fileID: 4}
   m_Position:
     serializedVersion: 2
-    x: 1503.3334
+    x: 1618
     y: 0
-    width: 403.33325
+    width: 288.66663
     height: 1284.6666
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 64
+  controlID: 48
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +143,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 403.33325
+    width: 288.66663
     height: 752.6667
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 131
+  controlID: 149
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -197,8 +197,8 @@ MonoBehaviour:
     y: 0
     width: 638.6666
     height: 1284.6666
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -222,10 +222,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 828
-    width: 1503.3334
+    width: 1618
     height: 456.66663
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -321,12 +321,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1503.3334
+    width: 1618
     height: 1284.6666
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 136
+  controlID: 79
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -344,7 +344,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1056
+    width: 934
     height: 828
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
@@ -373,22 +373,22 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1918.6667
-    y: 72.66667
-    width: 640.3334
-    height: 1278.3334
+    x: 1914
+    y: 80
+    width: 637.6666
+    height: 1263.6666
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 191
+    ID: 1002
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
-    - 906
-    - 302
+    - 894.6666
+    - 298
     relativeSizes:
     - 0.75
     - 0.25
@@ -398,7 +398,7 @@ MonoBehaviour:
     maxSizes:
     - 0
     - 0
-    lastTotalSize: 1208
+    lastTotalSize: 1192.6666
     splitSize: 6
     xOffset: 0
     m_Version: 1
@@ -414,9 +414,9 @@ MonoBehaviour:
       uniqueId: '[TacticalThieves][suite]'
       name: TacticalThieves
       fullName: TacticalThieves
-      resultStatus: 1
-      duration: 0.1421207
-      messages: 
+      resultStatus: 2
+      duration: 0.2638587
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -430,9 +430,9 @@ MonoBehaviour:
       uniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
       fullName: C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 1
-      duration: 0.0324721
-      messages: 
+      resultStatus: 2
+      duration: 0.1111811
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -592,9 +592,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][GameManagerTest][suite]
       name: GameManagerTest
       fullName: GameManagerTest
-      resultStatus: 1
-      duration: 0.0263133
-      messages: 
+      resultStatus: 2
+      duration: 0.1034636
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -609,7 +609,7 @@ MonoBehaviour:
       name: CollectingTreasureAddsGold
       fullName: GameManagerTest.CollectingTreasureAddsGold
       resultStatus: 1
-      duration: 0.0332892
+      duration: 0.0737178
       messages: 
       output: 
       stacktrace: 
@@ -625,8 +625,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn][suite]
       name: GameManagerTest_GameManagerSetCharacterTurn
       fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0153197
       messages: 
       output: 
       stacktrace: 
@@ -641,8 +641,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/GameManagerTest/GameManagerTest_GameManagerSetCharacterTurn/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(True)]
       name: GameManagerTest_GameManagerSetCharacterTurn(True)
       fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(True)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0105082
       messages: 
       output: 
       stacktrace: 
@@ -658,8 +658,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/GameManagerTest/GameManagerTest_GameManagerSetCharacterTurn/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(False)]
       name: GameManagerTest_GameManagerSetCharacterTurn(False)
       fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(False)
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0003636
       messages: 
       output: 
       stacktrace: 
@@ -676,7 +676,7 @@ MonoBehaviour:
       name: GameManagerTest_GameManagerShouldKnowCharacters
       fullName: GameManagerTest.GameManagerTest_GameManagerShouldKnowCharacters
       resultStatus: 1
-      duration: 0.0149302
+      duration: 0.0008824
       messages: 
       output: 
       stacktrace: 
@@ -693,7 +693,24 @@ MonoBehaviour:
       name: GameManagerTest_GameStateChangeWhenAllThievesDied
       fullName: GameManagerTest.GameManagerTest_GameStateChangeWhenAllThievesDied
       resultStatus: 1
-      duration: 0.0011307
+      duration: 0.0027206
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1009
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1018
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_OnLevelLoadedTest]
+      name: GameManagerTest_OnLevelLoadedTest
+      fullName: GameManagerTest.GameManagerTest_OnLevelLoadedTest
+      resultStatus: 1
+      duration: 0.0007116
       messages: 
       output: 
       stacktrace: 
@@ -709,11 +726,23 @@ MonoBehaviour:
       uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_UpdateCharacterTurnIndex]
       name: GameManagerTest_UpdateCharacterTurnIndex
       fullName: GameManagerTest.GameManagerTest_UpdateCharacterTurnIndex
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0593809
+      messages: 'System.NullReferenceException : Object reference not set to an instance
+        of an object'
       output: 
-      stacktrace: 
+      stacktrace: "  at TacticalThieves.Thief.EnableMove (System.Boolean bCanMove,
+        TacticalThieves.Grid grid) [0x0000e] in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\Thief.cs:93
+        \r\n  at TacticalThieves.PlayerController.OnThiefSelected (TacticalThieves.Thief
+        thief, System.Boolean leftClickUsed) [0x00019] in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\PlayerController.cs:39
+        \r\n  at TacticalThieves.GameManager.InitCharacterTurnIndex () [0x0002d]
+        in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\GameManager.cs:181
+        \r\n  at GameManagerTest.GameManagerTest_UpdateCharacterTurnIndex () [0x00159]
+        in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Tests\\GameManagerTest.cs:173
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <47fc8c70fa834cbf8141d7c1a7589125>:0 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -727,7 +756,7 @@ MonoBehaviour:
       name: GameStateTransitionsToWinOnVictory
       fullName: GameManagerTest.GameStateTransitionsToWinOnVictory
       resultStatus: 1
-      duration: 0.0173346
+      duration: 0.053034
       messages: 
       output: 
       stacktrace: 
@@ -744,7 +773,7 @@ MonoBehaviour:
       name: GridTest
       fullName: GridTest
       resultStatus: 1
-      duration: 0.0527082
+      duration: 0.0341417
       messages: 
       output: 
       stacktrace: 
@@ -755,6 +784,90 @@ MonoBehaviour:
       categories: []
       parentId: 1047
       parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1026
+      uniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+      name: GridTest_GetARandomTileLocation
+      fullName: GridTest.GridTest_GetARandomTileLocation
+      resultStatus: 1
+      duration: 0.0266178
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1018
+      parentUniqueId: Tests.dll/[Tests][GridTest][suite]
+    - id: 1022
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(1,1,4,4)]
+      name: GridTest_GetARandomTileLocation(1,1,4,4)
+      fullName: GridTest.GridTest_GetARandomTileLocation(1,1,4,4)
+      resultStatus: 1
+      duration: 0.0123975
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1026
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+    - id: 1023
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(-2,-2,4,4)]
+      name: GridTest_GetARandomTileLocation(-2,-2,4,4)
+      fullName: GridTest.GridTest_GetARandomTileLocation(-2,-2,4,4)
+      resultStatus: 1
+      duration: 0.0006078
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1026
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+    - id: 1024
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(1,1,1,1)]
+      name: GridTest_GetARandomTileLocation(1,1,1,1)
+      fullName: GridTest.GridTest_GetARandomTileLocation(1,1,1,1)
+      resultStatus: 1
+      duration: 0.0005151
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1026
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+    - id: 1025
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(4,4,4,4)]
+      name: GridTest_GetARandomTileLocation(4,4,4,4)
+      fullName: GridTest.GridTest_GetARandomTileLocation(4,4,4,4)
+      resultStatus: 1
+      duration: 0.0005078
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1026
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
     - id: 1013
       uniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GridCreation]
       name: GridTest_GridCreation
@@ -934,6 +1047,56 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1012
       parentUniqueId: Tests.dll/[Tests][GridTest][suite]
+    - id: 1027
+      uniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
+      name: LevelManagerTest
+      fullName: LevelManagerTest
+      resultStatus: 1
+      duration: 4.7843986
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1060
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1029
+      uniqueId: Tests.dll/LevelManagerTest/[Tests][LevelManagerTest.LevelManagerTest_LevelManagerCanInstantiateLevel]
+      name: LevelManagerTest_LevelManagerCanInstantiateLevel
+      fullName: LevelManagerTest.LevelManagerTest_LevelManagerCanInstantiateLevel
+      resultStatus: 1
+      duration: 4.765142
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1027
+      parentUniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
+    - id: 1028
+      uniqueId: Tests.dll/LevelManagerTest/[Tests][LevelManagerTest.LevelManagerTest_LevelManagerShouldBeCreated]
+      name: LevelManagerTest_LevelManagerShouldBeCreated
+      fullName: LevelManagerTest.LevelManagerTest_LevelManagerShouldBeCreated
+      resultStatus: 1
+      duration: 0.0095367
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1027
+      parentUniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
     - id: 1016
       uniqueId: Tests.dll/[Tests][MonsterTest][suite]
       name: MonsterTest
@@ -1479,13 +1642,36 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1045
       parentUniqueId: Tests.dll/[Tests][TreasureTest][suite]
-    m_ResultText: GameManagerTest_GameManagerShouldKnowCharacters (0,015s)
-    m_ResultStacktrace: 
+    m_ResultText: "GameManagerTest_UpdateCharacterTurnIndex (0,059s)\n---\nSystem.NullReferenceException
+      : Object reference not set to an instance of an object\n---\nat TacticalThieves.Thief.EnableMove
+      (System.Boolean bCanMove, TacticalThieves.Grid grid) [0x0000e] in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\Thief.cs:93
+      \r\n  at TacticalThieves.PlayerController.OnThiefSelected (TacticalThieves.Thief
+      thief, System.Boolean leftClickUsed) [0x00019] in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\PlayerController.cs:39
+      \r\n  at TacticalThieves.GameManager.InitCharacterTurnIndex () [0x0002d] in
+      C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\GameManager.cs:181
+      \r\n  at GameManagerTest.GameManagerTest_UpdateCharacterTurnIndex () [0x00159]
+      in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Tests\\GameManagerTest.cs:173
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <47fc8c70fa834cbf8141d7c1a7589125>:0"
+    m_ResultStacktrace: "  at TacticalThieves.Thief.EnableMove (System.Boolean bCanMove,
+      TacticalThieves.Grid grid) [0x0000e] in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\Thief.cs:93
+      \r\n  at TacticalThieves.PlayerController.OnThiefSelected (TacticalThieves.Thief
+      thief, System.Boolean leftClickUsed) [0x00019] in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\PlayerController.cs:39
+      \r\n  at TacticalThieves.GameManager.InitCharacterTurnIndex () [0x0002d] in
+      C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Scripts\\GameManager.cs:181
+      \r\n  at GameManagerTest.GameManagerTest_UpdateCharacterTurnIndex () [0x00159]
+      in C:\\Users\\Bobo\\Documents\\Projets\\tactical-thieves\\TacticalThievesUnity\\Assets\\Tests\\GameManagerTest.cs:173
+      \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+      at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+      invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo
+      culture) [0x0006a] in <47fc8c70fa834cbf8141d7c1a7589125>:0 "
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 7fb1ad25
-      m_LastClickedID: 632140159
-      m_ExpandedIDs: 9f7b7f9f8f0781abcfe95dc6396a33ca6b4e23d32f8c91d747642edd6a31c6f697429600e12120011e559e195db0b52db37cc93fffffff7f
+      m_SelectedIDs: 5790e125
+      m_LastClickedID: 635539543
+      m_ExpandedIDs: 9f7b7f9f8f0781abcfe95dc6396a33ca6b4e23d32f8c91d747642edd6a31c6f697429600e121200146008a131e559e195db0b52db37cc93fffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1583,9 +1769,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1510.6667
+    x: 1625.3334
     y: 832.6667
-    width: 401.33325
+    width: 286.66663
     height: 510.99994
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1603,7 +1789,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources/Prefabs
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
@@ -1618,7 +1804,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: a0570000
     m_LastClickedID: 22432
-    m_ExpandedIDs: 0000000090590000925900009459000096590000985900009a5900009c590000
+    m_ExpandedIDs: 00000000a25f0000a45f0000a65f0000a85f0000aa5f0000ac5f0000ae5f0000b05f0000b25f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1643,10 +1829,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 400.99994}
+    scrollPos: {x: 0, y: 132}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000090590000925900009459000096590000985900009a5900009c590000
+    m_ExpandedIDs: ffffffff00000000a25f0000a45f0000a65f0000a85f0000aa5f0000ac5f0000ae5f0000b05f0000b25f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1764,9 +1950,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1510.6667
+    x: 1625.3334
     y: 80
-    width: 401.33325
+    width: 286.66663
     height: 731.6667
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -1778,7 +1964,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: eaf9fffffcf9ffff32fbffff
+      m_ExpandedIDs: 32fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1824,7 +2010,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 7.3333335
     y: 80
-    width: 1055
+    width: 933
     height: 807
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -2061,9 +2247,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.4393253, y: -0.076274395, z: -1.9216421}
+    m_Target: {x: 1.3739703, y: 0.85706055, z: -1.8296615}
     speed: 2
-    m_Value: {x: 1.4393253, y: -0.076274395, z: -1.9216421}
+    m_Value: {x: 1.3739703, y: 0.85706055, z: -1.8296615}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -2089,7 +2275,7 @@ MonoBehaviour:
         m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
-      m_Size: {x: 0, y: 0}
+      m_Size: {x: 1, y: 1}
     yGrid:
       m_Fade:
         m_Target: 1
@@ -2110,17 +2296,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.35190305, y: -0.47816035, z: 0.21716116, w: -0.7748414}
+    m_Target: {x: 0.392815, y: 0.57686275, z: -0.36926463, w: 0.61366284}
     speed: 2
-    m_Value: {x: -0.35190108, y: -0.47815767, z: 0.21715994, w: -0.7748371}
+    m_Value: {x: 0.39281502, y: 0.57686275, z: -0.36926466, w: 0.61366284}
   m_Size:
-    m_Target: 3.8106728
+    m_Target: 2.6273558
     speed: 2
-    m_Value: 3.8106728
+    m_Value: 2.6273558
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -2161,9 +2347,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1063.3334
+    x: 941.3334
     y: 80
-    width: 445.33337
+    width: 682
     height: 807
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -2176,7 +2362,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 445.33337, y: 786}
+  m_TargetSize: {x: 682, y: 786}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -2191,8 +2377,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -148.44446
-    m_HBaseRangeMax: 148.44446
+    m_HBaseRangeMin: -227.33334
+    m_HBaseRangeMax: 227.33334
     m_VBaseRangeMin: -262
     m_VBaseRangeMax: 262
     m_HAllowExceedBaseRangeMin: 1
@@ -2212,23 +2398,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 445.33337
+      width: 682
       height: 786
-    m_Scale: {x: 2.136716, y: 2.136716}
-    m_Translation: {x: 216.04594, y: 367.89215}
+    m_Scale: {x: 1.7705858, y: 1.7705858}
+    m_Translation: {x: 294.92505, y: 426.8588}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -101.11121
-      y: -172.17645
-      width: 208.41956
-      height: 367.85425
+      x: -166.5692
+      y: -241.08337
+      width: 385.18326
+      height: 443.92087
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 668.00006, y: 1210.5}
+  m_LastWindowPixelSize: {x: 1023, y: 1210.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -2256,7 +2442,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 7.3333335
     y: 908
-    width: 1502.3334
+    width: 1617
     height: 435.66663
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
