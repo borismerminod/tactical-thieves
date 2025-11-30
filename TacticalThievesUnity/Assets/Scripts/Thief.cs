@@ -88,7 +88,7 @@ namespace TacticalThieves
             {
                 status = eThiefStatus.Wait;
                 grid.OnThiefMoveDisable();
-                Debug.Log("TEST");
+                //Debug.Log("TEST");
                 GameManager.Instance?.IncrementCharacterTurnIndex();
             }       
         }

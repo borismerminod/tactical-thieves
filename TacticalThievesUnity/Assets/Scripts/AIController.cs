@@ -161,7 +161,7 @@ namespace TacticalThieves
                 //    continue;
 
                 Vector2 thiefLoc = new Vector2(thief.X, thief.Y);
-                List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height, false);
+                List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height, true);
 
                 if (moveRoute != null)
                 {

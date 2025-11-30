@@ -208,7 +208,7 @@ namespace TacticalThieves
 
             playerController.OnThiefSelected(null, true);
             aiController.OnMonsterSelected(null);
-            Debug.Log(characterTurnIndex + " "+ characters.Count);
+            //Debug.Log(characterTurnIndex + " "+ characters.Count);
             Character character = characters[characterTurnIndex];
             Thief thief = character as Thief;
             if (thief != null)

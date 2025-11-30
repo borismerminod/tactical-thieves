@@ -36,7 +36,7 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
-        
+            defaultMaterial = GetComponent<Renderer>().material;
         }
 
         // Update is called once per frame
@@ -55,6 +55,7 @@ namespace TacticalThieves
 
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log(this);
             Thief thief = other.gameObject.GetComponent<Thief>();
             if (thief != null)
             {
@@ -91,6 +92,11 @@ namespace TacticalThieves
 
         public void SetEnableForMove(bool enable)
         {
+            if(walkable == false)
+            {
+                return;
+            }
+
             EnableForMove = enable;
             if (enable)
             {
