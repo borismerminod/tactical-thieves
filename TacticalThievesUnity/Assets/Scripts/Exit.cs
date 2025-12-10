@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Exit : MonoBehaviour
 {
+
+    [SerializeField] private GameObject model;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,10 @@ public class Exit : MonoBehaviour
 
         //TODO Log en cas d'erreur
         OnThiefReachExit(GameManager.Instance);
+        thief.OnThiefReachedExit();
+
+        Animator animator = model?.GetComponent<Animator>();
+        animator.Play("OpenDoor");
     }
 
     public bool OnThiefReachExit(GameManager gameManager)

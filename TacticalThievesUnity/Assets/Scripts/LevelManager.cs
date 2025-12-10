@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TacticalThieves;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class LevelManager : MonoBehaviour
 {
@@ -50,7 +51,10 @@ public class LevelManager : MonoBehaviour
         }
 
         GameObject level = Instantiate(levels[levelIndex], gameManager.transform.position, gameManager.transform.rotation);
-        gameManager.OnLevelLoaded(level);
+        level.transform.DOMoveY(10, 1.0f).From().SetEase(Ease.OutBounce).SetLink(gameObject).OnComplete( () =>
+        {
+            gameManager.OnLevelLoaded(level);
+        });
 
         return bLevelLoaded;
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -104,7 +105,11 @@ namespace TacticalThieves
 
             if (thiefIsAttacked)
             {
-                thief.OnThiefAttacked();
+                currentMonster.OnMonsterAttack(thief);
+                DOVirtual.DelayedCall(0.25f, () =>
+                {
+                    thief.OnThiefAttacked();
+                });
             }
 
 
@@ -120,12 +125,14 @@ namespace TacticalThieves
                 if(thief == null)
                     continue;
                 thiefAttacked = Attack(tilesEnabledPos, thief, GameManager.Instance.CurrentGrid);
-                if(thiefAttacked) 
+                if(thiefAttacked)
+                {
                     break;
+                }
             }
 
             GameManager.Instance?.CurrentGrid.OnMonsterAttackDisable();
-            if(thiefAttacked || currentMonster.ActionPhase == Monster.eActionPhase.PHASE5_ATTACK)
+            if (thiefAttacked || currentMonster.ActionPhase == Monster.eActionPhase.PHASE5_ATTACK)
             {
                 currentMonster.EndTurn();
                 GameManager.Instance?.IncrementCharacterTurnIndex();

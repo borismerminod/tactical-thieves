@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace TacticalThieves
 {
@@ -10,6 +12,8 @@ namespace TacticalThieves
         [SerializeField] Material defaultMaterial;
         [SerializeField] Material moveMaterial;
         [SerializeField] Material attackMaterial;
+        [SerializeField] Material selectMaterial;
+        [SerializeField] Material previousMaterial;
         [SerializeField] bool walkable = true;
 
         [SerializeField] bool enableForAttack;
@@ -88,7 +92,18 @@ namespace TacticalThieves
                 walkable = true;
             }
         }
-        
+
+        private void OnMouseEnter()
+        {
+            previousMaterial = GetComponent<Renderer>().material;
+            GetComponent<Renderer>().material = selectMaterial;
+        }
+
+        private void OnMouseExit()
+        {
+            GetComponent<Renderer>().material = previousMaterial;
+        }
+
 
         public void SetEnableForMove(bool enable)
         {
@@ -106,6 +121,8 @@ namespace TacticalThieves
             {
                 GetComponent<Renderer>().material = defaultMaterial;
             }
+
+            previousMaterial = GetComponent<Renderer>().material;
         }
 
         public void SetEnableForAttack(bool enable)
@@ -119,6 +136,9 @@ namespace TacticalThieves
             {
                 GetComponent<Renderer>().material = defaultMaterial;
             }
+
+            if(walkable)
+                previousMaterial = GetComponent<Renderer>().material;
         }
     }
 }

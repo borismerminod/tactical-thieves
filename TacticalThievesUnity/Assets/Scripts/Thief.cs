@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace TacticalThieves
@@ -23,6 +25,9 @@ namespace TacticalThieves
         [SerializeField] private Material defaultMaterial;
         [SerializeField] private Material stealthMaterial;
         [SerializeField] private GameObject thiefBody;
+        [SerializeField] private GameObject model;
+        [SerializeField] private GameObject ragdollModel;
+        [SerializeField] private GameObject impactEffect;
 
         [SerializeField] private bool moveTest; //A supprimé quand la phase de développement sera terminée
 
@@ -37,6 +42,7 @@ namespace TacticalThieves
         {
             OnThiefStarted();
             GameManager.Instance?.OnCharacterStarted(this);
+            impactEffect?.SetActive(false);
         }
 
         // Update is called once per frame
@@ -83,13 +89,16 @@ namespace TacticalThieves
             {
                 status = eThiefStatus.MovementEnable;
                 grid.OnThiefMoveEnable(this);
+
             }
             else
             {
                 status = eThiefStatus.Wait;
                 grid.OnThiefMoveDisable();
                 //Debug.Log("TEST");
+                model?.GetComponent<Animator>().SetBool("Run", false);
                 GameManager.Instance?.IncrementCharacterTurnIndex();
+
             }       
         }
 
@@ -99,6 +108,7 @@ namespace TacticalThieves
             {
                 status = eThiefStatus.isMoving;
                 currentRouteIndex = 0;
+                model?.GetComponent<Animator>().SetBool("Run", true);
             }
             else
             {
@@ -151,12 +161,24 @@ namespace TacticalThieves
         public void OnThiefAttacked()
         {
             status = eThiefStatus.Dead;
-            GameManager.Instance?.OnThiefDied();
+            impactEffect?.SetActive(true);
+
+            //DOVirtual.DelayedCall(0.25f, () =>
+            //{
+                GameManager.Instance?.OnThiefDied();
+                model.SetActive(false);
+                ragdollModel.SetActive(true);
+            //});
         }
 
         public void OnThiefStarted()
         {
             status = eThiefStatus.Wait;
+        }
+
+        public void OnThiefReachedExit()
+        {
+            model.GetComponent<Animator>().SetBool("Win", true);
         }
     }
 }
