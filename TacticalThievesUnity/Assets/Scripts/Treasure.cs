@@ -66,7 +66,9 @@ namespace TacticalThieves
                 }
             }
 
-            
+            gameManager.CurrentAudioManager?.OnTreasureChestOpenned();
+
+
             DOVirtual.DelayedCall(1.0f, () =>
             {
                 gameObject.SetActive(false);

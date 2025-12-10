@@ -42,7 +42,9 @@ public class Exit : MonoBehaviour
             return false;
 
 
+        gameManager.CurrentAudioManager?.OnDoorOpenned();
         gameManager.OnThiefReachExit();
+
         return true;
     }
 }

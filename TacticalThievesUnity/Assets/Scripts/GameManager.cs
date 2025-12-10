@@ -29,6 +29,7 @@ namespace TacticalThieves
         [SerializeField] private PlayerController playerController;
         [SerializeField] private AIController aiController;
         [SerializeField] private LevelManager levelManager;
+        [SerializeField] private AudioManager audioManager;
 
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
@@ -36,6 +37,8 @@ namespace TacticalThieves
         public bool TestMode { get => testMode; set => testMode = value; }
 
         public List<Character> Characters { get => characters; private set => characters = value; }
+
+        public AudioManager CurrentAudioManager { get => audioManager; private set => audioManager = value; }
 
 
         public GameState GetGameState() => gameState;
@@ -236,6 +239,11 @@ namespace TacticalThieves
         public void OnLevelManagerStarted(LevelManager levelManager)
         {
             this.levelManager = levelManager;
+        }
+
+        public void OnAudioManagerStarted(AudioManager audioManager)
+        {
+            CurrentAudioManager = audioManager;
         }
 
 

@@ -165,8 +165,9 @@ namespace TacticalThieves
 
             //DOVirtual.DelayedCall(0.25f, () =>
             //{
-                GameManager.Instance?.OnThiefDied();
-                model.SetActive(false);
+            GameManager.Instance?.OnThiefDied();
+            GameManager.Instance?.CurrentAudioManager?.OnMonsterAttack();
+            model.SetActive(false);
                 ragdollModel.SetActive(true);
             //});
         }

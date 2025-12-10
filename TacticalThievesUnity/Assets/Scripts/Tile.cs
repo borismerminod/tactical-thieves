@@ -97,6 +97,8 @@ namespace TacticalThieves
         {
             previousMaterial = GetComponent<Renderer>().material;
             GetComponent<Renderer>().material = selectMaterial;
+
+            GameManager.Instance?.CurrentAudioManager.OnTileSelected();
         }
 
         private void OnMouseExit()
