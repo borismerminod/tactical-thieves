@@ -149,6 +149,7 @@ namespace TacticalThieves
                 {
                     ActionPhase = eActionPhase.PHASE4_ATTACK_SELECT;
                     currentRouteIndex = 0;
+                    model?.GetComponent<Animator>().SetBool("Run", false);
 
 
                     Grid grid = GameManager.Instance?.CurrentGrid;

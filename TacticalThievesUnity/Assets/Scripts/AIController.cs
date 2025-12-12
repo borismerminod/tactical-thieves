@@ -106,10 +106,7 @@ namespace TacticalThieves
             if (thiefIsAttacked)
             {
                 currentMonster.OnMonsterAttack(thief);
-                DOVirtual.DelayedCall(0.25f, () =>
-                {
-                    thief.OnThiefAttacked();
-                });
+                thief.OnThiefAttacked();
             }
 
 

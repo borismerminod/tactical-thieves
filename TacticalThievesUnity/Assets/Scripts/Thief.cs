@@ -45,6 +45,8 @@ namespace TacticalThieves
             impactEffect?.SetActive(false);
         }
 
+      
+
         // Update is called once per frame
         void Update()
         {
@@ -97,8 +99,6 @@ namespace TacticalThieves
                 grid.OnThiefMoveDisable();
                 //Debug.Log("TEST");
                 model?.GetComponent<Animator>().SetBool("Run", false);
-                GameManager.Instance?.IncrementCharacterTurnIndex();
-
             }       
         }
 
@@ -113,6 +113,7 @@ namespace TacticalThieves
             else
             {
                 status = eThiefStatus.Wait;
+                GameManager.Instance?.IncrementCharacterTurnIndex();
             }
         }
 

@@ -237,6 +237,9 @@ public class ThiefTest
         Assert.IsNotNull(gridPrefab, "Grid prefab should be loaded successfully.");
         TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
         grid.InitTilesDictionnary();
+
+        thief.OnThiefStarted();
+        
         Assert.AreEqual(thief.Status, Thief.eThiefStatus.Wait);
 
         thief.EnableMove(true, grid);

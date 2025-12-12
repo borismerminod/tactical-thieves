@@ -204,11 +204,9 @@ namespace TacticalThieves
         {
             if (gameState != GameState.IN_GAME)
                 return;
-
             characterTurnIndex++;
             if (characterTurnIndex >= characters.Count)
                 characterTurnIndex = 0;
-
             playerController.OnThiefSelected(null, true);
             aiController.OnMonsterSelected(null);
             //Debug.Log(characterTurnIndex + " "+ characters.Count);

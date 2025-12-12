@@ -53,6 +53,8 @@ namespace TacticalThieves
             if (gameManager == null)
                 return false;
 
+            gameManager.OnTreasureCollected(Gold);
+
             MeshRenderer[] meshRenderers = GetComponentsInChildren<MeshRenderer>();
 
             model?.GetComponent<Animator>().SetBool("Open", true);
@@ -66,6 +68,7 @@ namespace TacticalThieves
                 }
             }
 
+            
             gameManager.CurrentAudioManager?.OnTreasureChestOpenned();
 
 

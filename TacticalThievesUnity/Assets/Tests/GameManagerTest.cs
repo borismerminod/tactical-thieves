@@ -161,11 +161,26 @@ public class GameManagerTest
         Assert.IsNotNull(monster2, "Monster component should be present on the instance.");
 
         GameObject playerControllerPrefab = Resources.Load<GameObject>("Prefabs/PlayerController");
-        Assert.IsNotNull(monster2, "playerControllerPrefab prefab should be present on the instance.");
+        Assert.IsNotNull(playerControllerPrefab, "playerControllerPrefab prefab should be present on the instance.");
         PlayerController playerController = GameObject.Instantiate(playerControllerPrefab).GetComponent<PlayerController>();
-        Assert.IsNotNull(monster2, "playerController component should be present on the instance.");
+        Assert.IsNotNull(playerController, "playerController component should be present on the instance.");
+
+        GameObject aiControllerPrefab = Resources.Load<GameObject>("Prefabs/AIController");
+        Assert.IsNotNull(aiControllerPrefab, "aiControllerPrefab prefab should be present on the instance.");
+        AIController aIController = GameObject.Instantiate(aiControllerPrefab).GetComponent<AIController>();
+        Assert.IsNotNull(aIController, "aiControllerPrefab component should be present on the instance.");
+
+        GameObject gridPrefab = Resources.Load<GameObject>("Prefabs/GridTest");
+        Assert.IsNotNull(gridPrefab, "gridPrefab prefab should be present on the instance.");
+        TacticalThieves.Grid grid = GameObject.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
+        Assert.IsNotNull(grid, "grid component should be present on the instance.");
+
+        grid.InitTilesDictionnary();
+
+        playerController.OnGridStarted(grid);
 
         gameManager.OnPlayerControllerStarted(playerController);
+        gameManager.OnAIControllerStarted(aIController);
         gameManager.OnCharacterStarted(thief);
         gameManager.OnCharacterStarted(thief2);
         gameManager.OnCharacterStarted(monster);
