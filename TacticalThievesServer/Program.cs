@@ -50,6 +50,28 @@ provider.Mappings[".data"] = "application/octet-stream";
 provider.Mappings[".framework.js"] = "application/javascript";
 provider.Mappings[".symbols.json"] = "application/json";
 
+/*// Angular
+provider.Mappings[".js"] = "application/javascript";
+provider.Mappings[".mjs"] = "application/javascript";
+provider.Mappings[".css"] = "text/css";
+provider.Mappings[".json"] = "application/json";*/
+
+/*// Angular
+provider.Mappings[".js"] = "application/javascript";
+provider.Mappings[".mjs"] = "application/javascript";
+provider.Mappings[".css"] = "text/css";
+provider.Mappings[".json"] = "application/json";
+provider.Mappings[".html"] = "text/html";
+
+// Unity WebGL files
+provider.Mappings[".wasm"] = "application/wasm";
+provider.Mappings[".data"] = "application/octet-stream";
+provider.Mappings[".framework.js"] = "application/javascript";
+provider.Mappings[".symbols.json"] = "application/octet-stream";*/
+
+// (Option: if using compressed builds with fallback)
+provider.Mappings[".unityweb"] = "application/octet-stream";
+
 app.UseDefaultFiles(); // permet index.html
 app.UseStaticFiles(new StaticFileOptions
 {
