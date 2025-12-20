@@ -312,6 +312,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1222233488216061912, guid: 297935199c86f4146a51a9593d7e8fd3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7785220758113420370, guid: 297935199c86f4146a51a9593d7e8fd3, type: 3}
       propertyPath: currentLevelIndex
       value: 3
@@ -437,6 +441,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WebSocketClient
       objectReference: {fileID: 0}
+    - target: {fileID: 4408889484601821998, guid: 897be6211bfad454194511e639884e77, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 897be6211bfad454194511e639884e77, type: 3}
 --- !u!1001 &4945647095787903272
@@ -547,9 +555,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5006144090595215864, guid: e9c9ea05e66fb294a9b160b81abb7d98, type: 3}
+      propertyPath: serverUrl
+      value: http://localhost:5140/api
+      objectReference: {fileID: 0}
     - target: {fileID: 5006144090595215865, guid: e9c9ea05e66fb294a9b160b81abb7d98, type: 3}
       propertyPath: m_Name
       value: APIClient
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006144090595215865, guid: e9c9ea05e66fb294a9b160b81abb7d98, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9c9ea05e66fb294a9b160b81abb7d98, type: 3}

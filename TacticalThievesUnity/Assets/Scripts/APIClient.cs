@@ -1,21 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager.Requests;
+//using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
+using static System.Net.WebRequestMethods;
 
 namespace TacticalThieves
 {
 
     public class APIClient : MonoBehaviour
     {
-        [SerializeField] private string serverUrl = "http://localhost:5140/api";
+        //[SerializeField] private string serverUrl = "http://localhost:5140/api";
+        [SerializeField] private string serverUrl = "https://localhost:7186/api";
 
 
         // Start is called before the first frame update
         void Start()
         {
-            GameManager.Instance.OnAPIClientStarted(this);        
+            //GameManager.Instance.OnAPIClientStarted(this);        
+            StartCoroutine(InitWebGL());
+        }
+
+        IEnumerator InitWebGL()
+        {
+            // Attendre 1 frame minimum
+            yield return null;
+
+            // Attendre encore un peu (sécurité WebGL)
+            yield return new WaitForSeconds(1.0f);
+
+            GameManager.Instance.OnAPIClientStarted(this);
         }
 
         public IEnumerator CollectTreasure(int amount)

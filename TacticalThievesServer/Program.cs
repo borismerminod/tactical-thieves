@@ -1,57 +1,70 @@
-using Microsoft.AspNetCore.StaticFiles;
+﻿using Microsoft.AspNetCore.StaticFiles;
 using TacticalThievesServer.Services;
 using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-/*builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    });
-});*/
+// =======================
+// Services
+// =======================
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200") // ton Angular
+            .WithOrigins("http://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // important pour SignalR
+            .AllowCredentials();
     });
 });
 
 builder.Services.AddSingleton<WebSocketHandler>();
+builder.Services.AddSingleton<ThiefStateService>();
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSignalR();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<ThiefStateService>();
-builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// =======================
+// Pipeline HTTP
+// =======================
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// ✅ IMPORTANT : Static Files AVANT TOUT
 var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".data"] = "application/octet-stream"; // <-- extension .data
 
+// Unity WebGL
+provider.Mappings[".wasm"] = "application/wasm";
+provider.Mappings[".data"] = "application/octet-stream";
+provider.Mappings[".framework.js"] = "application/javascript";
+provider.Mappings[".symbols.json"] = "application/json";
+
+app.UseDefaultFiles(); // permet index.html
 app.UseStaticFiles(new StaticFileOptions
 {
-    ContentTypeProvider = provider
+    ContentTypeProvider = provider,
+    OnPrepareResponse = ctx =>
+    {
+        // Recommandé pour WebGL moderne
+        ctx.Context.Response.Headers["Cross-Origin-Opener-Policy"] = "same-origin";
+        ctx.Context.Response.Headers["Cross-Origin-Embedder-Policy"] = "require-corp";
+    }
 });
 
-app.UseStaticFiles();
-app.UseDefaultFiles();
+// =======================
+// WebSockets
+// =======================
 
 app.UseWebSockets();
 
@@ -61,14 +74,17 @@ app.Map("/ws", async context =>
     await handler.HandleAsync(context);
 });
 
-app.UseHttpsRedirection();
+// =======================
+// Middleware classiques
+// =======================
+
+//app.UseHttpsRedirection();
+
+app.UseCors("AllowAngularClient");
 
 app.UseAuthorization();
 
-
-app.UseCors("AllowAngularClient");
 app.MapControllers();
-
 app.MapHub<ClientHub>("/scorehub");
 
 app.Run();

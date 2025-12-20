@@ -59,7 +59,7 @@ namespace TacticalThieves
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(this);
+            //Debug.Log(this);
             Thief thief = other.gameObject.GetComponent<Thief>();
             if (thief != null)
             {
