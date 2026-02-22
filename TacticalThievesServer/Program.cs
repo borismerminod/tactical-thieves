@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.StaticFiles;
 using TacticalThievesServer.Services;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using TacticalThievesServer.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +28,21 @@ builder.Services.AddSingleton<ThiefStateService>();
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 
+// <-- Ajout : enregistrement du DbContext pour SQL Server
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Appliquer les migrations au démarrage (créera la base si nécessaire)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 // =======================
 // Pipeline HTTP
