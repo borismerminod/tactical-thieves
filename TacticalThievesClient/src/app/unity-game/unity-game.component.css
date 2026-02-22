@@ -1,10 +1,15 @@
 .unity-container 
 {
     display:grid;
-    grid-template-columns: 320px 1fr 260px;
+    grid-template-columns: 320px 1024px 260px;
     gap:18px;
-    align-items:start;
+    align-items:center;
+    justify-content: center;  /* Centrer horizontalement la grille */
     padding:20px;
     height:100vh;
     box-sizing:border-box;
+}
+
+app-player-ui, app-player-controls {
+    height: 700px;  /* Augmenté pour correspondre à l'iframe */
 }

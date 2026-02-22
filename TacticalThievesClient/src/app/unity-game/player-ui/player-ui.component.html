@@ -1,6 +1,9 @@
-<div>
-    <p class="player-ui" id="player-ui-gold">Gold : {{playerGold}}</p>
-    <p *ngIf="gameOverMessage !== ''" class="player-ui" id="player-ui-game-over">
+<div class="player-ui-container">
+    <p class="player-ui" id="player-ui-gold">
+        <span id="player-ui-gold-label"> Gold :</span>
+        <span id="player-ui-gold-value">{{playerGold}}</span>
+    </p>
+    <p *ngIf="gameOverMessage !== ''" class="player-ui" id="player-ui-game-over" [class]="gameOverMessage.toLowerCase().includes('victory') || gameOverMessage.toLowerCase().includes('win') ? 'victory' : 'defeat'">
         {{gameOverMessage}}
     </p>
 </div>

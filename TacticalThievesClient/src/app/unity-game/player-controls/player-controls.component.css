@@ -1,0 +1,36 @@
+#player-controls {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:16px;
+}
+
+.control-button
+{
+    padding:12px;
+    border-radius:10px;
+    border:0;
+    font-weight:800;
+    cursor:pointer;
+    font-size:15px;
+    background:linear-gradient(90deg,#7BE0C7,#22c1a0); color:#042422; box-shadow:0 6px 18px rgba(2,6,23,0.4)
+}
+
+#stealth-btn
+{
+    background:linear-gradient(90deg,#FFB84D,#FF8A5B);
+    color:#071426
+}
+
+#end-btn
+{
+    background:#d1d8ff;
+    color:#04203b
+}
+
+.button-inactive {
+    opacity: 0.5;
+    pointer-events: none;
+}
