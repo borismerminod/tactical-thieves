@@ -1,6 +1,8 @@
 //using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Explorer;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 //using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -244,6 +246,24 @@ namespace TacticalThieves
             CurrentAudioManager = audioManager;
         }
 
+        // Remplace l'ancienne version incorrecte : renvoie Task<int> et await LoadLevelAsync
+        public async Task<int> GetCurrentLevelAsync()
+        {
+            if (apiClient == null)
+                return -1;
+
+            try
+            {
+                int level = await apiClient.LoadLevelAsync("userTest");
+                Debug.Log($"LoadLevel async -> niveau: {level}");
+                return level;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"LoadLevel erreur: {ex.Message}");
+                return -1;
+            }
+        }
 
 
     }

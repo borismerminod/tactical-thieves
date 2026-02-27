@@ -103,7 +103,7 @@ namespace TacticalThievesServer.Controllers
             // Notifie les clients (optionnel)
             //await clientHub.Clients.All.SendAsync("PlayerProgressSaved", new { pseudo = playerProgress.Pseudo, level = playerProgress.CurrentLevel });
 
-            return Ok(new { success = true, pseudo = playerProgress.Pseudo, level = playerProgress.CurrentLevel });
+            return Ok(new { Success = true, Pseudo = playerProgress.Pseudo, Level = playerProgress.CurrentLevel });
         }
 
         // Récupère le niveau courant d'un joueur par son pseudo (insensible à la casse côté SQL via LOWER)
@@ -120,7 +120,7 @@ namespace TacticalThievesServer.Controllers
             if (player == null)
                 return NotFound(new { success = false, message = "Player not found" });
 
-            return Ok(new { success = true, id = player.Id, pseudo = player.Pseudo, level = player.CurrentLevel });
+            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Pseudo, Level = player.CurrentLevel });
         }
 
         // Récupère le niveau courant d'un joueur par son Id
@@ -135,7 +135,7 @@ namespace TacticalThievesServer.Controllers
             if (player == null)
                 return NotFound(new { success = false, message = "Player not found" });
 
-            return Ok(new { success = true, id = player.Id, pseudo = player.Pseudo, level = player.CurrentLevel });
+            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Pseudo, Level = player.CurrentLevel });
         }
     }
 }

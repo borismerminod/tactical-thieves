@@ -4,19 +4,21 @@ using TacticalThieves;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System.Threading.Tasks;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] GameObject[] levels;
     [SerializeField] int currentLevelIndex;
+    [SerializeField] int loadedLevelIndex;
 
     public GameObject[] Levels { get => levels; set => levels = value; }
 
     // Start is called before the first frame update
-    void Start()
+    private async void Start()
     {
         GameManager.Instance?.OnLevelManagerStarted(this);
-        LoadLevel();
+        await LoadLevel();
     }
 
     // Update is called once per frame
@@ -30,9 +32,18 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void LoadLevel()
+    public async Task LoadLevel()
     {
-        LoadLevel(currentLevelIndex, GameManager.Instance);
+        if(currentLevelIndex == -1)
+        {
+            loadedLevelIndex = await GameManager.Instance.GetCurrentLevelAsync();
+            LoadLevel(loadedLevelIndex, GameManager.Instance);
+
+        }
+        else
+        {
+            LoadLevel(currentLevelIndex, GameManager.Instance);
+        }
     }
 
     public bool LoadLevel(int levelIndex, GameManager gameManager)
