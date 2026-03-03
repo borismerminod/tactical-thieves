@@ -32,6 +32,16 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public async Task SaveLevel(GameManager gameManager)
+    {
+        int nextLevelIndex = loadedLevelIndex + 1;
+        if (nextLevelIndex >= levels.Length)
+        {
+            nextLevelIndex = 0;
+        }
+        await gameManager.SaveNextLevelAsync(nextLevelIndex);
+    }
+
     public async Task LoadLevel()
     {
         if(currentLevelIndex == -1)

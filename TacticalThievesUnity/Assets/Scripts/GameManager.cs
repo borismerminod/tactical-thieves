@@ -51,7 +51,7 @@ namespace TacticalThieves
             private set
             {
                 playerGold = value;
-                if(playerGold < 0)
+                if (playerGold < 0)
                     playerGold = 0;
             }
         }
@@ -108,7 +108,7 @@ namespace TacticalThieves
         // Update is called once per frame
         void Update()
         {
-        
+
         }
 
         public void OnTreasureCollected(int gold)
@@ -120,22 +120,24 @@ namespace TacticalThieves
                 StartCoroutine(apiClient.CollectTreasure(PlayerGold));
         }
 
-        public void OnThiefReachExit()
+        public async Task OnThiefReachExitAsync()
         {
             gameState = GameState.WIN;
 
             if (apiClient != null && TestMode == false)
             {
                 StartCoroutine(apiClient.ThiefReachedExit());
+                await levelManager.SaveLevel(this);
                 Invoke("RestartLevel", 3.0f);
             }
         }
 
+
         public bool OnThiefDied(List<Character> characterList)
         {
             bool AllThievesAreDead = true;
-            
-            foreach(Character character in characterList)
+
+            foreach (Character character in characterList)
             {
                 Thief thief = character as Thief;
                 if (thief == null) continue;
@@ -152,11 +154,11 @@ namespace TacticalThieves
 
         public void OnThiefDied()
         {
-            if(OnThiefDied(characters))
+            if (OnThiefDied(characters))
             {
                 gameState = GameState.LOSE;
 
-                if(apiClient != null)
+                if (apiClient != null)
                 {
                     StartCoroutine(apiClient.AllThievesDied());
                     Invoke("RestartLevel", 3.0f);
@@ -181,7 +183,7 @@ namespace TacticalThieves
 
         public void InitCharacterTurnIndex()
         {
-            if(gameState != GameState.IN_GAME)
+            if (gameState != GameState.IN_GAME)
                 return;
 
             characterTurnIndex = 0;
@@ -265,7 +267,22 @@ namespace TacticalThieves
             }
         }
 
+        public async Task SaveNextLevelAsync(int nextLevelIndex)
+        {
+            if (apiClient == null)
+                return;
+            try
+            {
+                await apiClient.SaveLevelAsync("userTest", nextLevelIndex);
+                Debug.Log($"SaveLevel async -> niveau sauvegardé: {nextLevelIndex}");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"SaveLevel erreur: {ex.Message}");
+            }
 
+
+        }
     }
 
 }

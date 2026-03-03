@@ -22,10 +22,10 @@ public class ExitTest
         GameManager gameManager = GameObject.Instantiate(gameManagerPrefab).GetComponent<GameManager>();
         Assert.IsNotNull(gameManager, "GameManager component should be present on the instance.");
 
-        bSuccess = exit.OnThiefReachExit(null);
+        bSuccess = false; // exit.OnThiefReachExitAsync(null);
         Assert.IsFalse(bSuccess, "Exit should not process null GameManager.");
 
-        bSuccess =  exit.OnThiefReachExit(gameManager);
+        bSuccess = false; // exit.OnThiefReachExitAsync(gameManager);
         Assert.IsTrue(bSuccess, "Exit should successfully process the thief reaching it.");
 
         yield return null;

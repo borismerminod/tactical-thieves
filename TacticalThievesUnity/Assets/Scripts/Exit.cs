@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TacticalThieves;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Exit : MonoBehaviour
 {
@@ -20,21 +21,21 @@ public class Exit : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private async Task OnTriggerEnter(UnityEngine.Collider other)
     {
         Thief thief = other.GetComponent<Thief>();
         if(thief == null)
             return;
 
         //TODO Log en cas d'erreur
-        OnThiefReachExit(GameManager.Instance);
+        await OnThiefReachExitAsync(GameManager.Instance);
         thief.OnThiefReachedExit();
 
         Animator animator = model?.GetComponent<Animator>();
         animator.Play("OpenDoor");
     }
 
-    public bool OnThiefReachExit(GameManager gameManager)
+    public async Task<bool> OnThiefReachExitAsync(GameManager gameManager)
     {
         if (gameManager == null)
             return false;
@@ -43,7 +44,7 @@ public class Exit : MonoBehaviour
 
 
         gameManager.CurrentAudioManager?.OnDoorOpenned();
-        gameManager.OnThiefReachExit();
+        await gameManager.OnThiefReachExitAsync();
 
         return true;
     }

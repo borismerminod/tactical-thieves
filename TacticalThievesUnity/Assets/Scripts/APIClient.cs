@@ -118,8 +118,8 @@ namespace TacticalThieves
         }
 
         // POST /Game/save-level
-        // Envoie un JSON { Pseudo, NextLevel }
-        public IEnumerator SaveLevel(string pseudo, int nextLevel, System.Action onComplete = null, System.Action<string> onError = null)
+        // Envoie un JSON { Pseudo, Level }
+        /*public IEnumerator SaveLevel(string pseudo, int nextLevel, System.Action onComplete = null, System.Action<string> onError = null)
         {
             string endpoint = $"{serverUrl}/Game/save-level";
 
@@ -143,17 +143,52 @@ namespace TacticalThieves
                 Debug.LogError("SaveLevel Error: " + request.error);
                 onError?.Invoke(request.error);
             }
+        }*/
+
+        // Version awaitable pour SaveLevel : Task (lève une exception en cas d'erreur)
+        public Task SaveLevelAsync(string pseudo, int nextLevel)
+        {
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            StartCoroutine(SaveLevel(pseudo, nextLevel, tcs));
+            return tcs.Task;
+        }
+
+        private IEnumerator SaveLevel(string pseudo, int nextLevel, TaskCompletionSource<bool> tcs)
+        {
+            string endpoint = $"{serverUrl}/Game/save-level";
+
+            var dto = new SaveLevelDto { Pseudo = pseudo, CurrentLevel = nextLevel };
+            var json = JsonUtility.ToJson(dto);
+            var request = new UnityWebRequest(endpoint, "POST");
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+            //request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("SaveLevelAsync Response: " + request.downloadHandler.text);
+                tcs.SetResult(true);
+            }
+            else
+            {
+                Debug.LogError("SaveLevelAsync Error: " + request.error);
+                tcs.SetException(new System.Exception(request.error));
+            }
         }
 
         // Expose une API awaitable : Task<int>
         public Task<int> LoadLevelAsync(string pseudo)
         {
-            var tcs = new TaskCompletionSource<int>();
-            StartCoroutine(LoadLevelCoroutine(pseudo, tcs));
+            var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+            StartCoroutine(LoadLevel(pseudo, tcs));
             return tcs.Task;
         }
 
-        private IEnumerator LoadLevelCoroutine(string pseudo, TaskCompletionSource<int> tcs)
+        private IEnumerator LoadLevel(string pseudo, TaskCompletionSource<int> tcs)
         {
             string escaped = UnityWebRequest.EscapeURL(pseudo);
             string endpoint = $"{serverUrl}/Game/load-level/{escaped}";
@@ -166,7 +201,7 @@ namespace TacticalThieves
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string text = request.downloadHandler.text;
-                // Essayer de parser d'abord en JSON { NextLevel: n }
+                // Essayer de parser d'abord en JSON { level: n } ou formulaire complet
                 LoadLevelResponseDto resp = null;
                 try
                 {
@@ -206,11 +241,11 @@ namespace TacticalThieves
         // DTO pour SaveLevel
         class SaveLevelDto
         {
-            public int Level;
+            public int CurrentLevel;
             public string Pseudo;
         }
 
-        // DTO pour la réponse LoadLevel { NextLevel: n }
+        // DTO pour la réponse LoadLevel { success, id, pseudo, level }
         class LoadLevelResponseDto
         {
             public bool success;
