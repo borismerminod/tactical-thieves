@@ -31,4 +31,12 @@ export class PlayerControlsComponent {
     });
   }
 
+  endTurn()
+  {
+    this.playerControlsService.sendEndTurn().subscribe({
+      next: res => console.log('Fin de tour envoyée', res),
+      error: err => console.error('Erreur fin de tour', err)
+    });
+  }
+
 }

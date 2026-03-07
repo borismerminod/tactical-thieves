@@ -43,6 +43,13 @@ namespace TacticalThievesServer.Controllers
             return Ok(new { success = true });
         }
 
+        [HttpPost("end-turn")]
+        public IActionResult EndTurn()
+        {
+            webSocketHandler.Broadcast("end-turn");
+            return Ok(new { success = true });
+        }
+
         [HttpPost("collect-treasure")]
         public IActionResult CollectTreasure([FromBody] TreasureCollectDTO dto)
         {

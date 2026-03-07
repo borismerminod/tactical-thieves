@@ -13,13 +13,24 @@ namespace TacticalThieves
     {
         //[SerializeField] private string serverUrl = "http://localhost:5140/api";
         [SerializeField] private string serverUrl = "https://localhost:7186/api";
+        [SerializeField] private bool apiClientStarted;
 
 
         // Start is called before the first frame update
         void Start()
         {
             //GameManager.Instance.OnAPIClientStarted(this);        
-            StartCoroutine(InitWebGL());
+            //StartCoroutine(InitWebGL());
+            apiClientStarted = false;
+        }
+
+        private void Update()
+        {
+            if(!apiClientStarted && GameManager.Instance != null)
+            {
+                apiClientStarted = true;
+                GameManager.Instance.OnAPIClientStarted(this);
+            }
         }
 
         IEnumerator InitWebGL()

@@ -11,20 +11,26 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject[] levels;
     [SerializeField] int currentLevelIndex;
     [SerializeField] int loadedLevelIndex;
+    [SerializeField] bool levelManagerStarted;
 
     public GameObject[] Levels { get => levels; set => levels = value; }
 
     // Start is called before the first frame update
-    private async void Start()
+    private void Start()
     {
-        GameManager.Instance?.OnLevelManagerStarted(this);
-        await LoadLevel();
+        levelManagerStarted = false;
+        
     }
 
     // Update is called once per frame
-    void Update()
+    async void Update()
     {
-        
+        if(!levelManagerStarted && GameManager.Instance != null && GameManager.Instance.IsAPIClientStarted())
+        {
+            levelManagerStarted = true;
+            GameManager.Instance.OnLevelManagerStarted(this);
+            await LoadLevel();
+        }
     }
 
     public void RestartLevel()

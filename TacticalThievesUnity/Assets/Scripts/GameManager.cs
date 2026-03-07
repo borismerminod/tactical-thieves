@@ -283,6 +283,11 @@ namespace TacticalThieves
 
 
         }
+
+        public bool IsAPIClientStarted()
+        {
+            return apiClient != null;
+        }
     }
 
 }

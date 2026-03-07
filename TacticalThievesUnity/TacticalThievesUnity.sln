@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{A82B0235-E8D3-A257-5B34-27F804884860}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "endel.nativewebsocket", "endel.nativewebsocket.csproj", "{35E07F40-9B99-7882-FA4A-78F5D96C009B}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{37DEAC0C-5607-219E-E73F-0FAE20947300}"
 EndProject
 Global
@@ -33,6 +35,10 @@ Global
 		{A82B0235-E8D3-A257-5B34-27F804884860}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A82B0235-E8D3-A257-5B34-27F804884860}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A82B0235-E8D3-A257-5B34-27F804884860}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E07F40-9B99-7882-FA4A-78F5D96C009B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E07F40-9B99-7882-FA4A-78F5D96C009B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E07F40-9B99-7882-FA4A-78F5D96C009B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E07F40-9B99-7882-FA4A-78F5D96C009B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37DEAC0C-5607-219E-E73F-0FAE20947300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37DEAC0C-5607-219E-E73F-0FAE20947300}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37DEAC0C-5607-219E-E73F-0FAE20947300}.Release|Any CPU.ActiveCfg = Release|Any CPU

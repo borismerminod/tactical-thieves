@@ -746,6 +746,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="endel.nativewebsocket.csproj">
+      <Project>{35E07F40-9B99-7882-FA4A-78F5D96C009B}</Project>
+      <Name>endel.nativewebsocket</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

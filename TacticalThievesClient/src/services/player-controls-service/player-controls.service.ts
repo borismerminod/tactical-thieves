@@ -22,4 +22,9 @@ export class PlayerControlsService {
     return this.http.post(`${this.apiUrl}/stealth`, {});
   }
 
+  sendEndTurn() : Observable<any>
+  {
+    return this.http.post(`${this.apiUrl}/end-turn`, {});
+  }
+
 }

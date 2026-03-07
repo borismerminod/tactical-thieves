@@ -1,3 +1,6 @@
 {
-	"name": "TacticalThieves"
+	"name": "TacticalThieves",
+	"references": [
+		"endel.nativewebsocket"
+	]
 }
