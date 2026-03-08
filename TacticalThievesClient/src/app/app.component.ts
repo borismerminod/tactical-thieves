@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { UnityGameComponent } from './unity-game/unity-game.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, UnityGameComponent],
+  imports: [RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
