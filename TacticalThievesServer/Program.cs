@@ -3,12 +3,15 @@ using TacticalThievesServer.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using TacticalThievesServer.Data;
+using Fido2NetLib;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // =======================
 // Services
 // =======================
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
 {
@@ -22,10 +25,21 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddSingleton(new Fido2(new Fido2Configuration
+{
+    ServerDomain = "localhost",
+    ServerName = "TacticalThievesServer",
+    Origins = new HashSet<string> { "https://localhost:5140", "http://localhost:4200" }
+}));
+
 builder.Services.AddSingleton<WebSocketHandler>();
 builder.Services.AddSingleton<ThiefStateService>();
 
 builder.Services.AddControllers();
+
+builder.Services.AddDistributedMemoryCache(); //Pour stocker les options FIDO2 entre les requêtes
+builder.Services.AddSession(); //Pour stocker les options FIDO2 entre les requêtes
+
 builder.Services.AddSignalR();
 
 // <-- Ajout : enregistrement du DbContext pour SQL Server
@@ -116,7 +130,7 @@ app.Map("/ws", async context =>
 //app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularClient");
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllers();
