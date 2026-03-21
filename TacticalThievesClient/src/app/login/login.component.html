@@ -1,0 +1,15 @@
+<!-- login.component.html -->
+<div id="center">
+  <div class="login-container">
+    <h2>Login</h2>
+  
+    <label>
+      Username
+      <input [(ngModel)]="username" placeholder="Username" />
+    </label>
+  
+    <button (click)="onLogin()">Connect with WebAuthn</button>
+  
+    <p>{{ message }}</p>
+  </div>
+</div>

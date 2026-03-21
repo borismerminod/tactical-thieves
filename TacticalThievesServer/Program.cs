@@ -1,15 +1,40 @@
-﻿using Microsoft.AspNetCore.StaticFiles;
-using TacticalThievesServer.Services;
+﻿using Fido2NetLib;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using TacticalThievesServer.Data;
-using Fido2NetLib;
+using TacticalThievesServer.Services;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // =======================
 // Services
 // =======================
+
+var key = Encoding.UTF8.GetBytes("SUPER_SECRET_KEY_123456");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
 
 builder.Services.AddHttpContextAccessor();
 
@@ -18,7 +43,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200")
+            .WithOrigins("http://localhost:4200", "https://localhost:4200")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -29,7 +54,7 @@ builder.Services.AddSingleton(new Fido2(new Fido2Configuration
 {
     ServerDomain = "localhost",
     ServerName = "TacticalThievesServer",
-    Origins = new HashSet<string> { "https://localhost:5140", "http://localhost:4200" }
+    Origins = new HashSet<string> {"https://localhost:4200" }
 }));
 
 builder.Services.AddSingleton<WebSocketHandler>();
@@ -127,10 +152,11 @@ app.Map("/ws", async context =>
 // Middleware classiques
 // =======================
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularClient");
 app.UseSession();
+app.UseAuthentication(); // Attention avant Authorization
 app.UseAuthorization();
 
 app.MapControllers();

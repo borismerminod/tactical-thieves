@@ -1,0 +1,97 @@
+:host{
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  display:block;
+  height:100vh;
+}
+
+/* centrage identique */
+#center {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  padding:24px;
+}
+
+/* carte */
+.login-container{
+  width:min(520px, 96%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6), inset 0 1px rgba(255,255,255,0.02);
+  border-radius:20px;
+  padding:32px;
+
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+/* titre */
+.login-container h2{
+  margin:0;
+  font-size:48px;
+  text-align:center;
+}
+
+/* label */
+.login-container label{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  font-size:14px;
+  font-weight:600;
+}
+
+/* input */
+.login-container input{
+  padding:14px 16px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.25);
+  color:white;
+  font-size:16px;
+}
+
+/* bouton */
+.login-container button{
+  padding:20px 40px;
+  border-radius:12px;
+  border:0;
+  font-weight:700;
+  cursor:pointer;
+  font-size:20px;
+
+  background: linear-gradient(90deg,#FFB84D,#FF7A3A);
+  color:#071026;
+
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
+.login-container button:hover{
+  transform:translateY(-2px);
+  transition:all .15s ease;
+}
+
+/* message */
+.login-container p{
+  text-align:center;
+  font-size:14px;
+  opacity:0.8;
+}
+
+/* responsive */
+@media (max-width: 768px){
+  .login-container{
+    padding:20px;
+    gap:16px;
+  }
+
+  .login-container h2{
+    font-size:32px;
+  }
+
+  .login-container button{
+    padding:16px 24px;
+    font-size:16px;
+  }
+}
