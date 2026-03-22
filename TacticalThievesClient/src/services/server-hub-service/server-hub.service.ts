@@ -9,7 +9,8 @@ import { BehaviorSubject } from 'rxjs';
 export class ServerHubService {
 
   private hubConnection!: signalR.HubConnection;
-  private readonly hubUrl = 'http://localhost:5140/scorehub';
+  //private readonly hubUrl = 'http://localhost:5140/scorehub';
+  private readonly hubUrl = 'https://localhost:7186/scorehub';
 
   private playerGoldSource = new BehaviorSubject<number>(0)
   playerGold$ = this.playerGoldSource.asObservable()

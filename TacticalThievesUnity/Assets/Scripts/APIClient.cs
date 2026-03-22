@@ -128,34 +128,6 @@ namespace TacticalThieves
             }
         }
 
-        // POST /Game/save-level
-        // Envoie un JSON { Pseudo, Level }
-        /*public IEnumerator SaveLevel(string pseudo, int nextLevel, System.Action onComplete = null, System.Action<string> onError = null)
-        {
-            string endpoint = $"{serverUrl}/Game/save-level";
-
-            var dto = new SaveLevelDto { Pseudo = pseudo, Level = nextLevel };
-            var json = JsonUtility.ToJson(dto);
-            var request = new UnityWebRequest(endpoint, "POST");
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("SaveLevel Response: " + request.downloadHandler.text);
-                onComplete?.Invoke();
-            }
-            else
-            {
-                Debug.LogError("SaveLevel Error: " + request.error);
-                onError?.Invoke(request.error);
-            }
-        }*/
-
         // Version awaitable pour SaveLevel : Task (lève une exception en cas d'erreur)
         public Task SaveLevelAsync(string pseudo, int nextLevel)
         {

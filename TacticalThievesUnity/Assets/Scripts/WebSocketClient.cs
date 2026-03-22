@@ -10,7 +10,8 @@ public class WebSocketClient : MonoBehaviour
     private WebSocket _websocket;
 
     // URL du serveur WebSocket
-    public string serverUri = "ws://localhost:5140/ws";
+    //public string serverUri = "ws://localhost:5140/ws";
+    public string serverUri = "wss://localhost:7186/ws"; 
     public bool webSocketClientStarted;
 
     private void Start()

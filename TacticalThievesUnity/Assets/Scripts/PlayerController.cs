@@ -83,8 +83,12 @@ namespace TacticalThieves
                 selectedThief = thief;
             }
 
-            selectedThief?.EnableMove(false, levelGrid);
-            selectedThief?.ProceedMovement(false);
+
+            if(selectedThief.Status == eThiefStatus.MovementEnable)
+            {
+                selectedThief?.EnableMove(false, levelGrid);
+                selectedThief?.ProceedMovement(false);
+            }
 
         }
 
