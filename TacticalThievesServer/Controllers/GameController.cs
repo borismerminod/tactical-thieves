@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
+using System.Text.Json;
+using TacticalThievesServer.Data;
 using TacticalThievesServer.DTO;
 using TacticalThievesServer.Models;
 using TacticalThievesServer.Services;
-using TacticalThievesServer.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TacticalThievesServer.Controllers
 {
@@ -72,7 +76,7 @@ namespace TacticalThievesServer.Controllers
         [HttpPost("game-start")]
         public IActionResult GameStart()
         {
-            clientHub.Clients.All.SendAsync("GameStart");
+            clientHub.Clients.All.SendAsync("GameStart"); 
             return Ok(new { success = true });
         }
 
@@ -84,25 +88,34 @@ namespace TacticalThievesServer.Controllers
         }
 
         [HttpPost("save-level")]
-        public async Task<IActionResult> SaveLevel([FromBody] PlayerProgress playerProgress)
+        public async Task<IActionResult> SaveLevel([FromBody] PlayerProgressDTO playerProgress)
         {
             if (playerProgress == null || string.IsNullOrWhiteSpace(playerProgress.Pseudo))
                 return BadRequest(new { success = false, message = "Invalid player data" });
 
-            // Cherche une progression existante par pseudo
-            var existing = await db.PlayerProgresses
-                                   .FirstOrDefaultAsync(p => p.Pseudo == playerProgress.Pseudo);
+            var existingUser = await db.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == playerProgress.Pseudo.ToLower());
 
-            if (existing != null)
+            if (existingUser == null)
+                return NotFound(new { success = false, message = "User not found" });
+
+
+            if (existingUser.CurrentLevel != null)
             {
                 // Met à jour le niveau si nécessaire
-                existing.CurrentLevel = playerProgress.CurrentLevel;
-                db.PlayerProgresses.Update(existing);
+                existingUser.CurrentLevel.CurrentLevel = playerProgress.CurrentLevel;
+                db.Users.Update(existingUser);
+                //db.PlayerProgresses.Update(existing);
             }
             else
             {
+                existingUser.CurrentLevel = new PlayerProgress
+                {
+                    CurrentLevel = playerProgress.CurrentLevel
+                };
+
+                db.Users.Update(existingUser);
                 // Ajoute une nouvelle progression
-                db.PlayerProgresses.Add(playerProgress);
+                //db.PlayerProgresses.Add(playerProgress);
             }
 
             await db.SaveChangesAsync();
@@ -114,20 +127,20 @@ namespace TacticalThievesServer.Controllers
         }
 
         // Récupère le niveau courant d'un joueur par son pseudo (insensible à la casse côté SQL via LOWER)
-        [HttpGet("load-level/{pseudo}")]
+       /* [HttpGet("load-level/{pseudo}")]
         public async Task<IActionResult> LoadLevel(string pseudo)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
                 return BadRequest(new { success = false, message = "Pseudo is required" });
 
             // Utilise LOWER() pour une recherche insensible à la casse au niveau SQL
-            var player = await db.PlayerProgresses
-                                 .FirstOrDefaultAsync(p => p.Pseudo.ToLower() == pseudo.ToLower());
+            var player = await db.Users
+                                 .FirstOrDefaultAsync(p => p.Username.ToLower() == pseudo.ToLower());
 
             if (player == null)
                 return NotFound(new { success = false, message = "Player not found" });
 
-            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Pseudo, Level = player.CurrentLevel });
+            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Username, Level = player.CurrentLevel.CurrentLevel });
         }
 
         // Récupère le niveau courant d'un joueur par son Id
@@ -137,12 +150,74 @@ namespace TacticalThievesServer.Controllers
             if (id <= 0)
                 return BadRequest(new { success = false, message = "Invalid id" });
 
-            var player = await db.PlayerProgresses.FindAsync(id);
+            var player = await db.Users.FindAsync(id);
 
             if (player == null)
                 return NotFound(new { success = false, message = "Player not found" });
 
-            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Pseudo, Level = player.CurrentLevel });
+            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Username, Level = player.CurrentLevel.CurrentLevel });
+        }*/
+
+        [Authorize]
+        [HttpPost("load-level")]
+        public async Task<IActionResult> LoadLevel()
+        {
+            try
+            {
+                // Récupérer username depuis le JWT
+                var username = User.FindFirst("username")?.Value;
+
+                if (string.IsNullOrEmpty(username))
+                    return Unauthorized(new { success = false, message = "Invalid token" });
+
+                // Récupérer le joueur
+                var player = await db.Users
+                    .Include(p => p.CurrentLevel)
+                    .FirstOrDefaultAsync(p => p.Username.ToLower() == username.ToLower());
+
+                if (player == null)
+                    return NotFound(new { success = false, message = "Player not found" });
+
+                // Envoi au jeu via WebSocket
+                var payload = new GameMessage();
+                payload.Type = "load-level";
+                payload.Level = player.CurrentLevel.CurrentLevel;
+
+
+                var json = JsonSerializer.Serialize(payload);
+
+                //await webSocketHandler.BroadcastAsync(payload);
+                webSocketHandler.Broadcast(json);
+
+                // Réponse API
+                return Ok(new
+                {
+                    success = true,
+                    level = player.CurrentLevel.CurrentLevel
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
         }
+
     }
+
+    public class  PlayerProgressDTO
+    {
+        public string Pseudo { get; set; }
+        public int CurrentLevel { get; set; }
+    }
+
+    public class GameMessage
+    {
+        public string Type { get; set; }
+        public int Level { get; set; }
+    }
+
 }

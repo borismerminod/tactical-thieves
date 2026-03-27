@@ -33,16 +33,15 @@ namespace TacticalThievesServer.Migrations
                     b.Property<int>("CurrentLevel")
                         .HasColumnType("int");
 
-                    b.Property<string>("Pseudo")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Pseudo");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
-                    b.ToTable("PlayerProgress", (string)null);
+                    b.ToTable("PlayerProgress");
                 });
 
             modelBuilder.Entity("TacticalThievesServer.Models.StoredCredential", b =>
@@ -82,11 +81,23 @@ namespace TacticalThievesServer.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TacticalThievesServer.Models.PlayerProgress", b =>
+                {
+                    b.HasOne("TacticalThievesServer.Models.User", "User")
+                        .WithOne("CurrentLevel")
+                        .HasForeignKey("TacticalThievesServer.Models.PlayerProgress", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TacticalThievesServer.Models.StoredCredential", b =>
@@ -103,6 +114,9 @@ namespace TacticalThievesServer.Migrations
             modelBuilder.Entity("TacticalThievesServer.Models.User", b =>
                 {
                     b.Navigation("Credentials");
+
+                    b.Navigation("CurrentLevel")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

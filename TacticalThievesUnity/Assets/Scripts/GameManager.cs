@@ -1,4 +1,5 @@
 //using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Explorer;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 //using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.UI.CanvasScaler;
 
 namespace TacticalThieves
 {
@@ -13,6 +15,7 @@ namespace TacticalThieves
     {
         public enum GameState
         {
+            LOADING,
             IN_GAME,
             WIN,
             LOSE
@@ -32,6 +35,7 @@ namespace TacticalThieves
         [SerializeField] private AIController aiController;
         [SerializeField] private LevelManager levelManager;
         [SerializeField] private AudioManager audioManager;
+        [SerializeField] private bool bInit;
 
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
@@ -68,7 +72,8 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
-            gameState = GameState.IN_GAME;
+            gameState = GameState.LOADING;
+            bInit = false;
 
             Invoke("InitCharacterTurnIndex", 1.0f);
         }
@@ -108,7 +113,11 @@ namespace TacticalThieves
         // Update is called once per frame
         void Update()
         {
-
+            if(bInit == false && gameState == GameState.IN_GAME)
+            {
+                InitCharacterTurnIndex();
+                bInit = true;
+            }
         }
 
         public void OnTreasureCollected(int gold)
@@ -287,6 +296,23 @@ namespace TacticalThieves
         public bool IsAPIClientStarted()
         {
             return apiClient != null;
+        }
+
+        public void LoadLevel(int levelIndex)
+        {
+            GameObject level = levelManager.LoadLevel(levelIndex);
+            if(level !=null)
+            {
+                level.transform.DOMoveY(10, 1.0f)
+                        .From()
+                        .SetEase(Ease.OutBounce)
+                        .SetLink(gameObject)
+                        .OnComplete( () =>
+                        {
+                            OnLevelLoaded(level);
+                            gameState = GameState.IN_GAME;
+                        });
+            }
         }
     }
 

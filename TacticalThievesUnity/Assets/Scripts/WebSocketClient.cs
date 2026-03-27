@@ -1,9 +1,10 @@
-﻿using System;
+﻿//using Codice.Client.BaseCommands;
+using NativeWebSocket;
+using System;
 using System.Text;
 using System.Threading.Tasks;
-using NativeWebSocket;
-using UnityEngine;
 using TacticalThieves;
+using UnityEngine;
 
 public class WebSocketClient : MonoBehaviour
 {
@@ -101,6 +102,25 @@ public class WebSocketClient : MonoBehaviour
     {
         Debug.Log("Server message handled: " + msg);
 
+        ServerMessage serverMessage;
+
+        try
+        {
+            serverMessage = JsonUtility.FromJson<ServerMessage>(msg);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("JSON parse error: " + e.Message);
+            return;
+        }
+
+        if (serverMessage == null || string.IsNullOrEmpty(serverMessage.type))
+        {
+            Debug.LogWarning("Invalid message format");
+            return;
+        }
+
+
         GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
         if (playerControllerGO == null)
             return;
@@ -109,7 +129,7 @@ public class WebSocketClient : MonoBehaviour
         if (playerController == null)
             return;
 
-        switch (msg)
+        switch (serverMessage.type)
         {
             case "move":
                 Debug.Log("Triggering move action");
@@ -122,6 +142,10 @@ public class WebSocketClient : MonoBehaviour
             case "end-turn":
                 Debug.Log("Triggering end turn action");
                 playerController.HandleThiefEndTurn();
+                break;
+            case "load-level":
+                Debug.Log("Triggering load level action");
+                GameManager.Instance.LoadLevel(serverMessage.level);
                 break;
             default:
                 Debug.Log("Unknown command");
@@ -138,4 +162,11 @@ public class WebSocketClient : MonoBehaviour
             _websocket = null;
         }
     }
+}
+
+[Serializable]
+public class ServerMessage
+{
+    public string type;
+    public int level;
 }

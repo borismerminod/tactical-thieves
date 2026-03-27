@@ -6,14 +6,11 @@ namespace TacticalThievesServer.Models
     [Table("PlayerProgress")]
     public class PlayerProgress
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
-        public string Pseudo { get; set; } = null!;
+        public Guid UserId { get; set; }
+        public User User { get; set; } = null!;
 
-        [Required]
         public int CurrentLevel { get; set; }
     }
 }

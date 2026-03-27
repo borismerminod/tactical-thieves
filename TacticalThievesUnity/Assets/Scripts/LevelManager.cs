@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
         {
             levelManagerStarted = true;
             GameManager.Instance.OnLevelManagerStarted(this);
-            await LoadLevel();
+            //await LoadLevel();
         }
     }
 
@@ -48,6 +48,7 @@ public class LevelManager : MonoBehaviour
         await gameManager.SaveNextLevelAsync(nextLevelIndex);
     }
 
+    //Obsolète ?
     public async Task LoadLevel()
     {
         if(currentLevelIndex == -1)
@@ -62,6 +63,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    //Obsolète ? 
     public bool LoadLevel(int levelIndex, GameManager gameManager)
     {
         if (gameManager == null)
@@ -85,5 +87,25 @@ public class LevelManager : MonoBehaviour
 
         return bLevelLoaded;
 
+    }
+
+    public GameObject LoadLevel(int levelIndex)
+    {
+
+        if (currentLevelIndex >= 0 )
+        {
+            levelIndex = currentLevelIndex;
+
+        }
+
+        if (levelIndex < 0 || levelIndex >= levels.Length)
+        {
+            Debug.LogError("Level index out of range");
+            return null;
+        }
+
+        GameObject level = Instantiate(levels[levelIndex], transform.position, transform.rotation);
+
+        return level;
     }
 }

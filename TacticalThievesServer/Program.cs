@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Services
 // =======================
 
-var key = Encoding.UTF8.GetBytes("SUPER_SECRET_KEY_123456");
+var key = Encoding.UTF8.GetBytes("SUPER_SECRET_KEY_1234567890123456");
 
 builder.Services.AddAuthentication(options =>
 {

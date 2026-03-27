@@ -12,5 +12,8 @@ namespace TacticalThievesServer.Models
         public string Username { get; set; }
 
         public List<StoredCredential> Credentials { get; set; } = new();
+
+        public PlayerProgress CurrentLevel { get; set; } = null!;
+
     }
 }

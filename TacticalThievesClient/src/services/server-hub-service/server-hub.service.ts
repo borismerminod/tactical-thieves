@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 
 
 @Injectable({
@@ -12,13 +13,15 @@ export class ServerHubService {
   //private readonly hubUrl = 'http://localhost:5140/scorehub';
   private readonly hubUrl = 'https://localhost:7186/scorehub';
 
+  private serverURL: string = 'https://localhost:7186';
+
   private playerGoldSource = new BehaviorSubject<number>(0)
   playerGold$ = this.playerGoldSource.asObservable()
 
   private gameOverMessage = new BehaviorSubject<string>("")
   gameOverMessage$ = this.gameOverMessage.asObservable()
 
-  constructor()
+  constructor(private http: HttpClient)
   { 
     this.startConnection()
     this.onScoreUpdated()
@@ -58,14 +61,31 @@ export class ServerHubService {
     })
   }
 
+  public async sendLoadLevelCommand() : Promise<void>
+  {
+    const authToken = sessionStorage.getItem("authToken");
+
+    await firstValueFrom(
+      this.http.post(`${this.serverURL}/api/Game/load-level`, {}, {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+    })
+);
+    
+
+  }
+
   public onGameStart() : void 
   {
     this.hubConnection.on('GameStart', () => {
       console.log("Game start")
       this.gameOverMessage.next("")
       this.playerGoldSource.next(0)
+      this.sendLoadLevelCommand()
     })
   }
+
 
   public onThievesDied() : void 
   {

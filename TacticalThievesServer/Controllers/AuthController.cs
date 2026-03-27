@@ -48,10 +48,16 @@ namespace TacticalThievesServer.Controllers
 
                 if (user == null)
                 {
+                    var progress = new PlayerProgress
+                    {
+                        CurrentLevel = 1
+                    };
+
                     user = new User
                     {
                         Id = Guid.NewGuid(),
-                        Username = username
+                        Username = username,
+                        CurrentLevel = progress
                     };
 
                     _db.Users.Add(user);

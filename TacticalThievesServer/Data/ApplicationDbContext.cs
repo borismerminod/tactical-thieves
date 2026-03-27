@@ -22,9 +22,11 @@ namespace TacticalThievesServer.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<PlayerProgress>()
-                .ToTable("PlayerProgress")
-                .HasIndex(p => p.Pseudo)
-                .IsUnique(false); // true si vous voulez un pseudo unique
+                .HasOne(c => c.User)
+                .WithOne(u => u.CurrentLevel)
+                .HasForeignKey<PlayerProgress>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<StoredCredential>()
                 .HasOne(c => c.User)
