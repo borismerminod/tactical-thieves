@@ -54,7 +54,8 @@ builder.Services.AddSingleton(new Fido2(new Fido2Configuration
 {
     ServerDomain = "localhost",
     ServerName = "TacticalThievesServer",
-    Origins = new HashSet<string> {"https://localhost:4200" }
+    //Origins = new HashSet<string> {"https://localhost:4200" }
+    Origins = new HashSet<string> { "https://localhost:7186" }
 }));
 
 builder.Services.AddSingleton<WebSocketHandler>();
@@ -135,6 +136,8 @@ app.UseStaticFiles(new StaticFileOptions
         ctx.Context.Response.Headers["Cross-Origin-Embedder-Policy"] = "require-corp";
     }
 });
+
+app.MapFallbackToFile("angular/index.html");
 
 // =======================
 // WebSockets

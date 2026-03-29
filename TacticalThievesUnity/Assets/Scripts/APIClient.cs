@@ -68,12 +68,16 @@ namespace TacticalThieves
             }
         }
 
-        public IEnumerator ThiefReachedExit()
+        public IEnumerator ThiefReachedExit(int nextLevel)
         {
             string endpoint = $"{serverUrl}/Game/exit-reached";
 
+            var dto = new SaveLevelDto { CurrentLevel = nextLevel };
+            var json = JsonUtility.ToJson(dto);
+
             var request = new UnityWebRequest(endpoint, "POST");
-            request.uploadHandler = new UploadHandlerRaw(new byte[0]);
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             yield return request.SendWebRequest();

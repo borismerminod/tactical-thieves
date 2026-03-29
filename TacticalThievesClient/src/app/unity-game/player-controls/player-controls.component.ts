@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PlayerControlsService } from '../../../services/player-controls-service/player-controls.service';
+import { ServerHubService } from '../../../services/server-hub-service/server-hub.service';
 
 
 @Component({
@@ -8,11 +9,20 @@ import { PlayerControlsService } from '../../../services/player-controls-service
   templateUrl: './player-controls.component.html',
   styleUrl: './player-controls.component.css'
 })
-export class PlayerControlsComponent {
+export class PlayerControlsComponent implements OnInit {
   
-  constructor(private playerControlsService : PlayerControlsService)
-  {
+  restartLabel: string
 
+  constructor(private playerControlsService : PlayerControlsService, private serverHubService: ServerHubService)
+  {
+    this.restartLabel = "Restart level"
+  }
+
+  ngOnInit()
+  {
+    this.serverHubService.levelBtnMessage$.subscribe((value) => {
+      this.restartLabel = value;
+    });
   }
   
   move()
@@ -36,6 +46,14 @@ export class PlayerControlsComponent {
     this.playerControlsService.sendEndTurn().subscribe({
       next: res => console.log('Fin de tour envoyée', res),
       error: err => console.error('Erreur fin de tour', err)
+    });
+  }
+
+  restart()
+  {
+    this.playerControlsService.sendRestartLevel().subscribe({
+      next: res => console.log('restart command sent', res),
+      error: err => console.error('restart command error', err)
     });
   }
 

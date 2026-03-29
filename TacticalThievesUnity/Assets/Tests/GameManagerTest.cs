@@ -52,7 +52,7 @@ public class GameManagerTest
     public System.Collections.IEnumerator GameStateTransitionsToWinOnVictory()
     {
         Assert.AreEqual(GameManager.GameState.IN_GAME, gameManager.GetGameState(), "Initial game state should be IN_GAME.");
-        gameManager.OnThiefReachExitAsync();
+        gameManager.OnThiefReachExit();
         Assert.AreEqual(GameManager.GameState.WIN, gameManager.GetGameState(), "Game state should transition to WIN after victory.");
         yield return null; // attendre 1 frame
     }

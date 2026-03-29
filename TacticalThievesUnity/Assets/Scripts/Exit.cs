@@ -21,21 +21,21 @@ public class Exit : MonoBehaviour
         
     }
 
-    private async Task OnTriggerEnter(UnityEngine.Collider other)
+    private void OnTriggerEnter(UnityEngine.Collider other)
     {
         Thief thief = other.GetComponent<Thief>();
         if(thief == null)
             return;
 
         //TODO Log en cas d'erreur
-        await OnThiefReachExitAsync(GameManager.Instance);
+        OnThiefReachExit(GameManager.Instance);
         thief.OnThiefReachedExit();
 
         Animator animator = model?.GetComponent<Animator>();
         animator.Play("OpenDoor");
     }
 
-    public async Task<bool> OnThiefReachExitAsync(GameManager gameManager)
+    public bool OnThiefReachExit(GameManager gameManager)
     {
         if (gameManager == null)
             return false;
@@ -44,7 +44,7 @@ public class Exit : MonoBehaviour
 
 
         gameManager.CurrentAudioManager?.OnDoorOpenned();
-        await gameManager.OnThiefReachExitAsync();
+        gameManager.OnThiefReachExit();
 
         return true;
     }

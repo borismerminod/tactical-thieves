@@ -50,8 +50,30 @@ namespace TacticalThievesServer.Controllers
         [HttpPost("end-turn")]
         public IActionResult EndTurn()
         {
-            webSocketHandler.Broadcast("end-turn");
+            GameMessage gameMessage = new GameMessage
+            {
+                Type = "end-turn",
+                Level = 0
+            };
+
+            var json = JsonSerializer.Serialize(gameMessage);
+            webSocketHandler.Broadcast(json);
             return Ok(new { success = true });
+        }
+
+        [HttpPost("restart")]
+        public IActionResult Restart()
+        {
+            GameMessage gameMessage = new GameMessage
+            {
+                Type = "restart",
+                Level = 0
+            };
+
+            var json = JsonSerializer.Serialize(gameMessage);
+            webSocketHandler.Broadcast(json);
+            return Ok(new { success = true });
+
         }
 
         [HttpPost("collect-treasure")]
@@ -67,9 +89,9 @@ namespace TacticalThievesServer.Controllers
         }
 
         [HttpPost("exit-reached")]
-        public IActionResult ExitReached()
+        public IActionResult ExitReached([FromBody] PlayerProgressDTO playerProgress)
         {
-            clientHub.Clients.All.SendAsync("ExitReached");
+            clientHub.Clients.All.SendAsync("ExitReached", playerProgress.CurrentLevel);
             return Ok(new { success = true });
         }
 
@@ -87,13 +109,30 @@ namespace TacticalThievesServer.Controllers
             return Ok(new { success = true });
         }
 
+        [HttpPost("load-random-level")]
+        public IActionResult LoadRandomLevel()
+        {
+            GameMessage gameMessage = new GameMessage
+            {
+                Type = "load-random-level",
+                Level = 0
+            };
+            var json = JsonSerializer.Serialize(gameMessage);
+            webSocketHandler.Broadcast(json);
+            return Ok(new { success = true });
+        }
+
+        [Authorize]
         [HttpPost("save-level")]
         public async Task<IActionResult> SaveLevel([FromBody] PlayerProgressDTO playerProgress)
         {
-            if (playerProgress == null || string.IsNullOrWhiteSpace(playerProgress.Pseudo))
-                return BadRequest(new { success = false, message = "Invalid player data" });
+            // Récupérer username depuis le JWT
+            var username = User.FindFirst("username")?.Value;
 
-            var existingUser = await db.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == playerProgress.Pseudo.ToLower());
+            if (string.IsNullOrEmpty(username))
+                return Unauthorized(new { success = false, message = "Invalid token" });
+
+            var existingUser = await db.Users.Include(u => u.CurrentLevel).FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
 
             if (existingUser == null)
                 return NotFound(new { success = false, message = "User not found" });
@@ -103,17 +142,18 @@ namespace TacticalThievesServer.Controllers
             {
                 // Met à jour le niveau si nécessaire
                 existingUser.CurrentLevel.CurrentLevel = playerProgress.CurrentLevel;
-                db.Users.Update(existingUser);
+                //db.Users.Update(existingUser);
                 //db.PlayerProgresses.Update(existing);
             }
             else
             {
                 existingUser.CurrentLevel = new PlayerProgress
                 {
+                    UserId = existingUser.Id,
                     CurrentLevel = playerProgress.CurrentLevel
                 };
 
-                db.Users.Update(existingUser);
+                //db.Users.Update(existingUser);
                 // Ajoute une nouvelle progression
                 //db.PlayerProgresses.Add(playerProgress);
             }

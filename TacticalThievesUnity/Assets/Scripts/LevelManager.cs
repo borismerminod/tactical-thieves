@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    async void Update()
+    void Update()
     {
         if(!levelManagerStarted && GameManager.Instance != null && GameManager.Instance.IsAPIClientStarted())
         {
@@ -38,6 +38,7 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    //Obsolète ?
     public async Task SaveLevel(GameManager gameManager)
     {
         int nextLevelIndex = loadedLevelIndex + 1;
@@ -46,6 +47,26 @@ public class LevelManager : MonoBehaviour
             nextLevelIndex = 0;
         }
         await gameManager.SaveNextLevelAsync(nextLevelIndex);
+    }
+
+    public int SaveLevel()
+    {
+        int nextLevelIndex;
+        if(currentLevelIndex == -1)
+        {
+            nextLevelIndex = loadedLevelIndex + 1;
+        }
+        else
+        {
+            nextLevelIndex = currentLevelIndex;
+        }
+
+        if (nextLevelIndex >= levels.Length)
+        {
+            nextLevelIndex = 0;
+        }
+
+        return nextLevelIndex;
     }
 
     //Obsolète ?
@@ -79,6 +100,7 @@ public class LevelManager : MonoBehaviour
             return false;
         }
 
+       
         GameObject level = Instantiate(levels[levelIndex], gameManager.transform.position, gameManager.transform.rotation);
         level.transform.DOMoveY(10, 1.0f).From().SetEase(Ease.OutBounce).SetLink(gameObject).OnComplete( () =>
         {
@@ -95,7 +117,10 @@ public class LevelManager : MonoBehaviour
         if (currentLevelIndex >= 0 )
         {
             levelIndex = currentLevelIndex;
-
+        }
+        else
+        {
+            loadedLevelIndex = levelIndex;
         }
 
         if (levelIndex < 0 || levelIndex >= levels.Length)
@@ -107,5 +132,12 @@ public class LevelManager : MonoBehaviour
         GameObject level = Instantiate(levels[levelIndex], transform.position, transform.rotation);
 
         return level;
+    }
+
+    public GameObject LoadRandomLevel()
+    {
+        int levelIndex = Random.Range(0, levels.Length);
+
+        return LoadLevel(levelIndex);
     }
 }

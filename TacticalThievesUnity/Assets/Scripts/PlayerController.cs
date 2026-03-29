@@ -10,17 +10,23 @@ namespace TacticalThieves
     {
         [SerializeField] Thief selectedThief;
         [SerializeField] Grid levelGrid;
+        [SerializeField] bool levelLoaded;
 
         // Start is called before the first frame update
         void Start()
         {
             GameManager.Instance?.OnPlayerControllerStarted(this);
+            levelLoaded = false;
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            if(levelLoaded == false && Input.GetKey(KeyCode.Space))
+            {
+                GameManager.Instance?.LoadLevel(1);
+                levelLoaded = true;
+            }
         }
 
         public void OnGridStarted(Grid grid)

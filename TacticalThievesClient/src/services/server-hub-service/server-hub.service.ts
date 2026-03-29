@@ -21,6 +21,9 @@ export class ServerHubService {
   private gameOverMessage = new BehaviorSubject<string>("")
   gameOverMessage$ = this.gameOverMessage.asObservable()
 
+  private levelBtnMessage = new BehaviorSubject<string>("Restart level")
+  levelBtnMessage$ = this.levelBtnMessage.asObservable();
+
   constructor(private http: HttpClient)
   { 
     this.startConnection()
@@ -55,9 +58,13 @@ export class ServerHubService {
 
   public onExitReached() : void 
   {
-    this.hubConnection.on('ExitReached', () => {
+    this.hubConnection.on('ExitReached', (nextLevel: number) => {
       console.log("Exit reached by thief")
       this.gameOverMessage.next("You win !!!")
+
+      this.levelBtnMessage.next("Next level")
+
+      this.sendSaveLevelCommand(nextLevel)
     })
   }
 
@@ -65,15 +72,46 @@ export class ServerHubService {
   {
     const authToken = sessionStorage.getItem("authToken");
 
-    await firstValueFrom(
-      this.http.post(`${this.serverURL}/api/Game/load-level`, {}, {
-        headers: {
-          Authorization: `Bearer ${authToken}`
-        }
-    })
-);
-    
+    if(authToken === null)
+    {
+        await firstValueFrom(
+          this.http.post(`${this.serverURL}/api/Game/load-random-level`, {}, {
+            headers: {
+              Authorization: `Bearer ${authToken}`
+            }
+        })
+      );
+    }
+    else
+    {
+        await firstValueFrom(
+          this.http.post(`${this.serverURL}/api/Game/load-level`, {}, {
+            headers: {
+              Authorization: `Bearer ${authToken}`
+            }
+        })
+      );
+    }
+  
+  }
 
+   public async sendSaveLevelCommand(nextLevel: number) : Promise<void>
+  {
+    const authToken = sessionStorage.getItem("authToken");
+
+    const body = {
+      Pseudo: "",
+      CurrentLevel : nextLevel
+    }
+
+      await firstValueFrom(
+        this.http.post(`${this.serverURL}/api/Game/save-level`, body, {
+          headers: {
+            Authorization: `Bearer ${authToken}`
+          }
+      })
+    );
+  
   }
 
   public onGameStart() : void 
@@ -82,6 +120,7 @@ export class ServerHubService {
       console.log("Game start")
       this.gameOverMessage.next("")
       this.playerGoldSource.next(0)
+      this.levelBtnMessage.next("Restart level")
       this.sendLoadLevelCommand()
     })
   }

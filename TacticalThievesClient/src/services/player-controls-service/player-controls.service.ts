@@ -27,4 +27,9 @@ export class PlayerControlsService {
     return this.http.post(`${this.apiUrl}/end-turn`, {});
   }
 
+  sendRestartLevel() : Observable<any>
+  {
+    return this.http.post(`${this.apiUrl}/restart`, {});
+  }
+
 }

@@ -114,7 +114,7 @@ public class WebSocketClient : MonoBehaviour
             return;
         }
 
-        if (serverMessage == null || string.IsNullOrEmpty(serverMessage.type))
+        if (serverMessage == null || string.IsNullOrEmpty(serverMessage.Type))
         {
             Debug.LogWarning("Invalid message format");
             return;
@@ -129,7 +129,7 @@ public class WebSocketClient : MonoBehaviour
         if (playerController == null)
             return;
 
-        switch (serverMessage.type)
+        switch (serverMessage.Type)
         {
             case "move":
                 Debug.Log("Triggering move action");
@@ -145,7 +145,15 @@ public class WebSocketClient : MonoBehaviour
                 break;
             case "load-level":
                 Debug.Log("Triggering load level action");
-                GameManager.Instance.LoadLevel(serverMessage.level);
+                GameManager.Instance.LoadLevel(serverMessage.Level);
+                break;
+            case "load-random-level":
+                Debug.Log("Triggering load random level action");
+                GameManager.Instance.LoadRandomLevel();
+                break;
+            case "restart":
+                Debug.Log("Triggering restart action");
+                GameManager.Instance.RestartLevel();
                 break;
             default:
                 Debug.Log("Unknown command");
@@ -167,6 +175,6 @@ public class WebSocketClient : MonoBehaviour
 [Serializable]
 public class ServerMessage
 {
-    public string type;
-    public int level;
+    public string Type;
+    public int Level;
 }

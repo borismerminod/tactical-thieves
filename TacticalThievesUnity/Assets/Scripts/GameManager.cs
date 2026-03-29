@@ -129,15 +129,18 @@ namespace TacticalThieves
                 StartCoroutine(apiClient.CollectTreasure(PlayerGold));
         }
 
-        public async Task OnThiefReachExitAsync()
+        public void OnThiefReachExit()
         {
             gameState = GameState.WIN;
 
             if (apiClient != null && TestMode == false)
             {
-                StartCoroutine(apiClient.ThiefReachedExit());
-                await levelManager.SaveLevel(this);
-                Invoke("RestartLevel", 3.0f);
+                int nextLevel = levelManager.SaveLevel();
+                Debug.Log("OnThiefReachExit " + nextLevel);
+
+                StartCoroutine(apiClient.ThiefReachedExit(nextLevel));
+                
+                //Invoke("RestartLevel", 3.0f);
             }
         }
 
@@ -185,7 +188,7 @@ namespace TacticalThieves
             StartCoroutine(apiClient.GameStart());
         }
 
-        private void RestartLevel()
+        public void RestartLevel()
         {
             levelManager.RestartLevel();
         }
@@ -314,6 +317,24 @@ namespace TacticalThieves
                         });
             }
         }
+
+        public void LoadRandomLevel()
+        {
+            GameObject level = levelManager.LoadRandomLevel();
+            if (level != null)
+            {
+                level.transform.DOMoveY(10, 1.0f)
+                        .From()
+                        .SetEase(Ease.OutBounce)
+                        .SetLink(gameObject)
+                        .OnComplete(() =>
+                        {
+                            OnLevelLoaded(level);
+                            gameState = GameState.IN_GAME;
+                        });
+            }
+        }
+
     }
 
 }
