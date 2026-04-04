@@ -8,6 +8,7 @@ using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Services
 // =======================
 
-var key = Encoding.UTF8.GetBytes("SUPER_SECRET_KEY_1234567890123456");
+// Charger le .env
+Env.Load(); // lit le fichier .env à la racine
+
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new Exception("JWT_KEY n'est pas défini dans le .env");
+}
+
+var key = Encoding.UTF8.GetBytes(jwtKey);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -43,7 +54,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:7186")
+            .WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:7186", "https://mozell-fortifiable-moshe.ngrok-free.dev")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -52,10 +63,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton(new Fido2(new Fido2Configuration
 {
-    ServerDomain = "localhost",
+    //ServerDomain = "localhost",
+    ServerDomain = "mozell-fortifiable-moshe.ngrok-free.dev",
     ServerName = "TacticalThievesServer",
     //Origins = new HashSet<string> {"https://localhost:4200" }
-    Origins = new HashSet<string> { "https://localhost:7186" }
+    //Origins = new HashSet<string> { "https://localhost:7186" }
+    Origins = new HashSet<string> { "https://mozell-fortifiable-moshe.ngrok-free.dev/" }
 }));
 
 builder.Services.AddSingleton<WebSocketHandler>();
@@ -68,9 +81,21 @@ builder.Services.AddSession(); //Pour stocker les options FIDO2 entre les requê
 
 builder.Services.AddSignalR();
 
+
+
+var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
+if (string.IsNullOrEmpty(dbPassword))
+{
+    throw new Exception("SA_PASSWORD n'est pas défini dans le .env");
+}
+
+var connectionStringWithoutPassword = builder.Configuration.GetConnectionString("DefaultConnection");
+
+string finalConnectionString = connectionStringWithoutPassword.Replace("{DB_PASSWORD}", dbPassword);
+
 // <-- Ajout : enregistrement du DbContext pour SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(finalConnectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

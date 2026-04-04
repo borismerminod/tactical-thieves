@@ -6,7 +6,7 @@ services:
     container_name: tactical-thieves-sqlserver
     environment:
       ACCEPT_EULA: Y
-      MSSQL_SA_PASSWORD: YourStrong!Passw0rd  # Remplacez par un mot de passe fort
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD} 
       MSSQL_PID: Developer  # Utilise l'édition Express gratuite
     ports:
       - "1433:1433"

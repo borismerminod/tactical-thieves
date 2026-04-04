@@ -36,6 +36,7 @@ namespace TacticalThieves
         [SerializeField] private LevelManager levelManager;
         [SerializeField] private AudioManager audioManager;
         [SerializeField] private bool bInit;
+        [SerializeField] private bool bGameStarted;
 
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
@@ -74,6 +75,7 @@ namespace TacticalThieves
         {
             gameState = GameState.LOADING;
             bInit = false;
+            bGameStarted = false;
 
             Invoke("InitCharacterTurnIndex", 1.0f);
         }
@@ -96,7 +98,7 @@ namespace TacticalThieves
         public void OnAPIClientStarted(APIClient client)
         {
             apiClient = client;
-            OnGameStart();
+            //OnGameStart();
         }
 
         public void OnGridStarted(Grid grid)
@@ -111,9 +113,15 @@ namespace TacticalThieves
         }
 
         // Update is called once per frame
-        void Update()
+        async void Update()
         {
-            if(bInit == false && gameState == GameState.IN_GAME)
+            if (bGameStarted == false && webSocketClient != null && apiClient != null)
+            {
+                await webSocketClient.ConnectWebSocket();
+                bGameStarted = true;
+            }
+
+            if (bInit == false && gameState == GameState.IN_GAME)
             {
                 InitCharacterTurnIndex();
                 bInit = true;
@@ -185,7 +193,10 @@ namespace TacticalThieves
 
         public void OnGameStart()
         {
+            Debug.Log("OnGameStart Start");
+
             StartCoroutine(apiClient.GameStart());
+            Debug.Log("OnGameStart End");
         }
 
         public void RestartLevel()

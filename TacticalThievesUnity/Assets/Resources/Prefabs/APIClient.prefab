@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0f20730ca08834c90d6cfecd20ce0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverUrl: http://localhost:5140/api
+  serverUrl: https://mozell-fortifiable-moshe.ngrok-free.dev/api
+  apiClientStarted: 0

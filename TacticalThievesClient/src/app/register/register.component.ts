@@ -18,7 +18,8 @@ export class RegisterComponent {
   displayName: string = '';
   message: string = '';
 
-  serverURL: string = 'https://localhost:7186';
+  //serverURL: string = 'https://localhost:7186';
+  serverURL: string = 'https://mozell-fortifiable-moshe.ngrok-free.dev';
 
   constructor(private http: HttpClient, private router: Router) {}
 

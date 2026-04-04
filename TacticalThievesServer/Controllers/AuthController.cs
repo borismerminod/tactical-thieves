@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using DotNetEnv;
 using Fido2NetLib;
 using Fido2NetLib.Objects;
 using Microsoft.AspNetCore.Identity;
@@ -332,11 +333,20 @@ namespace TacticalThievesServer.Controllers
 
         private string GenerateJwtToken(string username)
         {
+
+            Env.Load(); // lit le fichier .env à la racine
+
+            var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+
+            if (string.IsNullOrEmpty(jwtKey))
+            {
+                throw new Exception("JWT_KEY n'est pas défini dans le .env");
+            }
             /*Clé secrète utilisée pour signer le token
             Doit faire au moins 32 caractères (256 bits) pour HS256
             DOTO En production ==> stocker dans appsettings.json ou variable d'environnement*/
             var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("SUPER_SECRET_KEY_1234567890123456")
+                Encoding.UTF8.GetBytes(jwtKey)
             );
 
             //Création des credentials de signature avec l'algorithme HmacSha256

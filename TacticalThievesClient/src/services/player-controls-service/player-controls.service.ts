@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class PlayerControlsService {
 
-  private apiUrl = "https://localhost:7186/api/Game" 
+  private apiUrl = "https://mozell-fortifiable-moshe.ngrok-free.dev/api/Game" 
+  //private apiUrl = "https://localhost:7186/api/Game" 
  // private apiUrl = "http://localhost:5140/api/Game" 
 
   constructor(private http: HttpClient) { }

@@ -12,7 +12,8 @@ public class WebSocketClient : MonoBehaviour
 
     // URL du serveur WebSocket
     //public string serverUri = "ws://localhost:5140/ws";
-    public string serverUri = "wss://localhost:7186/ws"; 
+    //public string serverUri = "wss://localhost:7186/ws"; 
+    public string serverUri = "wss://mozell-fortifiable-moshe.ngrok-free.dev/ws"; 
     public bool webSocketClientStarted;
 
     private void Start()
@@ -37,7 +38,7 @@ public class WebSocketClient : MonoBehaviour
         GameObject debugText = GameObject.FindGameObjectWithTag("DebugText");
         GameManager.Instance.OnWebSocketClientStarted(this);
 
-        try
+        /*try
         {
             Debug.Log("Connecting to WebSocket server...");
             if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = serverUri;
@@ -82,9 +83,63 @@ public class WebSocketClient : MonoBehaviour
             string err = "WebSocket error: " + ex.Message;
             Debug.LogError(err);
             if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = err;
-        }
+        }*/
     }
 
+    public async Task ConnectWebSocket()
+    {
+        GameObject debugText = GameObject.FindGameObjectWithTag("DebugText");
+        //GameManager.Instance.OnWebSocketClientStarted(this);
+
+        try
+        {
+            Debug.Log("Connecting to WebSocket server...");
+            if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = serverUri;
+
+            // Création de l'instance NativeWebSocket
+            _websocket = new WebSocket(serverUri);
+
+            // Événements
+            _websocket.OnOpen += () =>
+            {
+                Debug.Log("Connected!");
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "Connected!";
+
+                GameManager.Instance.OnGameStart();
+            };
+
+            _websocket.OnError += (e) =>
+            {
+                Debug.LogError("WebSocket error: " + e);
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "WebSocket error: " + e;
+            };
+
+            _websocket.OnClose += (code) =>
+            {
+                Debug.Log("WebSocket closed: " + code);
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "WebSocket closed: " + code;
+            };
+
+            _websocket.OnMessage += (bytes) =>
+            {
+                var msg = Encoding.UTF8.GetString(bytes);
+                Debug.Log("Received: " + msg);
+                HandleServerMessage(msg);
+            };
+
+            // Connexion (NativeWebSocket.Connect)
+            await _websocket.Connect();
+
+            // Exemple : envoyer un message au serveur
+            await SendMessageAsync("Hello from Unity!");
+        }
+        catch (Exception ex)
+        {
+            string err = "WebSocket error: " + ex.Message;
+            Debug.LogError(err);
+            if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = err;
+        }
+    }
     public async Task SendMessageAsync(string message)
     {
         if (_websocket == null) return;
