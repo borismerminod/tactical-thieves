@@ -9,6 +9,7 @@ using TacticalThievesServer.Data;
 using TacticalThievesServer.DTO;
 using TacticalThievesServer.Models;
 using TacticalThievesServer.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TacticalThievesServer.Controllers
@@ -22,13 +23,15 @@ namespace TacticalThievesServer.Controllers
         private readonly WebSocketHandler webSocketHandler;
         private readonly IHubContext<ClientHub> clientHub;
         private readonly ApplicationDbContext db; // ajout du DbContext
+        private readonly WebSocketLinkerService linker;
 
-        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db)
+        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db, WebSocketLinkerService linker)
         {
             this.thiefState = thiefState;
             this.webSocketHandler = webSocketHandler;
             this.clientHub = clientHub;
             this.db = db;
+            this.linker = linker;
         }
 
         [HttpPost("move")]
@@ -50,6 +53,15 @@ namespace TacticalThievesServer.Controllers
         [HttpPost("end-turn")]
         public IActionResult EndTurn()
         {
+            // récupérer sessionId depuis header
+            var sessionId = Request.Headers["X-Session-Id"].ToString();
+            if (string.IsNullOrEmpty(sessionId))
+                return BadRequest("Missing sessionId");
+
+            // récupérer le lien
+            if (!linker.TryGet(sessionId, out var link))
+                return NotFound("Link not found for session");
+
             GameMessage gameMessage = new GameMessage
             {
                 Type = "end-turn",
@@ -57,13 +69,26 @@ namespace TacticalThievesServer.Controllers
             };
 
             var json = JsonSerializer.Serialize(gameMessage);
-            webSocketHandler.Broadcast(json);
+
+            webSocketHandler.SendToClient(link.UnityGUID, json);
+            //webSocketHandler.Broadcast(json);
             return Ok(new { success = true });
         }
 
         [HttpPost("restart")]
         public IActionResult Restart()
         {
+
+            // récupérer sessionId depuis header
+            var sessionId = Request.Headers["X-Session-Id"].ToString();
+            if (string.IsNullOrEmpty(sessionId))
+                return BadRequest("Missing sessionId");
+
+            // récupérer le lien
+            if (!linker.TryGet(sessionId, out var link))
+                return NotFound("Link not found for session");
+
+
             GameMessage gameMessage = new GameMessage
             {
                 Type = "restart",
@@ -71,7 +96,10 @@ namespace TacticalThievesServer.Controllers
             };
 
             var json = JsonSerializer.Serialize(gameMessage);
-            webSocketHandler.Broadcast(json);
+
+            webSocketHandler.SendToClient(link.UnityGUID, json);
+
+            //webSocketHandler.Broadcast(json);
             return Ok(new { success = true });
 
         }
@@ -79,11 +107,22 @@ namespace TacticalThievesServer.Controllers
         [HttpPost("collect-treasure")]
         public IActionResult CollectTreasure([FromBody] TreasureCollectDTO dto)
         {
+            // récupérer sessionId depuis header
+            var sessionId = Request.Headers["X-Session-Id"].ToString();
+            if (string.IsNullOrEmpty(sessionId))
+                return BadRequest("Missing sessionId");
+
             if (dto == null || dto.Amount <= 0)
                 return BadRequest(new { success = false, message = "Invalid treasure amount" });
 
+            // récupérer le lien
+            if (!linker.TryGet(sessionId, out var link))
+                return NotFound("Link not found for session");
+
+
+            clientHub.Clients.Client(link.AngularGUID).SendAsync("ScoreUpdated", dto.Amount);
             //clientHub.SendPlayerGoldUpdate(dto.Amount);
-            clientHub.Clients.All.SendAsync("ScoreUpdated", dto.Amount);
+            //clientHub.Clients.All.SendAsync("ScoreUpdated", dto.Amount);
 
             return Ok(new { success = true, gold = dto.Amount });
         }
@@ -91,35 +130,123 @@ namespace TacticalThievesServer.Controllers
         [HttpPost("exit-reached")]
         public IActionResult ExitReached([FromBody] PlayerProgressDTO playerProgress)
         {
-            clientHub.Clients.All.SendAsync("ExitReached", playerProgress.CurrentLevel);
+            // récupérer sessionId depuis header
+            var sessionId = Request.Headers["X-Session-Id"].ToString();
+            if (string.IsNullOrEmpty(sessionId))
+                return BadRequest("Missing sessionId");
+
+            // récupérer le lien
+            if (!linker.TryGet(sessionId, out var link))
+                return NotFound("Link not found for session");
+
+            clientHub.Clients.Client(link.AngularGUID).SendAsync("ExitReached", playerProgress.CurrentLevel);
+            
+            //clientHub.Clients.All.SendAsync("ExitReached", playerProgress.CurrentLevel);
             return Ok(new { success = true });
         }
 
-        [HttpPost("game-start")]
-        public IActionResult GameStart()
+        /*[HttpPost("game-start")]
+        public IActionResult GameStart([FromBody] GameStartDTO gameStartDTO)
         {
-            clientHub.Clients.All.SendAsync("GameStart"); 
+            linker.AddOrUpdate(gameStartDTO.SessionID, unityGuid: gameStartDTO.UnityGUID);
+            clientHub.Clients.All.SendAsync("GameStart", gameStartDTO.SessionID); 
             return Ok(new { success = true });
+        }*/
+
+        [HttpPost("game-start")]
+        public async Task<IActionResult> GameStart([FromBody] GameStartDTO gameStartDTO)
+        {
+            try
+            {
+                //Vérification du body
+                if (gameStartDTO == null)
+                    return BadRequest("DTO is null");
+
+                if (string.IsNullOrEmpty(gameStartDTO.SessionID))
+                    return BadRequest("Missing SessionID");
+
+                if (string.IsNullOrEmpty(gameStartDTO.UnityGUID))
+                    return BadRequest("Missing UnityGUID");
+
+                // Debug (très important)
+                Console.WriteLine($"[GameStart] Session: {gameStartDTO.SessionID} | Unity: {gameStartDTO.UnityGUID}");
+
+                // Enregistrement
+                linker.AddOrUpdate(gameStartDTO.SessionID, unityGuid: gameStartDTO.UnityGUID);
+
+                // Broadcast vers Angular
+                await clientHub.Clients.All.SendAsync("GameStart", gameStartDTO.SessionID);
+
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[GameStart ERROR] {ex.Message}");
+
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPost("thieves-died")]
         public IActionResult ThievesDied()
         {
-            clientHub.Clients.All.SendAsync("ThievesDied");
+            // récupérer sessionId depuis header
+            var sessionId = Request.Headers["X-Session-Id"].ToString();
+            if (string.IsNullOrEmpty(sessionId))
+                return BadRequest("Missing sessionId");
+
+            // récupérer le lien
+            if (!linker.TryGet(sessionId, out var link))
+                return NotFound("Link not found for session");
+
+            clientHub.Clients.Client(link.AngularGUID).SendAsync("ThievesDied");
+            //clientHub.Clients.All.SendAsync("ThievesDied");
             return Ok(new { success = true });
         }
 
         [HttpPost("load-random-level")]
         public IActionResult LoadRandomLevel()
         {
-            GameMessage gameMessage = new GameMessage
+            try
             {
-                Type = "load-random-level",
-                Level = 0
-            };
-            var json = JsonSerializer.Serialize(gameMessage);
-            webSocketHandler.Broadcast(json);
-            return Ok(new { success = true });
+               // récupérer connectionId depuis header
+                var connectionId = Request.Headers["X-Connection-Id"].ToString();
+                if (string.IsNullOrEmpty(connectionId))
+                    return BadRequest("Missing connectionId");
+
+                // récupérer sessionId depuis header
+                var sessionId = Request.Headers["X-Session-Id"].ToString();
+                if (string.IsNullOrEmpty(sessionId))
+                    return BadRequest("Missing sessionId");
+
+                // récupérer le lien
+                linker.AddOrUpdate(sessionId, angularGuid: connectionId);
+                if (!linker.TryGet(sessionId, out var link))
+                    return NotFound("Link not found for session");
+
+                GameMessage gameMessage = new GameMessage
+                {
+                    Type = "load-random-level",
+                    Level = 0
+                };
+                var json = JsonSerializer.Serialize(gameMessage);
+
+                webSocketHandler.SendToClient(link.UnityGUID, json);
+                //webSocketHandler.Broadcast(json);
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
         }
 
         [Authorize]
@@ -218,6 +345,20 @@ namespace TacticalThievesServer.Controllers
                 if (player == null)
                     return NotFound(new { success = false, message = "Player not found" });
 
+                // récupérer connectionId
+                var connectionId = Request.Headers["X-Connection-Id"].ToString();
+                if (string.IsNullOrEmpty(connectionId))
+                    return BadRequest("Missing connectionId");
+
+                // récupérer sessionId
+                var sessionId = Request.Headers["X-Session-Id"].ToString();
+                if (string.IsNullOrEmpty(sessionId))
+                    return BadRequest("Missing sessionId");
+
+                linker.AddOrUpdate(sessionId, angularGuid: connectionId);
+                if (!linker.TryGet(sessionId, out var link))
+                    return NotFound("Link not found for session");
+
                 // Envoi au jeu via WebSocket
                 var payload = new GameMessage();
                 payload.Type = "load-level";
@@ -226,8 +367,10 @@ namespace TacticalThievesServer.Controllers
 
                 var json = JsonSerializer.Serialize(payload);
 
+                webSocketHandler.SendToClient(link.UnityGUID, json);
+
                 //await webSocketHandler.BroadcastAsync(payload);
-                webSocketHandler.Broadcast(json);
+                //webSocketHandler.Broadcast(json);
 
                 // Réponse API
                 return Ok(new
@@ -258,6 +401,12 @@ namespace TacticalThievesServer.Controllers
     {
         public string Type { get; set; }
         public int Level { get; set; }
+    }
+
+    public class GameStartDTO
+    {
+        public string SessionID { get; set; }
+        public string UnityGUID { get; set; }
     }
 
 }

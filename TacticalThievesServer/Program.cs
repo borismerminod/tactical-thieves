@@ -54,7 +54,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:7186", "https://mozell-fortifiable-moshe.ngrok-free.dev")
+            .WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:7186", "https://mozell-fortifiable-moshe.ngrok-free.dev", "https://tactical-thieves.loca.lt")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -63,16 +63,19 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton(new Fido2(new Fido2Configuration
 {
-    //ServerDomain = "localhost",
-    ServerDomain = "mozell-fortifiable-moshe.ngrok-free.dev",
+    ServerDomain = "localhost",
+    //ServerDomain = "mozell-fortifiable-moshe.ngrok-free.dev",
+    //ServerDomain = "https://tactical-thieves.loca.lt",
     ServerName = "TacticalThievesServer",
     //Origins = new HashSet<string> {"https://localhost:4200" }
-    //Origins = new HashSet<string> { "https://localhost:7186" }
-    Origins = new HashSet<string> { "https://mozell-fortifiable-moshe.ngrok-free.dev/" }
+    Origins = new HashSet<string> { "https://localhost:7186" }
+    //Origins = new HashSet<string> { "https://mozell-fortifiable-moshe.ngrok-free.dev/" }
+    //Origins = new HashSet<string> { "https://tactical-thieves.loca.lt/" }
 }));
 
 builder.Services.AddSingleton<WebSocketHandler>();
 builder.Services.AddSingleton<ThiefStateService>();
+builder.Services.AddSingleton<WebSocketLinkerService>();
 
 builder.Services.AddControllers();
 

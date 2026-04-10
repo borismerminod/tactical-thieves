@@ -12,8 +12,9 @@ public class WebSocketClient : MonoBehaviour
 
     // URL du serveur WebSocket
     //public string serverUri = "ws://localhost:5140/ws";
-    //public string serverUri = "wss://localhost:7186/ws"; 
-    public string serverUri = "wss://mozell-fortifiable-moshe.ngrok-free.dev/ws"; 
+    public string serverUri = "wss://localhost:7186/ws?clientId={$clientId}"; 
+    //private string serverUri = "wss://mozell-fortifiable-moshe.ngrok-free.dev/ws?clientId={$clientId}"; 
+    //private string serverUri = "wss://tactical-thieves.loca.lt/ws?clientId={$clientId}"; 
     public bool webSocketClientStarted;
 
     private void Start()
@@ -97,7 +98,11 @@ public class WebSocketClient : MonoBehaviour
             if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = serverUri;
 
             // Création de l'instance NativeWebSocket
-            _websocket = new WebSocket(serverUri);
+
+
+            string finallUri = serverUri.Replace("{$clientId}", GameManager.Instance.UnityGUID);
+
+            _websocket = new WebSocket(finallUri);
 
             // Événements
             _websocket.OnOpen += () =>

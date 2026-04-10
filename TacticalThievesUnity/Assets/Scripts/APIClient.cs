@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 //using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 using static System.Net.WebRequestMethods;
-using System.Threading.Tasks;
 
 namespace TacticalThieves
 {
@@ -54,7 +55,9 @@ namespace TacticalThieves
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
+
             request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("X-Session-Id", GameManager.Instance.SessionID);
 
             yield return request.SendWebRequest();
 
@@ -79,7 +82,10 @@ namespace TacticalThieves
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
+
             request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("X-Session-Id", GameManager.Instance.SessionID);
+
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
@@ -99,7 +105,10 @@ namespace TacticalThieves
             var request = new UnityWebRequest(endpoint, "POST");
             request.uploadHandler = new UploadHandlerRaw(new byte[0]);
             request.downloadHandler = new DownloadHandlerBuffer();
+
             request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("X-Session-Id", GameManager.Instance.SessionID);
+
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
@@ -116,8 +125,17 @@ namespace TacticalThieves
         {
             string endpoint = $"{serverUrl}/Game/game-start";
 
+            var payload = new GameStartDto
+            {
+                SessionID = GameManager.Instance.SessionID,
+                UnityGUID = GameManager.Instance.UnityGUID
+            };
+
+            string json = JsonUtility.ToJson(payload);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+            Debug.Log(json);
             var request = new UnityWebRequest(endpoint, "POST");
-            request.uploadHandler = new UploadHandlerRaw(new byte[0]);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             yield return request.SendWebRequest();
@@ -239,6 +257,13 @@ namespace TacticalThieves
             public int id;
             public string pseudo;
             public int level;
+        }
+
+
+        public class GameStartDto
+        {
+            public string SessionID;
+            public string UnityGUID;
         }
 
     }

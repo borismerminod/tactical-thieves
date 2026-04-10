@@ -1,5 +1,6 @@
 //using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Explorer;
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace TacticalThieves
         [SerializeField] private AudioManager audioManager;
         [SerializeField] private bool bInit;
         [SerializeField] private bool bGameStarted;
+        [SerializeField] private string unityGUID;
+        [SerializeField] private string sessionID;
 
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
@@ -46,6 +49,10 @@ namespace TacticalThieves
         public List<Character> Characters { get => characters; private set => characters = value; }
 
         public AudioManager CurrentAudioManager { get => audioManager; private set => audioManager = value; }
+
+        public string UnityGUID { get => unityGUID; private set => unityGUID = value; }
+
+        public string SessionID { get => sessionID; private set => sessionID = value; }
 
 
         public GameState GetGameState() => gameState;
@@ -68,6 +75,35 @@ namespace TacticalThieves
         private void Awake()
         {
             Instance = this;
+            unityGUID = System.Guid.NewGuid().ToString();
+
+            string url = Application.absoluteURL;
+            Debug.Log("URL: " + url);
+
+            SessionID = GetQueryParam("sessionId");
+            Debug.Log("SessionId: " + SessionID);
+        }
+
+        public static string GetQueryParam(string key)
+        {
+            string url = Application.absoluteURL;
+
+            if (string.IsNullOrEmpty(url))
+                return null;
+
+            var uri = new System.Uri(url);
+            var query = uri.Query.TrimStart('?').Split('&');
+
+            foreach (var param in query)
+            {
+                var parts = param.Split('=');
+                if (parts.Length == 2 && parts[0] == key)
+                {
+                    return Uri.UnescapeDataString(parts[1]);
+                }
+            }
+
+            return null;
         }
 
         // Start is called before the first frame update
