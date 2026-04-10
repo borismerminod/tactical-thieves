@@ -1,9 +1,14 @@
-using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Explorer;
+//using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Explorer;
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
+using System.Threading.Tasks;
+
+//using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.UI.CanvasScaler;
 
 namespace TacticalThieves
 {
@@ -11,6 +16,7 @@ namespace TacticalThieves
     {
         public enum GameState
         {
+            LOADING,
             IN_GAME,
             WIN,
             LOSE
@@ -28,12 +34,25 @@ namespace TacticalThieves
         [SerializeField] private int characterTurnIndex;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private AIController aiController;
+        [SerializeField] private LevelManager levelManager;
+        [SerializeField] private AudioManager audioManager;
+        [SerializeField] private bool bInit;
+        [SerializeField] private bool bGameStarted;
+        [SerializeField] private string unityGUID;
+        [SerializeField] private string sessionID;
+
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
 
         public bool TestMode { get => testMode; set => testMode = value; }
 
         public List<Character> Characters { get => characters; private set => characters = value; }
+
+        public AudioManager CurrentAudioManager { get => audioManager; private set => audioManager = value; }
+
+        public string UnityGUID { get => unityGUID; private set => unityGUID = value; }
+
+        public string SessionID { get => sessionID; private set => sessionID = value; }
 
 
         public GameState GetGameState() => gameState;
@@ -44,22 +63,55 @@ namespace TacticalThieves
             private set
             {
                 playerGold = value;
-                if(playerGold < 0)
+                if (playerGold < 0)
                     playerGold = 0;
             }
         }
 
         public int CharacterTurnIndex { get => characterTurnIndex; set => characterTurnIndex = value; }
 
+        public PlayerController CurrentPlayerController { get => playerController; private set => playerController = value; }
+
         private void Awake()
         {
             Instance = this;
+            unityGUID = System.Guid.NewGuid().ToString();
+
+            string url = Application.absoluteURL;
+            Debug.Log("URL: " + url);
+
+            SessionID = GetQueryParam("sessionId");
+            Debug.Log("SessionId: " + SessionID);
+        }
+
+        public static string GetQueryParam(string key)
+        {
+            string url = Application.absoluteURL;
+
+            if (string.IsNullOrEmpty(url))
+                return null;
+
+            var uri = new System.Uri(url);
+            var query = uri.Query.TrimStart('?').Split('&');
+
+            foreach (var param in query)
+            {
+                var parts = param.Split('=');
+                if (parts.Length == 2 && parts[0] == key)
+                {
+                    return Uri.UnescapeDataString(parts[1]);
+                }
+            }
+
+            return null;
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            gameState = GameState.IN_GAME;
+            gameState = GameState.LOADING;
+            bInit = false;
+            bGameStarted = false;
 
             Invoke("InitCharacterTurnIndex", 1.0f);
         }
@@ -82,7 +134,7 @@ namespace TacticalThieves
         public void OnAPIClientStarted(APIClient client)
         {
             apiClient = client;
-            OnGameStart();
+            //OnGameStart();
         }
 
         public void OnGridStarted(Grid grid)
@@ -97,9 +149,19 @@ namespace TacticalThieves
         }
 
         // Update is called once per frame
-        void Update()
+        async void Update()
         {
-        
+            if (bGameStarted == false && webSocketClient != null && apiClient != null)
+            {
+                await webSocketClient.ConnectWebSocket();
+                bGameStarted = true;
+            }
+
+            if (bInit == false && gameState == GameState.IN_GAME)
+            {
+                InitCharacterTurnIndex();
+                bInit = true;
+            }
         }
 
         public void OnTreasureCollected(int gold)
@@ -117,16 +179,21 @@ namespace TacticalThieves
 
             if (apiClient != null && TestMode == false)
             {
-                StartCoroutine(apiClient.ThiefReachedExit());
-                Invoke("RestartLevel", 3.0f);
+                int nextLevel = levelManager.SaveLevel();
+                Debug.Log("OnThiefReachExit " + nextLevel);
+
+                StartCoroutine(apiClient.ThiefReachedExit(nextLevel));
+                
+                //Invoke("RestartLevel", 3.0f);
             }
         }
+
 
         public bool OnThiefDied(List<Character> characterList)
         {
             bool AllThievesAreDead = true;
-            
-            foreach(Character character in characterList)
+
+            foreach (Character character in characterList)
             {
                 Thief thief = character as Thief;
                 if (thief == null) continue;
@@ -143,11 +210,11 @@ namespace TacticalThieves
 
         public void OnThiefDied()
         {
-            if(OnThiefDied(characters))
+            if (OnThiefDied(characters))
             {
                 gameState = GameState.LOSE;
 
-                if(apiClient != null)
+                if (apiClient != null)
                 {
                     StartCoroutine(apiClient.AllThievesDied());
                     Invoke("RestartLevel", 3.0f);
@@ -162,16 +229,22 @@ namespace TacticalThieves
 
         public void OnGameStart()
         {
+            Debug.Log("OnGameStart Start");
+
             StartCoroutine(apiClient.GameStart());
+            Debug.Log("OnGameStart End");
         }
 
-        private void RestartLevel()
+        public void RestartLevel()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            levelManager.RestartLevel();
         }
 
         public void InitCharacterTurnIndex()
         {
+            if (gameState != GameState.IN_GAME)
+                return;
+
             characterTurnIndex = 0;
 
             Character character = characters[characterTurnIndex];
@@ -192,13 +265,14 @@ namespace TacticalThieves
 
         public void IncrementCharacterTurnIndex()
         {
+            if (gameState != GameState.IN_GAME)
+                return;
             characterTurnIndex++;
             if (characterTurnIndex >= characters.Count)
                 characterTurnIndex = 0;
-
             playerController.OnThiefSelected(null, true);
             aiController.OnMonsterSelected(null);
-            Debug.Log(characterTurnIndex + " "+ characters.Count);
+            //Debug.Log(characterTurnIndex + " "+ characters.Count);
             Character character = characters[characterTurnIndex];
             Thief thief = character as Thief;
             if (thief != null)
@@ -214,7 +288,99 @@ namespace TacticalThieves
             }
         }
 
+        public bool OnLevelLoaded(GameObject level)
+        {
+            if (level == null)
+                return false;
 
+            level.transform.SetParent(gameObject.transform);
+            return true;
+        }
+
+        public void OnLevelManagerStarted(LevelManager levelManager)
+        {
+            this.levelManager = levelManager;
+        }
+
+        public void OnAudioManagerStarted(AudioManager audioManager)
+        {
+            CurrentAudioManager = audioManager;
+        }
+
+        // Remplace l'ancienne version incorrecte : renvoie Task<int> et await LoadLevelAsync
+        public async Task<int> GetCurrentLevelAsync()
+        {
+            if (apiClient == null)
+                return -1;
+
+            try
+            {
+                int level = await apiClient.LoadLevelAsync("userTest");
+                Debug.Log($"LoadLevel async -> niveau: {level}");
+                return level;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"LoadLevel erreur: {ex.Message}");
+                return -1;
+            }
+        }
+
+        public async Task SaveNextLevelAsync(int nextLevelIndex)
+        {
+            if (apiClient == null)
+                return;
+            try
+            {
+                await apiClient.SaveLevelAsync("userTest", nextLevelIndex);
+                Debug.Log($"SaveLevel async -> niveau sauvegardé: {nextLevelIndex}");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"SaveLevel erreur: {ex.Message}");
+            }
+
+
+        }
+
+        public bool IsAPIClientStarted()
+        {
+            return apiClient != null;
+        }
+
+        public void LoadLevel(int levelIndex)
+        {
+            GameObject level = levelManager.LoadLevel(levelIndex);
+            if(level !=null)
+            {
+                level.transform.DOMoveY(10, 1.0f)
+                        .From()
+                        .SetEase(Ease.OutBounce)
+                        .SetLink(gameObject)
+                        .OnComplete( () =>
+                        {
+                            OnLevelLoaded(level);
+                            gameState = GameState.IN_GAME;
+                        });
+            }
+        }
+
+        public void LoadRandomLevel()
+        {
+            GameObject level = levelManager.LoadRandomLevel();
+            if (level != null)
+            {
+                level.transform.DOMoveY(10, 1.0f)
+                        .From()
+                        .SetEase(Ease.OutBounce)
+                        .SetLink(gameObject)
+                        .OnComplete(() =>
+                        {
+                            OnLevelLoaded(level);
+                            gameState = GameState.IN_GAME;
+                        });
+            }
+        }
 
     }
 

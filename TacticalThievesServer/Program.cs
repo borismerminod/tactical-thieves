@@ -1,57 +1,175 @@
-using Microsoft.AspNetCore.StaticFiles;
-using TacticalThievesServer.Services;
+﻿using Fido2NetLib;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
+using TacticalThievesServer.Data;
+using TacticalThievesServer.Services;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-/*builder.Services.AddCors(options =>
+// =======================
+// Services
+// =======================
+
+// Charger le .env
+Env.Load(); // lit le fichier .env à la racine
+
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+
+if (string.IsNullOrEmpty(jwtKey))
 {
-    options.AddDefaultPolicy(policy =>
+    throw new Exception("JWT_KEY n'est pas défini dans le .env");
+}
+
+var key = Encoding.UTF8.GetBytes(jwtKey);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    });
-});*/
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200") // ton Angular
+            .WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:7186", "https://mozell-fortifiable-moshe.ngrok-free.dev", "https://tactical-thieves.loca.lt")
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // important pour SignalR
+            .AllowCredentials();
     });
 });
 
+builder.Services.AddSingleton(new Fido2(new Fido2Configuration
+{
+    ServerDomain = "localhost",
+    //ServerDomain = "mozell-fortifiable-moshe.ngrok-free.dev",
+    //ServerDomain = "https://tactical-thieves.loca.lt",
+    ServerName = "TacticalThievesServer",
+    //Origins = new HashSet<string> {"https://localhost:4200" }
+    Origins = new HashSet<string> { "https://localhost:7186" }
+    //Origins = new HashSet<string> { "https://mozell-fortifiable-moshe.ngrok-free.dev/" }
+    //Origins = new HashSet<string> { "https://tactical-thieves.loca.lt/" }
+}));
+
 builder.Services.AddSingleton<WebSocketHandler>();
+builder.Services.AddSingleton<ThiefStateService>();
+builder.Services.AddSingleton<WebSocketLinkerService>();
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddDistributedMemoryCache(); //Pour stocker les options FIDO2 entre les requêtes
+builder.Services.AddSession(); //Pour stocker les options FIDO2 entre les requêtes
+
+builder.Services.AddSignalR();
+
+
+
+var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
+if (string.IsNullOrEmpty(dbPassword))
+{
+    throw new Exception("SA_PASSWORD n'est pas défini dans le .env");
+}
+
+var connectionStringWithoutPassword = builder.Configuration.GetConnectionString("DefaultConnection");
+
+string finalConnectionString = connectionStringWithoutPassword.Replace("{DB_PASSWORD}", dbPassword);
+
+// <-- Ajout : enregistrement du DbContext pour SQL Server
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(finalConnectionString));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<ThiefStateService>();
-builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Appliquer les migrations au démarrage (créera la base si nécessaire)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
+
+// =======================
+// Pipeline HTTP
+// =======================
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// ✅ IMPORTANT : Static Files AVANT TOUT
 var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".data"] = "application/octet-stream"; // <-- extension .data
 
+// Unity WebGL
+provider.Mappings[".wasm"] = "application/wasm";
+provider.Mappings[".data"] = "application/octet-stream";
+provider.Mappings[".framework.js"] = "application/javascript";
+provider.Mappings[".symbols.json"] = "application/json";
+
+/*// Angular
+provider.Mappings[".js"] = "application/javascript";
+provider.Mappings[".mjs"] = "application/javascript";
+provider.Mappings[".css"] = "text/css";
+provider.Mappings[".json"] = "application/json";*/
+
+/*// Angular
+provider.Mappings[".js"] = "application/javascript";
+provider.Mappings[".mjs"] = "application/javascript";
+provider.Mappings[".css"] = "text/css";
+provider.Mappings[".json"] = "application/json";
+provider.Mappings[".html"] = "text/html";
+
+// Unity WebGL files
+provider.Mappings[".wasm"] = "application/wasm";
+provider.Mappings[".data"] = "application/octet-stream";
+provider.Mappings[".framework.js"] = "application/javascript";
+provider.Mappings[".symbols.json"] = "application/octet-stream";*/
+
+// (Option: if using compressed builds with fallback)
+provider.Mappings[".unityweb"] = "application/octet-stream";
+
+app.UseDefaultFiles(); // permet index.html
 app.UseStaticFiles(new StaticFileOptions
 {
-    ContentTypeProvider = provider
+    ContentTypeProvider = provider,
+    OnPrepareResponse = ctx =>
+    {
+        // Recommandé pour WebGL moderne
+        ctx.Context.Response.Headers["Cross-Origin-Opener-Policy"] = "same-origin";
+        ctx.Context.Response.Headers["Cross-Origin-Embedder-Policy"] = "require-corp";
+    }
 });
 
-app.UseStaticFiles();
-app.UseDefaultFiles();
+app.MapFallbackToFile("angular/index.html");
+
+// =======================
+// WebSockets
+// =======================
 
 app.UseWebSockets();
 
@@ -61,14 +179,18 @@ app.Map("/ws", async context =>
     await handler.HandleAsync(context);
 });
 
+// =======================
+// Middleware classiques
+// =======================
+
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAngularClient");
+app.UseSession();
+app.UseAuthentication(); // Attention avant Authorization
 app.UseAuthorization();
 
-
-app.UseCors("AllowAngularClient");
 app.MapControllers();
-
 app.MapHub<ClientHub>("/scorehub");
 
 app.Run();

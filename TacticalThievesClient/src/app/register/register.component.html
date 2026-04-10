@@ -1,0 +1,20 @@
+<div id="center">
+
+  <div class="register-container">
+
+    <h2>Registration</h2>
+
+    <label>
+      Username
+      <input [(ngModel)]="username" placeholder="Username"/>
+    </label>
+
+    <button (click)="onRegister()">
+      Register with a Web passkey
+    </button>
+
+    <p>{{ message }}</p>
+
+  </div>
+
+</div>

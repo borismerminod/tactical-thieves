@@ -212,7 +212,7 @@ public class ThiefTest
             Assert.IsNotNull(targetedTile, $"Tile at {targetedTileKey} should not be null.");
 
             Vector2 targetedTileLoc = new Vector2(targetedTile.X, targetedTile.Y);
-            List<Vector2> moveRoute = grid.ComputeMoveRoute(thief, targetedTileLoc, thief.MoveRange);
+            List<Vector2> moveRoute = grid.ComputeMoveRoute(thief, targetedTileLoc, thief.MoveRange, true);
             Assert.AreEqual(expectedMove.Length, moveRoute.Count, "Move route should have the expected number of steps.");
             for (int i = 0; i < moveRoute.Count; i++)
             {
@@ -237,6 +237,9 @@ public class ThiefTest
         Assert.IsNotNull(gridPrefab, "Grid prefab should be loaded successfully.");
         TacticalThieves.Grid grid = UnityEngine.Object.Instantiate(gridPrefab).GetComponent<TacticalThieves.Grid>();
         grid.InitTilesDictionnary();
+
+        thief.OnThiefStarted();
+        
         Assert.AreEqual(thief.Status, Thief.eThiefStatus.Wait);
 
         thief.EnableMove(true, grid);

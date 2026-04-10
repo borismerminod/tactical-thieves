@@ -1,0 +1,13 @@
+<nav>
+  <a routerLink="/home">Home</a>
+  <a routerLink="/unity-game">Game</a>
+
+  <div *ngIf="isLoggedIn; else loggedOut">
+    <a (click)="logout()">Logout {{username}}</a>
+  </div>
+
+  <ng-template #loggedOut>
+    <a routerLink="/register">Register</a>
+    <a routerLink="/login">Login</a>
+  </ng-template>
+</nav>

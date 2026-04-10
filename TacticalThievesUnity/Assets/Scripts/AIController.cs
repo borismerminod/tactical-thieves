@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -104,6 +105,7 @@ namespace TacticalThieves
 
             if (thiefIsAttacked)
             {
+                currentMonster.OnMonsterAttack(thief);
                 thief.OnThiefAttacked();
             }
 
@@ -120,12 +122,14 @@ namespace TacticalThieves
                 if(thief == null)
                     continue;
                 thiefAttacked = Attack(tilesEnabledPos, thief, GameManager.Instance.CurrentGrid);
-                if(thiefAttacked) 
+                if(thiefAttacked)
+                {
                     break;
+                }
             }
 
             GameManager.Instance?.CurrentGrid.OnMonsterAttackDisable();
-            if(thiefAttacked || currentMonster.ActionPhase == Monster.eActionPhase.PHASE5_ATTACK)
+            if (thiefAttacked || currentMonster.ActionPhase == Monster.eActionPhase.PHASE5_ATTACK)
             {
                 currentMonster.EndTurn();
                 GameManager.Instance?.IncrementCharacterTurnIndex();
@@ -161,7 +165,7 @@ namespace TacticalThieves
                 //    continue;
 
                 Vector2 thiefLoc = new Vector2(thief.X, thief.Y);
-                List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height);
+                List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height, true);
 
                 if (moveRoute != null)
                 {
@@ -221,6 +225,18 @@ namespace TacticalThieves
             else
             {
                 moveRoute = AdjustRouteFromMoveRange(moveRoute, currentMonster.MoveRange);
+            }
+
+       
+
+            foreach(Thief thief1 in thieves)
+            {
+                Vector2 thiefLoc = new Vector2(thief1.X, thief1.Y);
+                if(moveRoute[moveRoute.Count - 1] == thiefLoc)
+                {
+                     moveRoute.RemoveAt(moveRoute.Count - 1);
+                    break;
+                }
             }
 
             currentMonster.OnMonsterMoveRouteSelected(moveRoute);

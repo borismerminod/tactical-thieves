@@ -10,17 +10,23 @@ namespace TacticalThieves
     {
         [SerializeField] Thief selectedThief;
         [SerializeField] Grid levelGrid;
+        [SerializeField] bool levelLoaded;
 
         // Start is called before the first frame update
         void Start()
         {
             GameManager.Instance?.OnPlayerControllerStarted(this);
+            levelLoaded = false;
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            if(levelLoaded == false && Input.GetKey(KeyCode.Space))
+            {
+                GameManager.Instance?.LoadLevel(1);
+                levelLoaded = true;
+            }
         }
 
         public void OnGridStarted(Grid grid)
@@ -45,8 +51,11 @@ namespace TacticalThieves
 
         public void OnTileSelected(Tile tile)
         {
+            if (selectedThief == null || selectedThief.Status != eThiefStatus.MovementEnable)
+                return;
+
             Vector2 tileLoc = new Vector2(tile.X, tile.Y);
-            List<Vector2> moveRoute = levelGrid.ComputeMoveRoute(selectedThief, tileLoc, selectedThief.MoveRange); 
+            List<Vector2> moveRoute = levelGrid.ComputeMoveRoute(selectedThief, tileLoc, selectedThief.MoveRange, true ); 
             selectedThief.SetMoveRoute(moveRoute);
 
         }
@@ -65,6 +74,28 @@ namespace TacticalThieves
             }
 
             selectedThief.EnableMove(true, levelGrid);
+        }
+
+        public void HandleThiefEndTurn()
+        {
+            if(selectedThief == null)
+            {
+                GameObject thiefGO = GameObject.FindGameObjectWithTag("Thief");
+                if (thiefGO == null)
+                    return;
+                Thief thief = thiefGO.GetComponent<Thief>();
+                if (thief == null)
+                    return;
+                selectedThief = thief;
+            }
+
+
+            if(selectedThief.Status == eThiefStatus.MovementEnable)
+            {
+                selectedThief?.EnableMove(false, levelGrid);
+                selectedThief?.ProceedMovement(false);
+            }
+
         }
 
         public void HandleThiefStealth()

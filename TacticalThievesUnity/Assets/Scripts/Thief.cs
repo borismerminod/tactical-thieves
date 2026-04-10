@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+//using UnityEditor.Animations;
 using UnityEngine;
 
 namespace TacticalThieves
@@ -23,6 +25,9 @@ namespace TacticalThieves
         [SerializeField] private Material defaultMaterial;
         [SerializeField] private Material stealthMaterial;
         [SerializeField] private GameObject thiefBody;
+        [SerializeField] private GameObject model;
+        [SerializeField] private GameObject ragdollModel;
+        [SerializeField] private GameObject impactEffect;
 
         [SerializeField] private bool moveTest; //A supprimé quand la phase de développement sera terminée
 
@@ -37,7 +42,10 @@ namespace TacticalThieves
         {
             OnThiefStarted();
             GameManager.Instance?.OnCharacterStarted(this);
+            impactEffect?.SetActive(false);
         }
+
+      
 
         // Update is called once per frame
         void Update()
@@ -48,19 +56,11 @@ namespace TacticalThieves
 
         private void Move()
         {
-           
-            GameObject gridGO = GameObject.FindGameObjectWithTag("Grid");
-            if (gridGO == null)
-                return;
-
-            Grid grid = gridGO.GetComponent<Grid>();
-            if (grid == null)
-                return;
 
             if (currentRouteIndex < 0 || currentRouteIndex >= currentMoveRoute.Count)
                 return;
 
-            Tile nextTileDestination = grid.GetNextTileMove(currentMoveRoute[currentRouteIndex]);
+            Tile nextTileDestination = GameManager.Instance?.CurrentGrid.GetNextTileMove(currentMoveRoute[currentRouteIndex]);
 
             Vector3 direction = (nextTileDestination.transform.position - transform.position).normalized;
             direction = new Vector3(direction.x, 0.0f, direction.z);
@@ -91,13 +91,14 @@ namespace TacticalThieves
             {
                 status = eThiefStatus.MovementEnable;
                 grid.OnThiefMoveEnable(this);
+
             }
             else
             {
                 status = eThiefStatus.Wait;
                 grid.OnThiefMoveDisable();
-                Debug.Log("TEST");
-                GameManager.Instance?.IncrementCharacterTurnIndex();
+                //Debug.Log("TEST");
+                model?.GetComponent<Animator>().SetBool("Run", false);
             }       
         }
 
@@ -107,10 +108,12 @@ namespace TacticalThieves
             {
                 status = eThiefStatus.isMoving;
                 currentRouteIndex = 0;
+                model?.GetComponent<Animator>().SetBool("Run", true);
             }
             else
             {
                 status = eThiefStatus.Wait;
+                GameManager.Instance?.IncrementCharacterTurnIndex();
             }
         }
 
@@ -136,15 +139,7 @@ namespace TacticalThieves
                 {
                     ProceedMovement(false);
 
-                    GameObject gridGO = GameObject.FindGameObjectWithTag("Grid");
-                    if (gridGO == null)
-                        return;
-
-                    Grid grid = gridGO.GetComponent<Grid>();
-                    if (grid == null)
-                        return;
-
-                    EnableMove(false, grid);
+                    EnableMove(false, GameManager.Instance?.CurrentGrid);
                 }
 
             }
@@ -167,12 +162,25 @@ namespace TacticalThieves
         public void OnThiefAttacked()
         {
             status = eThiefStatus.Dead;
+            impactEffect?.SetActive(true);
+
+            //DOVirtual.DelayedCall(0.25f, () =>
+            //{
             GameManager.Instance?.OnThiefDied();
+            GameManager.Instance?.CurrentAudioManager?.OnMonsterAttack();
+            model.SetActive(false);
+                ragdollModel.SetActive(true);
+            //});
         }
 
         public void OnThiefStarted()
         {
             status = eThiefStatus.Wait;
+        }
+
+        public void OnThiefReachedExit()
+        {
+            model.GetComponent<Animator>().SetBool("Win", true);
         }
     }
 }

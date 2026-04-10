@@ -1,0 +1,45 @@
+
+
+#player-ui-gold
+{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.02);
+    margin-bottom:14px
+}
+
+#player-ui-gold-label
+{
+    color:#9FB0BD;
+}
+
+#player-ui-gold-value
+{
+    font-weight:800;
+    color:#FFB84D;
+    font-size:22px
+}
+
+#player-ui-game-over {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.victory {
+    color: #44ff44; /* Vert pour la victoire */
+    background: rgba(68, 255, 68, 0.1);
+    border: 1px solid #44ff44;
+}
+
+.defeat {
+    color: #ff4444; /* Rouge pour la défaite */
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid #ff4444;
+}

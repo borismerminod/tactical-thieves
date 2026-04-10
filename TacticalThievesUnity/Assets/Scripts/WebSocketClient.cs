@@ -1,88 +1,185 @@
+ï»¿//using Codice.Client.BaseCommands;
+using NativeWebSocket;
 using System;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Net.WebSockets;
-using UnityEngine;
 using TacticalThieves;
+using UnityEngine;
 
 public class WebSocketClient : MonoBehaviour
 {
-    private ClientWebSocket _webSocket;
-    private CancellationTokenSource _cts;
+    private WebSocket _websocket;
 
     // URL du serveur WebSocket
-    public string serverUri = "ws://localhost:5000/ws";
+    //public string serverUri = "ws://localhost:5140/ws";
+    public string serverUri = "wss://localhost:7186/ws?clientId={$clientId}"; 
+    //private string serverUri = "wss://mozell-fortifiable-moshe.ngrok-free.dev/ws?clientId={$clientId}"; 
+    //private string serverUri = "wss://tactical-thieves.loca.lt/ws?clientId={$clientId}"; 
+    public bool webSocketClientStarted;
 
-    private async void Start()
+    private void Start()
     {
-        _cts = new CancellationTokenSource();
-        _webSocket = new ClientWebSocket();
+        webSocketClientStarted = false;
+    }
 
+    private async void Update()
+    {
+        // Dispatcher messages queued (nonâ€‘WebGL implementation uses DispatchMessageQueue)
+//#if !UNITY_WEBGL || UNITY_EDITOR
+//        _websocket?.DispatchMessageQueue();
+//#endif
+
+        if (webSocketClientStarted == true || GameManager.Instance == null)
+        {
+            return;
+        }
+
+        webSocketClientStarted = true;
+
+        GameObject debugText = GameObject.FindGameObjectWithTag("DebugText");
         GameManager.Instance.OnWebSocketClientStarted(this);
+
+        /*try
+        {
+            Debug.Log("Connecting to WebSocket server...");
+            if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = serverUri;
+
+            // CrÃ©ation de l'instance NativeWebSocket
+            _websocket = new WebSocket(serverUri);
+
+            // Ã‰vÃ©nements
+            _websocket.OnOpen += () =>
+            {
+                Debug.Log("Connected!");
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "Connected!";
+            };
+
+            _websocket.OnError += (e) =>
+            {
+                Debug.LogError("WebSocket error: " + e);
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "WebSocket error: " + e;
+            };
+
+            _websocket.OnClose += (code) =>
+            {
+                Debug.Log("WebSocket closed: " + code);
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "WebSocket closed: " + code;
+            };
+
+            _websocket.OnMessage += (bytes) =>
+            {
+                var msg = Encoding.UTF8.GetString(bytes);
+                Debug.Log("Received: " + msg);
+                HandleServerMessage(msg);
+            };
+
+            // Connexion (NativeWebSocket.Connect)
+            await _websocket.Connect();
+
+            // Exemple : envoyer un message au serveur
+            await SendMessageAsync("Hello from Unity!");
+        }
+        catch (Exception ex)
+        {
+            string err = "WebSocket error: " + ex.Message;
+            Debug.LogError(err);
+            if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = err;
+        }*/
+    }
+
+    public async Task ConnectWebSocket()
+    {
+        GameObject debugText = GameObject.FindGameObjectWithTag("DebugText");
+        //GameManager.Instance.OnWebSocketClientStarted(this);
 
         try
         {
             Debug.Log("Connecting to WebSocket server...");
-            await _webSocket.ConnectAsync(new Uri(serverUri), _cts.Token);
-            Debug.Log("Connected!");
+            if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = serverUri;
 
-            // Lancer la réception des messages
-            _ = ReceiveLoop();
+            // CrÃ©ation de l'instance NativeWebSocket
+
+
+            string finallUri = serverUri.Replace("{$clientId}", GameManager.Instance.UnityGUID);
+
+            _websocket = new WebSocket(finallUri);
+
+            // Ã‰vÃ©nements
+            _websocket.OnOpen += () =>
+            {
+                Debug.Log("Connected!");
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "Connected!";
+
+                GameManager.Instance.OnGameStart();
+            };
+
+            _websocket.OnError += (e) =>
+            {
+                Debug.LogError("WebSocket error: " + e);
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "WebSocket error: " + e;
+            };
+
+            _websocket.OnClose += (code) =>
+            {
+                Debug.Log("WebSocket closed: " + code);
+                if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = "WebSocket closed: " + code;
+            };
+
+            _websocket.OnMessage += (bytes) =>
+            {
+                var msg = Encoding.UTF8.GetString(bytes);
+                Debug.Log("Received: " + msg);
+                HandleServerMessage(msg);
+            };
+
+            // Connexion (NativeWebSocket.Connect)
+            await _websocket.Connect();
 
             // Exemple : envoyer un message au serveur
-            await SendMessage("Hello from Unity!");
+            await SendMessageAsync("Hello from Unity!");
         }
         catch (Exception ex)
         {
-            Debug.LogError("WebSocket error: " + ex.Message);
+            string err = "WebSocket error: " + ex.Message;
+            Debug.LogError(err);
+            if (debugText != null) debugText.GetComponent<UnityEngine.UI.Text>().text = err;
         }
     }
-
-    private async Task SendMessage(string message)
+    public async Task SendMessageAsync(string message)
     {
-        if (_webSocket.State == WebSocketState.Open)
-        {
-            var bytes = Encoding.UTF8.GetBytes(message);
-            await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, _cts.Token);
-            Debug.Log("Message sent: " + message);
-        }
-    }
+        if (_websocket == null) return;
 
-    private async Task ReceiveLoop()
-    {
-        var buffer = new byte[1024];
-        while (_webSocket.State == WebSocketState.Open)
-        {
-            try
-            {
-                var result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), _cts.Token);
-                if (result.MessageType == WebSocketMessageType.Close)
-                {
-                    Debug.Log("Server requested close. Closing connection...");
-                    await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", _cts.Token);
-                }
-                else
-                {
-                    var msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    Debug.Log("Received: " + msg);
-
-                    // Ici tu peux déclencher des actions dans ton jeu
-                    HandleServerMessage(msg);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Receive loop error: " + ex.Message);
-                break;
-            }
-        }
+//#if UNITY_WEBGL && !UNITY_EDITOR
+//        await _websocket.SendText(message);
+//#else
+        // la classe fournie a Ã©galement SendText pour desktop
+        await _websocket.SendText(message);
+//#endif
+        Debug.Log("Message sent: " + message);
     }
 
     private void HandleServerMessage(string msg)
     {
-        // TODO: Décoder le message et déclencher les actions (move, stealth, etc.)
         Debug.Log("Server message handled: " + msg);
+
+        ServerMessage serverMessage;
+
+        try
+        {
+            serverMessage = JsonUtility.FromJson<ServerMessage>(msg);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("JSON parse error: " + e.Message);
+            return;
+        }
+
+        if (serverMessage == null || string.IsNullOrEmpty(serverMessage.Type))
+        {
+            Debug.LogWarning("Invalid message format");
+            return;
+        }
+
 
         GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
         if (playerControllerGO == null)
@@ -92,31 +189,52 @@ public class WebSocketClient : MonoBehaviour
         if (playerController == null)
             return;
 
-        switch (msg)
+        switch (serverMessage.Type)
         {
             case "move":
-                // Appeler la méthode de déplacement dans ton jeu
                 Debug.Log("Triggering move action");
                 playerController.HandleThiefMove();
                 break;
             case "stealth":
-                // Appeler la méthode de furtivité dans ton jeu
                 Debug.Log("Triggering stealth action");
                 playerController.HandleThiefStealth();
+                break;
+            case "end-turn":
+                Debug.Log("Triggering end turn action");
+                playerController.HandleThiefEndTurn();
+                break;
+            case "load-level":
+                Debug.Log("Triggering load level action");
+                GameManager.Instance.LoadLevel(serverMessage.Level);
+                break;
+            case "load-random-level":
+                Debug.Log("Triggering load random level action");
+                GameManager.Instance.LoadRandomLevel();
+                break;
+            case "restart":
+                Debug.Log("Triggering restart action");
+                GameManager.Instance.RestartLevel();
                 break;
             default:
                 Debug.Log("Unknown command");
                 break;
         }
-
     }
 
     private void OnDestroy()
     {
-        if (_webSocket != null)
+        if (_websocket != null)
         {
-            _cts.Cancel();
-            _webSocket.Dispose();
+            // Ne pas await dans OnDestroy, dÃ©marrer la fermeture en tÃ¢che de fond
+            _ = _websocket.Close();
+            _websocket = null;
         }
     }
+}
+
+[Serializable]
+public class ServerMessage
+{
+    public string Type;
+    public int Level;
 }

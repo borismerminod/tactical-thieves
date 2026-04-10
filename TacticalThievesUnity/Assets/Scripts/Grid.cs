@@ -219,7 +219,7 @@ namespace TacticalThieves
             {
                 Tile tile = tiles[tileKey];
                 Vector2 tileLocation = new Vector2(tile.X, tile.Y);
-                List<Vector2> routes = ComputeMoveRoute(character, tileLocation, character.MoveRange);
+                List<Vector2> routes = ComputeMoveRoute(character, tileLocation, character.MoveRange, true);
                 if (routes.Count <= character.MoveRange)
                 {
                     tile.SetEnableForMove(true);
@@ -241,7 +241,7 @@ namespace TacticalThieves
             {
                 Tile tile = tiles[tileKey];
                 Vector2 tileLocation = new Vector2(tile.X, tile.Y);
-                List<Vector2> routes = ComputeMoveRoute(monster, tileLocation, monster.AttackRange);
+                List<Vector2> routes = ComputeMoveRoute(monster, tileLocation, monster.AttackRange, false);
 
                 if (routes.Count <= monster.AttackRange)
                 {
@@ -274,7 +274,7 @@ namespace TacticalThieves
            // Debug.Log("maxTileCoords " + maxTileCoords);
         }
 
-        public List<Vector2> ComputeMoveRoute(Character character, Vector2 targetLocation, int range)
+        public List<Vector2> ComputeMoveRoute(Character character, Vector2 targetLocation, int range, bool bUseWalkableParam)
         {
             List<Vector2> moveRoute = new List<Vector2>();
             Vector2 currentLocation = new Vector2(character.X, character.Y);
@@ -295,7 +295,7 @@ namespace TacticalThieves
                 foreach (Vector2 move in possibleMoves)
                 {
                     string tileKey = move.x + "_" + move.y;
-                    if (tiles.ContainsKey(tileKey) && tiles[tileKey].Walkable == false)
+                    if (tiles.ContainsKey(tileKey) && bUseWalkableParam == true && tiles[tileKey].Walkable == false)
                     {
                         continue;
                     }
@@ -355,7 +355,7 @@ namespace TacticalThieves
         public List<Vector2> GetRandomMoveRoute(Character character)
         {
             Vector2 randomTileLocation = GetRandomTileLocation(1, 1, Width, Height);
-            List<Vector2> randomMoveRoute =  ComputeMoveRoute(character, randomTileLocation, character.MoveRange);
+            List<Vector2> randomMoveRoute =  ComputeMoveRoute(character, randomTileLocation, character.MoveRange, true);
             
             return randomMoveRoute;
         }

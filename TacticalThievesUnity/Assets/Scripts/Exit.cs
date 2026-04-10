@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TacticalThieves;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Exit : MonoBehaviour
 {
+
+    [SerializeField] private GameObject model;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +21,7 @@ public class Exit : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(UnityEngine.Collider other)
     {
         Thief thief = other.GetComponent<Thief>();
         if(thief == null)
@@ -25,6 +29,10 @@ public class Exit : MonoBehaviour
 
         //TODO Log en cas d'erreur
         OnThiefReachExit(GameManager.Instance);
+        thief.OnThiefReachedExit();
+
+        Animator animator = model?.GetComponent<Animator>();
+        animator.Play("OpenDoor");
     }
 
     public bool OnThiefReachExit(GameManager gameManager)
@@ -35,7 +43,9 @@ public class Exit : MonoBehaviour
             return false;
 
 
+        gameManager.CurrentAudioManager?.OnDoorOpenned();
         gameManager.OnThiefReachExit();
+
         return true;
     }
 }
