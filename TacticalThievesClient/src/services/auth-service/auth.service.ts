@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { base64urlToBuffer, bufferToBase64url } from '../../app/utils/webauthn.utils';
 import { LoggerService } from '../logger/logger.service';
 import { TacticalThievesPublicKeyCredentialRequestOptions, TacticalThievesAuthenticatorAssertionResponse, TacticalThievesLoginResponse} from '../../models/webauthn/webauthn.types';
@@ -10,7 +10,24 @@ import { TacticalThievesPublicKeyCredentialRequestOptions, TacticalThievesAuthen
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken())
+  isLoggedIn$ = this.loggedIn.asObservable()
+
+  private username = new BehaviorSubject<string>(this.getStoredUsername());
+  username$ = this.username.asObservable();
+
   constructor(private http: HttpClient, private logger : LoggerService) {}
+
+  private hasToken(): boolean 
+  {
+    return !!sessionStorage.getItem('authToken');
+  }
+
+  private getStoredUsername(): string 
+  {
+    return sessionStorage.getItem('username') || '';
+  }
+
 
   registerStart(username: string) {
     return this.http.post<any>(
@@ -26,6 +43,13 @@ export class AuthService {
     );
   }
 
+  public logOut()
+  {
+    sessionStorage.clear()
+    this.loggedIn.next(false)
+    this.username.next('')
+  }
+
   public async login(username: string) : Promise<boolean>
   {
     let success : boolean = false
@@ -37,6 +61,9 @@ export class AuthService {
     {
       sessionStorage.setItem('authToken', result.token);
       sessionStorage.setItem('username', result.username);
+      this.loggedIn.next(true);
+      this.username.next(username);
+
       success = true
     }
 
