@@ -26,3 +26,41 @@ export type TacticalThievesLoginResponse = {
     token : string
     username : string
 }
+
+export type TacticalThievesAuthenticatorAttestationResponse = 
+{
+  id: string
+  rawId: string
+  type: string
+
+  clientExtensionResults: AuthenticationExtensionsClientOutputs
+
+  response: 
+  {
+    clientDataJSON: string
+    attestationObject: string
+    transports: string[]
+  }
+}
+
+export type TacticalThievesRegisteredPasskey = {
+  id: string
+  type: 'public-key'
+  publicKey: string
+  signCount: number
+  transports: AuthenticatorTransport[]
+
+  aaGuid: string
+  attestationFormat: string
+  attestationObject: string
+  attestationClientDataJson: string
+
+  isBackedUp: boolean
+  isBackupEligible: boolean
+
+  user: {
+    name: string
+    id: string
+    displayName: string
+  }
+}

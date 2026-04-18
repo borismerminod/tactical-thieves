@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { base64urlToBuffer, bufferToBase64url } from '../../app/utils/webauthn.utils';
 import { LoggerService } from '../logger/logger.service';
-import { TacticalThievesPublicKeyCredentialRequestOptions, TacticalThievesAuthenticatorAssertionResponse, TacticalThievesLoginResponse} from '../../models/webauthn/webauthn.types';
+import { TacticalThievesAuthenticatorAssertionResponse, TacticalThievesLoginResponse, TacticalThievesAuthenticatorAttestationResponse, TacticalThievesRegisteredPasskey} from '../../models/webauthn/webauthn.types';
 
 
 @Injectable({ providedIn: 'root' })
@@ -29,31 +29,115 @@ export class AuthService {
   }
 
 
-  registerStart(username: string) {
-    return this.http.post<any>(
-      '/api/auth/RegisterStart',
-      username
-    );
+  public async register(username : string) : Promise<boolean>
+  {
+    let bSuccess: boolean = false
+
+    const startOptions : PublicKeyCredentialCreationOptions = await this.registerStart(username)
+    const attestationResponse : TacticalThievesAuthenticatorAttestationResponse = await this.requestAttestation(startOptions)
+    const finishResult : TacticalThievesRegisteredPasskey = await this.registerFinish(attestationResponse)
+
+    bSuccess = !!finishResult && 
+                finishResult.type === 'public-key' && 
+                !!finishResult.id && 
+                !!finishResult.publicKey
+
+    return bSuccess
   }
 
-  registerFinish(data: any) {
-    return this.http.post(
-      '/api/auth/RegisterFinish',
-      data
-    );
+  async registerStart(username: string) : Promise<PublicKeyCredentialCreationOptions>
+  {
+    
+     // Appel RegisterStart pour obtenir les options de création de credential
+    const registerStartURL = `${environment.apiURL}/api/auth/RegisterStart`
+    const usernameObj = { username: username}
+    const credentialOpt =  { withCredentials: true }
+
+    const startOptionsToFormat = await firstValueFrom(this.http.post(registerStartURL, usernameObj, credentialOpt))
+
+
+    const startOptions : PublicKeyCredentialCreationOptions = this.formatRegisterStartOptions(startOptionsToFormat)
+
+    return startOptions
+
   }
 
-  public logOut()
+  async registerFinish(attestationResponse: TacticalThievesAuthenticatorAttestationResponse) : Promise<TacticalThievesRegisteredPasskey>
+  {
+    if(environment.logEnabled)
+      console.log(attestationResponse)
+
+    let bSuccess: boolean = true
+    const registerFinishURL : string = `${environment.apiURL}/api/auth/RegisterFinish`
+    const credentialOpt = { withCredentials: true }
+    const finishResult : TacticalThievesRegisteredPasskey= await firstValueFrom(this.http.post( registerFinishURL, attestationResponse, credentialOpt)) as TacticalThievesRegisteredPasskey
+
+    if(environment.logEnabled)
+      console.log(finishResult)
+    
+    return finishResult
+
+  }
+
+  formatRegisterStartOptions(startOptionsToFormat : any) : PublicKeyCredentialCreationOptions
+  {
+    
+    if(environment.logEnabled)
+      console.log(startOptionsToFormat)
+    
+    // Convertir challenge et id utilisateur en ArrayBuffer
+    startOptionsToFormat.challenge = base64urlToBuffer(startOptionsToFormat.challenge);
+    startOptionsToFormat.user.id = base64urlToBuffer(startOptionsToFormat.user.id);
+    
+    if(startOptionsToFormat.excludeCredentials)
+      startOptionsToFormat.excludeCredentials = startOptionsToFormat.excludeCredentials.map(this.convertCredentialsToArrayBuffer)
+    
+    const startOptions : PublicKeyCredentialCreationOptions = startOptionsToFormat
+
+    return startOptions
+  }
+
+  async requestAttestation(startOptions: PublicKeyCredentialCreationOptions) : Promise<TacticalThievesAuthenticatorAttestationResponse>
+  {
+    // Créer la credential via le navigateur
+      const credential: PublicKeyCredential = await navigator.credentials.create({ publicKey: startOptions }) as PublicKeyCredential;
+
+      const credentialResponse = credential.response as AuthenticatorAttestationResponse;
+
+      const attestationResponse: TacticalThievesAuthenticatorAttestationResponse = {
+        id: credential.id,
+        rawId: bufferToBase64url(credential.rawId),
+        type: credential.type,
+
+        clientExtensionResults: credential.getClientExtensionResults(),
+
+        response: {
+          clientDataJSON: bufferToBase64url(credentialResponse.clientDataJSON),
+          attestationObject: bufferToBase64url(credentialResponse.attestationObject),
+          transports: credentialResponse.getTransports ? credentialResponse.getTransports() : []
+        }
+      }
+
+      if(environment.logEnabled)
+        console.log(attestationResponse)
+
+      return attestationResponse
+  }
+
+  
+
+  public logout()
   {
     sessionStorage.clear()
     this.loggedIn.next(false)
     this.username.next('')
   }
 
+
   public async login(username: string) : Promise<boolean>
   {
     let success : boolean = false
-    const startOptions : TacticalThievesPublicKeyCredentialRequestOptions = await this.loginStart(username)
+    const startOptions : PublicKeyCredentialCreationOptions = await this.loginStart(username)
     const assertionResponse : TacticalThievesAuthenticatorAssertionResponse = await this.requestAssertion(startOptions) 
     const result : TacticalThievesLoginResponse = await this.loginFinish(assertionResponse)
 
@@ -70,7 +154,7 @@ export class AuthService {
     return success
   }
 
-  private async loginStart(username: string) : Promise<TacticalThievesPublicKeyCredentialRequestOptions>
+  private async loginStart(username: string) : Promise<PublicKeyCredentialCreationOptions>
   {
 
     const loginStartURL = `${environment.apiURL}/api/auth/LoginStart`
@@ -78,7 +162,7 @@ export class AuthService {
     const credentialOpt = { withCredentials: true }
     const startOptionsToFormat = await firstValueFrom(this.http.post(loginStartURL, usernameObj, credentialOpt));
 
-    const startOptions : TacticalThievesPublicKeyCredentialRequestOptions = this.formatStartOptions(startOptionsToFormat)
+    const startOptions : PublicKeyCredentialCreationOptions = this.formatLoginStartOptions(startOptionsToFormat)
 
     return startOptions
 
@@ -90,34 +174,32 @@ export class AuthService {
     const credentialOpt = { withCredentials: true }
     const result: TacticalThievesLoginResponse = await firstValueFrom( this.http.post(loginFinishURL, assertionResponse, credentialOpt)) as TacticalThievesLoginResponse
 
-    this.logger.log(result)
+    if(environment.logEnabled)
+      console.log(result)
 
     return result
   }
 
-  private formatStartOptions(startOptionsToFormat : any) : TacticalThievesPublicKeyCredentialRequestOptions
+  private formatLoginStartOptions(startOptionsToFormat : any) : PublicKeyCredentialCreationOptions
   {
-     this.logger.log(startOptionsToFormat)
+    if(environment.logEnabled)
+      console.log(startOptionsToFormat)
       //Convertir challenge en ArrayBuffer
       startOptionsToFormat.challenge = base64urlToBuffer(startOptionsToFormat.challenge)
 
-      this.logger.log(startOptionsToFormat)
+      if(environment.logEnabled)
+        console.log(startOptionsToFormat)
 
       //Convertir chaque allowCredentials.id en ArrayBuffer
       if (startOptionsToFormat.allowCredentials) 
         startOptionsToFormat.allowCredentials = startOptionsToFormat.allowCredentials.map(this.convertCredentialsToArrayBuffer)
-      
 
-      // Convertir excludeCredentials id en ArrayBuffer
-      if (startOptionsToFormat.excludeCredentials) 
-        startOptionsToFormat.excludeCredentials = startOptionsToFormat.excludeCredentials.map(this.convertCredentialsToArrayBuffer)
-
-      const startOptions: TacticalThievesPublicKeyCredentialRequestOptions = startOptionsToFormat
+      const startOptions: PublicKeyCredentialCreationOptions = startOptionsToFormat
 
       return startOptions
   }
 
-  private async requestAssertion(startOptions : TacticalThievesPublicKeyCredentialRequestOptions) : Promise<TacticalThievesAuthenticatorAssertionResponse>
+  private async requestAssertion(startOptions : PublicKeyCredentialCreationOptions) : Promise<TacticalThievesAuthenticatorAssertionResponse>
   {
 
     const publicKeyObj = {publicKey: startOptions}
@@ -125,7 +207,7 @@ export class AuthService {
     const assertion: PublicKeyCredential = await navigator.credentials.get(publicKeyObj) as PublicKeyCredential;
 
     // Préparer le AuthenticatorAssertionRawResponse
-    const assertionResponse: TacticalThievesAuthenticatorAssertionResponse  = {
+    const assertionResponse: any  = {
       id: assertion.id,
       rawId: bufferToBase64url(assertion.rawId),
       type: assertion.type,
@@ -139,6 +221,9 @@ export class AuthService {
             : null
         }
     }
+
+    if(environment.logEnabled)
+      console.log(assertionResponse)
 
     return assertionResponse
 

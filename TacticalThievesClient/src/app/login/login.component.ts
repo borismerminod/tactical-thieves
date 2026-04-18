@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { LoggerService } from '../../services/logger/logger.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -46,9 +47,10 @@ export class LoginComponent {
     } 
     catch (err: any) 
     {
-      console.error("FULL ERROR:", err)
-      this.logger.error("FULL ERROR:")
-      this.logger.error(err)
+
+      if(environment.logEnabled)
+        console.error("FULL ERROR:", err)
+
       this.message = this.authService.getErrorDetailForUser(err)
       this.message = "Login failed \n"+ this.message
     }

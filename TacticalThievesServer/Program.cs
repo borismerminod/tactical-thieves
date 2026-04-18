@@ -67,9 +67,9 @@ builder.Services.AddSingleton(new Fido2(new Fido2Configuration
     ServerDomain = "mozell-fortifiable-moshe.ngrok-free.dev",
     //ServerDomain = "https://tactical-thieves.loca.lt",
     ServerName = "TacticalThievesServer",
-    //Origins = new HashSet<string> {"https://localhost:4200" }
+    Origins = new HashSet<string> {"https://localhost:4200" }
     //Origins = new HashSet<string> { "https://localhost:7186" }
-    Origins = new HashSet<string> { "https://mozell-fortifiable-moshe.ngrok-free.dev/" }
+    //Origins = new HashSet<string> { "https://mozell-fortifiable-moshe.ngrok-free.dev/" }
     //Origins = new HashSet<string> { "https://tactical-thieves.loca.lt/" }
 }));
 
