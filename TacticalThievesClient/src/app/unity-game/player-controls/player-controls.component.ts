@@ -28,33 +28,34 @@ export class PlayerControlsComponent implements OnInit {
   move()
   {
     this.playerControlsService.sendMove().subscribe({
-      next: res => console.log('Mouvement envoyé', res),
-      error: err => console.error('Erreur mouvement', err)
+      next: res => console.log('Move command sent', res),
+      error: err => console.error('Move command failed', err)
     });
   }
 
   stealth()
   {
     this.playerControlsService.sendStealth().subscribe({
-      next: res => console.log('Mouvement envoyé', res),
-      error: err => console.error('Erreur mouvement', err)
+      next: res => console.log('Stealth command sent', res),
+      error: err => console.error('Stealth command failed', err)
     });
   }
 
   endTurn()
   {
     this.playerControlsService.sendEndTurn().subscribe({
-      next: res => console.log('Fin de tour envoyée', res),
-      error: err => console.error('Erreur fin de tour', err)
+      next: res => console.log('End turn command sent', res),
+      error: err => console.error('End turn command failed', err)
     });
   }
 
   restart()
   {
     this.playerControlsService.sendRestartLevel().subscribe({
-      next: res => console.log('restart command sent', res),
-      error: err => console.error('restart command error', err)
+      next: res => console.log('Restart command sent', res),
+      error: err => console.error('Restart command failed', err)
     });
   }
+
 
 }

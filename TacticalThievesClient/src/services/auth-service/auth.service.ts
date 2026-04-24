@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { base64urlToBuffer, bufferToBase64url } from '../../app/utils/webauthn.utils';
-import { LoggerService } from '../logger/logger.service';
 import { TacticalThievesAuthenticatorAssertionResponse, TacticalThievesLoginResponse, TacticalThievesAuthenticatorAttestationResponse, TacticalThievesRegisteredPasskey} from '../../models/webauthn/webauthn.types';
 
 
@@ -16,7 +15,7 @@ export class AuthService {
   private username = new BehaviorSubject<string>(this.getStoredUsername());
   username$ = this.username.asObservable();
 
-  constructor(private http: HttpClient, private logger : LoggerService) {}
+  constructor(private http: HttpClient) {}
 
   private hasToken(): boolean 
   {

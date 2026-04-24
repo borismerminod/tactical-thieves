@@ -1,27 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerControlsService {
 
-  //private apiUrl = "https://tactical-thieves.loca.lt/api/Game" 
-  private apiUrl = "https://mozell-fortifiable-moshe.ngrok-free.dev/api/Game" 
-  //private apiUrl = "https://localhost:7186/api/Game" 
- // private apiUrl = "http://localhost:5140/api/Game" 
-
   constructor(private http: HttpClient) { }
 
   sendMove() : Observable<any>
   {
-    return this.http.post(`${this.apiUrl}/move`, {});
+    return this.http.post(`${environment.apiURL}/api/Game/move`, {});
   }
 
   sendStealth() : Observable<any>
   {
-    return this.http.post(`${this.apiUrl}/stealth`, {});
+    return this.http.post(`${environment.apiURL}/api/Game/stealth`, {});
   }
 
   sendEndTurn() : Observable<any>
@@ -29,14 +25,14 @@ export class PlayerControlsService {
     const sessionId = sessionStorage.getItem("sessionId");
     const headers = { 'X-Session-Id': sessionId ? sessionId : '' };
 
-    return this.http.post(`${this.apiUrl}/end-turn`, {}, { headers });
+    return this.http.post(`${environment.apiURL}/api/Game/end-turn`, {}, { headers });
   }
 
   sendRestartLevel() : Observable<any>
   {
     const sessionId = sessionStorage.getItem("sessionId");
     const headers = { 'X-Session-Id': sessionId ? sessionId : '' };
-    return this.http.post(`${this.apiUrl}/restart`, {}, { headers });
+    return this.http.post(`${environment.apiURL}/api/Game/restart`, {}, { headers });
   }
 
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -10,14 +11,7 @@ import { BehaviorSubject, firstValueFrom } from 'rxjs';
 export class ServerHubService {
 
   private hubConnection!: signalR.HubConnection;
-  //private readonly hubUrl = 'http://localhost:5140/scorehub';
-  //private readonly hubUrl = 'https://localhost:7186/scorehub';
-  private readonly hubUrl = 'https://mozell-fortifiable-moshe.ngrok-free.dev/scorehub';
-  //private readonly hubUrl = 'https://tactical-thieves.loca.lt/scorehub';
-
-  //private serverURL: string = 'https://localhost:7186';
-  private serverURL: string = 'https://mozell-fortifiable-moshe.ngrok-free.dev';
-  //private serverURL: string = 'https://tactical-thieves.loca.lt';
+  private readonly hubURL= `${environment.apiURL}/scorehub`;
 
   private playerGoldSource = new BehaviorSubject<number>(0)
   playerGold$ = this.playerGoldSource.asObservable()
@@ -36,14 +30,12 @@ export class ServerHubService {
     this.onExitReached()
     this.onGameStart()
     this.onThievesDied()
-    //this. onUnityAssigned()
-    //this.onUnityAlreadyTaken()
 
   }
 
   public startConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.hubUrl, {
+      .withUrl(this.hubURL, {
         transport: signalR.HttpTransportType.WebSockets, // force WebSocket
       })
       .withAutomaticReconnect()
@@ -52,15 +44,20 @@ export class ServerHubService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('Connected to SignalR Hub')
+          if(environment.logEnabled)
+            console.log('Connected to SignalR Hub')
       } )
-      .catch((err) => console.error('Error while starting SignalR connection: ' + err));
+      .catch((err) => {
+        if(environment.logEnabled)
+          console.error('Error while starting SignalR connection: ' + err)
+      });
   }
 
   // S'abonner aux mises à jour du score
   public onScoreUpdated(): void {
-    this.hubConnection.on('ScoreUpdated', (gold: number) => {
-      console.log('Score reçu du serveur:', gold);
+    this.hubConnection.on('ScoreUpdated', (gold: number) => {   
+      if(environment.logEnabled)
+        console.log('Score reçu du serveur:', gold);
       this.playerGoldSource.next(gold)
     });
   }
@@ -68,8 +65,11 @@ export class ServerHubService {
   public onExitReached() : void 
   {  
       this.hubConnection.on('ExitReached', (nextLevel: number) => {
-      console.log("Exit reached by thief")
-      this.gameOverMessage.next("You win !!!")
+      
+        if(environment.logEnabled)
+          console.log("Exit reached by thief")
+  
+        this.gameOverMessage.next("You win !!!")
 
       this.levelBtnMessage.next("Next level")
 
@@ -92,40 +92,14 @@ export class ServerHubService {
     }
 
     const endpoint = authToken === null
-      ? `${this.serverURL}/api/Game/load-random-level`
-      : `${this.serverURL}/api/Game/load-level`;
+      ? `${environment.apiURL}/api/Game/load-random-level`
+      : `${environment.apiURL}/api/Game/load-level`;
 
     await firstValueFrom(
       this.http.post(endpoint, {}, { headers })
     );
   }
 
-  /*public async sendLoadLevelCommand(connectionId : string) : Promise<void>
-  {
-    const authToken = sessionStorage.getItem("authToken");
-
-    if(authToken === null)
-    {
-        await firstValueFrom(
-          this.http.post(`${this.serverURL}/api/Game/load-random-level`, {}, {
-            headers: {
-              Authorization: `Bearer ${authToken}`
-            }
-        })
-      );
-    }
-    else
-    {
-        await firstValueFrom(
-          this.http.post(`${this.serverURL}/api/Game/load-level`, {}, {
-            headers: {
-              Authorization: `Bearer ${authToken}`
-            }
-        })
-      );
-    }
-  
-  }*/
 
    public async sendSaveLevelCommand(nextLevel: number) : Promise<void>
   {
@@ -137,7 +111,7 @@ export class ServerHubService {
     }
 
       await firstValueFrom(
-          this.http.post(`${this.serverURL}/api/Game/save-level`, body, {
+          this.http.post(`${environment.apiURL}/api/Game/save-level`, body, {
             headers: {
               Authorization: `Bearer ${authToken}`
             }
@@ -154,7 +128,7 @@ export class ServerHubService {
     }
       
     await firstValueFrom(
-          this.http.post(`${this.serverURL}/api/Game/claim-unity`, body, {
+          this.http.post(`${environment.apiURL}/api/Game/claim-unity`, body, {
             headers: {
               ContentType: 'application/json',
             }
@@ -175,35 +149,23 @@ export class ServerHubService {
         this.sendLoadLevelCommand(sessionID, this.hubConnection.connectionId)
       }
 
-      /*// Claim de cette Unity
-      this.hubConnection.invoke("ClaimUnity", unityGUID)
-        .then(() => {
-          console.log("Unity claim envoyée");
-      })
-      .catch(err => console.error("Erreur claim:", err));*/
-
     })
   }
 
-  /*public onUnityAssigned(): void
-  {
-    this.hubConnection.on("UnityAssigned", (unityId: string) => {
-      console.log("Unity assignée:", unityId);
-      this.sendLoadLevelCommand();
-    });
-  }*/
 
   public onUnityAlreadyTaken(): void
   {
     this.hubConnection.on("UnityAlreadyTaken", () => {
-      console.log("Unity déjà prise par un autre client");
+      if(environment.logEnabled)
+        console.log("Unity déjà prise par un autre client");
     });
   }
 
   public onThievesDied() : void 
   {
     this.hubConnection.on("ThievesDied", () => {
-      console.log("All thieves died")
+      if(environment.logEnabled)
+        console.log("All thieves died")
       this.gameOverMessage.next("Try again !!!")
     })
   }

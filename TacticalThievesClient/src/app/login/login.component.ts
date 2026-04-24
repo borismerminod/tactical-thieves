@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth-service/auth.service';
-import { LoggerService } from '../../services/logger/logger.service';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -20,7 +19,7 @@ export class LoginComponent {
   username: string = '';
   message: string = '';
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private logger: LoggerService) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   async onLogin() 
   {

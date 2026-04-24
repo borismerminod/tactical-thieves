@@ -22,10 +22,10 @@ export function bufferToBase64url(buffer: ArrayBuffer): string {
     .replace(/=/g, '');
 }
 
-export function preparePublicKeyOptions(options: any) {
+/*export function preparePublicKeyOptions(options: any) {
 
   options.challenge = base64urlToBuffer(options.challenge);
   options.user.id = base64urlToBuffer(options.user.id);
 
   return options;
-}
+}*/
