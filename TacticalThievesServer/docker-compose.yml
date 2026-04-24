@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tactical_thieves_api
+    ports:
+      - "7186:7186"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=tactical-thieves-sqlserver,1433;Database=TacticalThievesDb;User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true;
+      - JWT_KEY=${JWT_KEY}
+      - SA_PASSWORD=${SA_PASSWORD}
+    networks:
+      - tactical_network
+
+networks:
+  tactical_network:
+    driver: bridge
+    name: tactical_network
+    external: true
