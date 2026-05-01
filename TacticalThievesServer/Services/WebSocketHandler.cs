@@ -124,8 +124,9 @@ namespace TacticalThievesServer.Services
         }*/
 
         //Envoi ciblé
-        public async Task SendToClient(string clientId, string message)
+        public async Task<bool> SendToClient(string clientId, string message)
         {
+            bool bSuccess = false;
             if (_clients.TryGetValue(clientId, out var socket) && socket.State == WebSocketState.Open)
             {
                 var data = Encoding.UTF8.GetBytes(message);
@@ -136,7 +137,10 @@ namespace TacticalThievesServer.Services
                     true,
                     CancellationToken.None
                 );
+                bSuccess = true;
             }
+
+            return bSuccess;
         }
 
         /*public async void Broadcast(string message)

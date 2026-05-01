@@ -22,198 +22,88 @@ namespace TacticalThievesServer.Controllers
         private readonly ThiefStateService thiefState;
         private readonly WebSocketHandler webSocketHandler;
         private readonly IHubContext<ClientHub> clientHub;
-        private readonly ApplicationDbContext db; // ajout du DbContext
+        private readonly ApplicationDbContext db;
         private readonly WebSocketLinkerService linker;
+        private readonly ILogger<GameController> logger;
 
-        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db, WebSocketLinkerService linker)
+        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db, WebSocketLinkerService linker, ILogger<GameController> logger)
         {
             this.thiefState = thiefState;
             this.webSocketHandler = webSocketHandler;
             this.clientHub = clientHub;
             this.db = db;
             this.linker = linker;
+            this.logger = logger;
         }
 
-        [HttpPost("move")]
-        public IActionResult Move()
-        {
-            this.thiefState.Move();
-            webSocketHandler.Broadcast("move");
-            return Ok(new { success = true });
-        }
-
-        [HttpPost("stealth")]
-        public IActionResult Stealth()
-        {
-            this.thiefState.Stealth();
-            webSocketHandler.Broadcast("stealth");
-            return Ok(new { success = true });
-        }
-
-        [HttpPost("end-turn")]
-        public IActionResult EndTurn()
-        {
-            // récupérer sessionId depuis header
-            var sessionId = Request.Headers["X-Session-Id"].ToString();
-            if (string.IsNullOrEmpty(sessionId))
-                return BadRequest("Missing sessionId");
-
-            // récupérer le lien
-            if (!linker.TryGet(sessionId, out var link))
-                return NotFound("Link not found for session");
-
-            GameMessage gameMessage = new GameMessage
-            {
-                Type = "end-turn",
-                Level = 0
-            };
-
-            var json = JsonSerializer.Serialize(gameMessage);
-
-            webSocketHandler.SendToClient(link.UnityGUID, json);
-            //webSocketHandler.Broadcast(json);
-            return Ok(new { success = true });
-        }
-
-        [HttpPost("restart")]
-        public IActionResult Restart()
-        {
-
-            // récupérer sessionId depuis header
-            var sessionId = Request.Headers["X-Session-Id"].ToString();
-            if (string.IsNullOrEmpty(sessionId))
-                return BadRequest("Missing sessionId");
-
-            // récupérer le lien
-            if (!linker.TryGet(sessionId, out var link))
-                return NotFound("Link not found for session");
-
-
-            GameMessage gameMessage = new GameMessage
-            {
-                Type = "restart",
-                Level = 0
-            };
-
-            var json = JsonSerializer.Serialize(gameMessage);
-
-            webSocketHandler.SendToClient(link.UnityGUID, json);
-
-            //webSocketHandler.Broadcast(json);
-            return Ok(new { success = true });
-
-        }
-
-        [HttpPost("collect-treasure")]
-        public IActionResult CollectTreasure([FromBody] TreasureCollectDTO dto)
-        {
-            // récupérer sessionId depuis header
-            var sessionId = Request.Headers["X-Session-Id"].ToString();
-            if (string.IsNullOrEmpty(sessionId))
-                return BadRequest("Missing sessionId");
-
-            if (dto == null || dto.Amount <= 0)
-                return BadRequest(new { success = false, message = "Invalid treasure amount" });
-
-            // récupérer le lien
-            if (!linker.TryGet(sessionId, out var link))
-                return NotFound("Link not found for session");
-
-
-            clientHub.Clients.Client(link.AngularGUID).SendAsync("ScoreUpdated", dto.Amount);
-            //clientHub.SendPlayerGoldUpdate(dto.Amount);
-            //clientHub.Clients.All.SendAsync("ScoreUpdated", dto.Amount);
-
-            return Ok(new { success = true, gold = dto.Amount });
-        }
-
-        [HttpPost("exit-reached")]
-        public IActionResult ExitReached([FromBody] PlayerProgressDTO playerProgress)
-        {
-            // récupérer sessionId depuis header
-            var sessionId = Request.Headers["X-Session-Id"].ToString();
-            if (string.IsNullOrEmpty(sessionId))
-                return BadRequest("Missing sessionId");
-
-            // récupérer le lien
-            if (!linker.TryGet(sessionId, out var link))
-                return NotFound("Link not found for session");
-
-            clientHub.Clients.Client(link.AngularGUID).SendAsync("ExitReached", playerProgress.CurrentLevel);
-            
-            //clientHub.Clients.All.SendAsync("ExitReached", playerProgress.CurrentLevel);
-            return Ok(new { success = true });
-        }
-
-        /*[HttpPost("game-start")]
-        public IActionResult GameStart([FromBody] GameStartDTO gameStartDTO)
-        {
-            linker.AddOrUpdate(gameStartDTO.SessionID, unityGuid: gameStartDTO.UnityGUID);
-            clientHub.Clients.All.SendAsync("GameStart", gameStartDTO.SessionID); 
-            return Ok(new { success = true });
-        }*/
-
-        [HttpPost("game-start")]
-        public async Task<IActionResult> GameStart([FromBody] GameStartDTO gameStartDTO)
+        private async Task<IActionResult> SendGameMessageAsync(string messageType)
         {
             try
             {
-                //Vérification du body
-                if (gameStartDTO == null)
-                    return BadRequest("DTO is null");
+                var sessionId = Request.Headers["X-Session-Id"].ToString();
+                if (string.IsNullOrEmpty(sessionId))
+                    return BadRequest("Missing sessionId");
 
-                if (string.IsNullOrEmpty(gameStartDTO.SessionID))
-                    return BadRequest("Missing SessionID");
+                if (!linker.TryGet(sessionId, out var link))
+                    return NotFound("Link not found for session");
 
-                if (string.IsNullOrEmpty(gameStartDTO.UnityGUID))
-                    return BadRequest("Missing UnityGUID");
+                var gameMessage = new GameMessage
+                {
+                    Type = messageType,
+                    Level = 0
+                };
 
-                // Debug (très important)
-                Console.WriteLine($"[GameStart] Session: {gameStartDTO.SessionID} | Unity: {gameStartDTO.UnityGUID}");
+                var json = JsonSerializer.Serialize(gameMessage);
 
-                // Enregistrement
-                linker.AddOrUpdate(gameStartDTO.SessionID, unityGuid: gameStartDTO.UnityGUID);
+                // Supposons que SendToClient retourne un bool ou Task<bool>
+                bool success = await webSocketHandler.SendToClient(link.UnityGUID, json);
 
-                // Broadcast vers Angular
-                await clientHub.Clients.All.SendAsync("GameStart", gameStartDTO.SessionID);
+                if (!success)
+                    return StatusCode(500, "Failed to send message to client");
 
                 return Ok(new { success = true });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[GameStart ERROR] {ex.Message}");
-
-                return BadRequest(new
+                logger.LogError(ex, "Error in SendGameMessageAsync. SessionId: {SessionId}, Type: {MessageType}",Request.Headers["X-Session-Id"].ToString(), messageType);
+                return StatusCode(500, new
                 {
                     success = false,
-                    message = ex.Message
+                    error = "An error occured"
                 });
             }
         }
 
-        [HttpPost("thieves-died")]
-        public IActionResult ThievesDied()
+        [HttpPost("move")]
+        public Task<IActionResult> Move()
         {
-            // récupérer sessionId depuis header
-            var sessionId = Request.Headers["X-Session-Id"].ToString();
-            if (string.IsNullOrEmpty(sessionId))
-                return BadRequest("Missing sessionId");
+            return SendGameMessageAsync("move");
+        }
 
-            // récupérer le lien
-            if (!linker.TryGet(sessionId, out var link))
-                return NotFound("Link not found for session");
+        [HttpPost("stealth")]
+        public Task<IActionResult> Stealth()
+        {
+            return SendGameMessageAsync("stealth");
+        }
 
-            clientHub.Clients.Client(link.AngularGUID).SendAsync("ThievesDied");
-            //clientHub.Clients.All.SendAsync("ThievesDied");
-            return Ok(new { success = true });
+        [HttpPost("end-turn")]
+        public Task<IActionResult> EndTurn()
+        {
+            return SendGameMessageAsync("end-turn");
+        }
+
+        [HttpPost("restart")]
+        public Task<IActionResult> Restart()
+        {
+            return SendGameMessageAsync("restart");
         }
 
         [HttpPost("load-random-level")]
-        public IActionResult LoadRandomLevel()
+        public async Task<IActionResult> LoadRandomLevel()
         {
             try
             {
-               // récupérer connectionId depuis header
+                // récupérer connectionId depuis header
                 var connectionId = Request.Headers["X-Connection-Id"].ToString();
                 if (string.IsNullOrEmpty(connectionId))
                     return BadRequest("Missing connectionId");
@@ -235,16 +125,161 @@ namespace TacticalThievesServer.Controllers
                 };
                 var json = JsonSerializer.Serialize(gameMessage);
 
-                webSocketHandler.SendToClient(link.UnityGUID, json);
-                //webSocketHandler.Broadcast(json);
+                bool bSuccess = await webSocketHandler.SendToClient(link.UnityGUID, json);
+
+                if(bSuccess == false)
+                    return StatusCode(500, "Failed to send message to client");
+
                 return Ok(new { success = true });
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Error in LoadRandomLevel. SessionId: {SessionId}, ConnectionId: {ConnectionId}", Request.Headers["X-Session-Id"].ToString(), Request.Headers["X-Connection-Id"].ToString());
                 return BadRequest(new
                 {
                     success = false,
-                    message = ex.Message
+                    message = "An error occured"
+                });
+            }
+        }
+
+        private async Task<IActionResult> HandleClientEventAsync<T>(
+            T dto, 
+            Func<T, bool> isValid, 
+            string validationErrorMessage, 
+            string eventName, 
+            Func<T, object> payloadSelector, 
+            Func<object> successResponse
+         )
+        {
+            try
+            {
+                var sessionId = Request.Headers["X-Session-Id"].ToString();
+                if (string.IsNullOrEmpty(sessionId))
+                    return BadRequest("Missing sessionId");
+
+                if (!linker.TryGet(sessionId, out var link))
+                    return NotFound("Link not found for session");
+
+                if (dto == null || !isValid(dto))
+                    return BadRequest(new { success = false, message = validationErrorMessage });
+
+                var payload = payloadSelector(dto);
+
+                await clientHub
+                    .Clients
+                    .Client(link.AngularGUID)
+                    .SendAsync(eventName, payload);
+
+                return Ok(successResponse());
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error in HandleClientEventAsync. Event: {EventName}", eventName);
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    error = "An error occured"
+                });
+            }
+        }
+
+        [HttpPost("collect-treasure")]
+       public Task<IActionResult> CollectTreasure([FromBody] TreasureCollectDTO dto)
+       {
+            return HandleClientEventAsync(
+                 dto,
+                 dto => dto.Amount >= 0,
+                 "Invalid treasure amount",
+                 "ScoreUpdated",
+                 dto => dto.Amount,
+                  () => new { success = true, gold = dto.Amount }
+            );
+          
+       }
+
+       [HttpPost("exit-reached")]
+       public Task<IActionResult> ExitReached([FromBody] PlayerProgressDTO playerProgress)
+       {
+            return HandleClientEventAsync(
+                playerProgress,
+                playerProgress => playerProgress.CurrentLevel >= 0,
+                "Invalid level value",
+                "ExitReached",
+                playerProgress => playerProgress.CurrentLevel,
+                () => new { success = true }
+             );
+          
+       }
+
+        [HttpPost("thieves-died")]
+        public IActionResult ThievesDied()
+        {
+            // récupérer sessionId depuis header
+            var sessionId = Request.Headers["X-Session-Id"].ToString();
+            if (string.IsNullOrEmpty(sessionId))
+                return BadRequest("Missing sessionId");
+
+            // récupérer le lien
+            if (!linker.TryGet(sessionId, out var link))
+                return NotFound("Link not found for session");
+
+            clientHub.Clients.Client(link.AngularGUID).SendAsync("ThievesDied");
+            return Ok(new { success = true });
+        }
+
+
+        [HttpPost("game-start")]
+        public async Task<IActionResult> GameStart([FromBody] GameStartDTO gameStartDTO)
+        {
+            try
+            {
+                if (gameStartDTO == null)
+                {
+                    logger.LogWarning("GameStart called with null DTO");
+                    return BadRequest("DTO is null");
+                }
+
+                if (string.IsNullOrEmpty(gameStartDTO.SessionID))
+                {
+                    logger.LogWarning("GameStart missing SessionID");
+                    return BadRequest("Missing SessionID");
+                }
+
+                if (string.IsNullOrEmpty(gameStartDTO.UnityGUID))
+                {
+                    logger.LogWarning("GameStart missing UnityGUID");
+                    return BadRequest("Missing UnityGUID");
+                }
+
+                logger.LogInformation(
+                    "GameStart received. SessionId: {SessionId}, UnityGUID: {UnityGUID}",
+                    gameStartDTO.SessionID,
+                    gameStartDTO.UnityGUID
+                );
+
+                linker.AddOrUpdate(gameStartDTO.SessionID, unityGuid: gameStartDTO.UnityGUID);
+
+                await clientHub.Clients.All.SendAsync("GameStart", gameStartDTO.SessionID);
+
+                logger.LogInformation(
+                    "GameStart broadcast sent for SessionId: {SessionId}",
+                    gameStartDTO.SessionID
+                );
+
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex,
+                    "Error in GameStart. SessionId: {SessionId}",
+                    gameStartDTO?.SessionID);
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Internal server error"
                 });
             }
         }
@@ -253,77 +288,61 @@ namespace TacticalThievesServer.Controllers
         [HttpPost("save-level")]
         public async Task<IActionResult> SaveLevel([FromBody] PlayerProgressDTO playerProgress)
         {
-            // Récupérer username depuis le JWT
-            var username = User.FindFirst("username")?.Value;
-
-            if (string.IsNullOrEmpty(username))
-                return Unauthorized(new { success = false, message = "Invalid token" });
-
-            var existingUser = await db.Users.Include(u => u.CurrentLevel).FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
-
-            if (existingUser == null)
-                return NotFound(new { success = false, message = "User not found" });
-
-
-            if (existingUser.CurrentLevel != null)
+            try
             {
-                // Met à jour le niveau si nécessaire
-                existingUser.CurrentLevel.CurrentLevel = playerProgress.CurrentLevel;
-                //db.Users.Update(existingUser);
-                //db.PlayerProgresses.Update(existing);
-            }
-            else
-            {
-                existingUser.CurrentLevel = new PlayerProgress
+                // Récupérer username depuis le JWT
+                var username = User.FindFirst("username")?.Value;
+
+                if (string.IsNullOrEmpty(username))
+                    return Unauthorized(new { success = false, message = "Invalid token" });
+
+                var existingUser = await db.Users.Include(u => u.CurrentLevel).FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+
+                if (existingUser == null)
+                    return NotFound(new { success = false, message = "User not found" });
+
+
+                if (existingUser.CurrentLevel != null)
                 {
-                    UserId = existingUser.Id,
-                    CurrentLevel = playerProgress.CurrentLevel
-                };
+                    // Met à jour le niveau si nécessaire
+                    existingUser.CurrentLevel.CurrentLevel = playerProgress.CurrentLevel;
+                }
+                else
+                {
+                    existingUser.CurrentLevel = new PlayerProgress
+                    {
+                        UserId = existingUser.Id,
+                        CurrentLevel = playerProgress.CurrentLevel
+                    };
+                }
 
-                //db.Users.Update(existingUser);
-                // Ajoute une nouvelle progression
-                //db.PlayerProgresses.Add(playerProgress);
+                await db.SaveChangesAsync();
+
+                return Ok(new { Success = true, Pseudo = playerProgress.Pseudo, Level = playerProgress.CurrentLevel });
             }
+            catch (DbUpdateException ex)
+            {
+                logger.LogError(ex, "Database error in SaveLevel for {Username}",
+                    User.FindFirst("username")?.Value);
 
-            await db.SaveChangesAsync();
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Database error while saving level"
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unexpected error in SaveLevel");
 
-            // Notifie les clients (optionnel)
-            //await clientHub.Clients.All.SendAsync("PlayerProgressSaved", new { pseudo = playerProgress.Pseudo, level = playerProgress.CurrentLevel });
-
-            return Ok(new { Success = true, Pseudo = playerProgress.Pseudo, Level = playerProgress.CurrentLevel });
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Internal server error"
+                });
+            }
         }
 
-        // Récupère le niveau courant d'un joueur par son pseudo (insensible à la casse côté SQL via LOWER)
-       /* [HttpGet("load-level/{pseudo}")]
-        public async Task<IActionResult> LoadLevel(string pseudo)
-        {
-            if (string.IsNullOrWhiteSpace(pseudo))
-                return BadRequest(new { success = false, message = "Pseudo is required" });
-
-            // Utilise LOWER() pour une recherche insensible à la casse au niveau SQL
-            var player = await db.Users
-                                 .FirstOrDefaultAsync(p => p.Username.ToLower() == pseudo.ToLower());
-
-            if (player == null)
-                return NotFound(new { success = false, message = "Player not found" });
-
-            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Username, Level = player.CurrentLevel.CurrentLevel });
-        }
-
-        // Récupère le niveau courant d'un joueur par son Id
-        [HttpGet("load-level/{id:int}")]
-        public async Task<IActionResult> GetLevelById(int id)
-        {
-            if (id <= 0)
-                return BadRequest(new { success = false, message = "Invalid id" });
-
-            var player = await db.Users.FindAsync(id);
-
-            if (player == null)
-                return NotFound(new { success = false, message = "Player not found" });
-
-            return Ok(new { Success = true, ID = player.Id, Pseudo = player.Username, Level = player.CurrentLevel.CurrentLevel });
-        }*/
 
         [Authorize]
         [HttpPost("load-level")]
@@ -367,10 +386,13 @@ namespace TacticalThievesServer.Controllers
 
                 var json = JsonSerializer.Serialize(payload);
 
-                webSocketHandler.SendToClient(link.UnityGUID, json);
+                bool bSuccess = await webSocketHandler.SendToClient(link.UnityGUID, json);
 
-                //await webSocketHandler.BroadcastAsync(payload);
-                //webSocketHandler.Broadcast(json);
+                if (bSuccess == false)
+                {
+                    return StatusCode(500, "Failed to send message to client");
+                }
+
 
                 // Réponse API
                 return Ok(new
@@ -381,32 +403,16 @@ namespace TacticalThievesServer.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Error in LoadLevel for user {Username}", User.FindFirst("username")?.Value);
+
                 return BadRequest(new
                 {
                     success = false,
-                    message = ex.Message
+                    message = "An error occured while loading level"
                 });
             }
         }
 
-    }
-
-    public class  PlayerProgressDTO
-    {
-        public string Pseudo { get; set; }
-        public int CurrentLevel { get; set; }
-    }
-
-    public class GameMessage
-    {
-        public string Type { get; set; }
-        public int Level { get; set; }
-    }
-
-    public class GameStartDTO
-    {
-        public string SessionID { get; set; }
-        public string UnityGUID { get; set; }
     }
 
 }
