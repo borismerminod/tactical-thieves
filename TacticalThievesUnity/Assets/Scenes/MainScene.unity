@@ -705,7 +705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4408889484601821999, guid: 897be6211bfad454194511e639884e77, type: 3}
       propertyPath: serverUri
-      value: wss://localhost:7186/ws?clientId={$clientId}
+      value: wss://mozell-fortifiable-moshe.ngrok-free.dev/ws?clientId={$clientId}
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 897be6211bfad454194511e639884e77, type: 3}
@@ -819,7 +819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5006144090595215864, guid: e9c9ea05e66fb294a9b160b81abb7d98, type: 3}
       propertyPath: serverUrl
-      value: https://localhost:7186/api
+      value: https://mozell-fortifiable-moshe.ngrok-free.dev/api
       objectReference: {fileID: 0}
     - target: {fileID: 5006144090595215865, guid: e9c9ea05e66fb294a9b160b81abb7d98, type: 3}
       propertyPath: m_Name

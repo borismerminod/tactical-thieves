@@ -11,12 +11,12 @@ export class ServerHubService {
 
   private hubConnection!: signalR.HubConnection;
   //private readonly hubUrl = 'http://localhost:5140/scorehub';
-  private readonly hubUrl = 'https://localhost:7186/scorehub';
-  //private readonly hubUrl = 'https://mozell-fortifiable-moshe.ngrok-free.dev/scorehub';
+  //private readonly hubUrl = 'https://localhost:7186/scorehub';
+  private readonly hubUrl = 'https://mozell-fortifiable-moshe.ngrok-free.dev/scorehub';
   //private readonly hubUrl = 'https://tactical-thieves.loca.lt/scorehub';
 
-  private serverURL: string = 'https://localhost:7186';
-  //private serverURL: string = 'https://mozell-fortifiable-moshe.ngrok-free.dev';
+  //private serverURL: string = 'https://localhost:7186';
+  private serverURL: string = 'https://mozell-fortifiable-moshe.ngrok-free.dev';
   //private serverURL: string = 'https://tactical-thieves.loca.lt';
 
   private playerGoldSource = new BehaviorSubject<number>(0)

@@ -16,8 +16,8 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   username: string = '';
   message: string = '';
-  serverURL: string = 'https://localhost:7186';
-  //serverURL: string = 'https://mozell-fortifiable-moshe.ngrok-free.dev';
+  //serverURL: string = 'https://localhost:7186';
+  serverURL: string = 'https://mozell-fortifiable-moshe.ngrok-free.dev';
   //serverURL: string = 'https://tactical-thieves.loca.lt';
 
   constructor(private http: HttpClient, private router: Router) {}

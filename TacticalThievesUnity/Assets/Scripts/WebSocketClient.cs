@@ -12,8 +12,8 @@ public class WebSocketClient : MonoBehaviour
 
     // URL du serveur WebSocket
     //public string serverUri = "ws://localhost:5140/ws";
-    public string serverUri = "wss://localhost:7186/ws?clientId={$clientId}"; 
-    //private string serverUri = "wss://mozell-fortifiable-moshe.ngrok-free.dev/ws?clientId={$clientId}"; 
+    //public string serverUri = "wss://localhost:7186/ws?clientId={$clientId}"; 
+    private string serverUri = "wss://mozell-fortifiable-moshe.ngrok-free.dev/ws?clientId={$clientId}"; 
     //private string serverUri = "wss://tactical-thieves.loca.lt/ws?clientId={$clientId}"; 
     public bool webSocketClientStarted;
 

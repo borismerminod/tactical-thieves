@@ -13,7 +13,8 @@ namespace TacticalThieves
     public class APIClient : MonoBehaviour
     {
         //[SerializeField] private string serverUrl = "http://localhost:5140/api";
-        [SerializeField] private string serverUrl = "https://localhost:7186/api";
+        //[SerializeField] private string serverUrl = "https://localhost:7186/api";
+        [SerializeField] private string serverUrl = "https://mozell-fortifiable-moshe.ngrok-free.dev/api";
         [SerializeField] private bool apiClientStarted;
 
 

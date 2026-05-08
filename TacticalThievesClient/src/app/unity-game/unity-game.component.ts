@@ -16,8 +16,8 @@ export class UnityGameComponent {
   constructor(private sanitizer: DomSanitizer) {
     // Générer un sessionId unique pour chaque instance du composant
     const sessionId = crypto.randomUUID();
-    const rawUrl= `https://localhost:7186/unity/index.html?sessionId=${sessionId}`;
-    //const rawUrl= `https://mozell-fortifiable-moshe.ngrok-free.dev/unity/index.html?sessionId=${sessionId}`;
+    //const rawUrl= `https://localhost:7186/unity/index.html?sessionId=${sessionId}`;
+    const rawUrl= `https://mozell-fortifiable-moshe.ngrok-free.dev/unity/index.html?sessionId=${sessionId}`;
     //const rawUrl= `https://tactical-thieves.loca.lt/unity/index.html?sessionId=${sessionId}`;
     console.log(rawUrl);
 
