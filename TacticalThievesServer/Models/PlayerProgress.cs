@@ -11,6 +11,6 @@ namespace TacticalThievesServer.Models
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;
 
-        public int CurrentLevel { get; set; }
+        public uint CurrentLevel { get; set; }
     }
 }

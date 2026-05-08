@@ -296,7 +296,7 @@ namespace TacticalThievesServer.Controllers
                 if (string.IsNullOrEmpty(username))
                     return Unauthorized(new { success = false, message = "Invalid token" });
 
-                var existingUser = await db.Users.Include(u => u.CurrentLevel).FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+                var existingUser = await db.Users.Include(u => u.CurrentLevel).FirstOrDefaultAsync(u => u.Username?.ToLower() == username.ToLower());
 
                 if (existingUser == null)
                     return NotFound(new { success = false, message = "User not found" });

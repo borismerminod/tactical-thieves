@@ -92,9 +92,9 @@ if (string.IsNullOrEmpty(dbPassword))
     throw new Exception("SA_PASSWORD n'est pas défini dans le .env");
 }
 
-var connectionStringWithoutPassword = builder.Configuration.GetConnectionString("DefaultConnection");
+string? connectionStringWithoutPassword = builder.Configuration.GetConnectionString("DefaultConnection");
 
-string finalConnectionString = connectionStringWithoutPassword.Replace("{DB_PASSWORD}", dbPassword);
+string finalConnectionString = (connectionStringWithoutPassword == null) ? "" : connectionStringWithoutPassword.Replace("{DB_PASSWORD}", dbPassword);
 
 // <-- Ajout : enregistrement du DbContext pour SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

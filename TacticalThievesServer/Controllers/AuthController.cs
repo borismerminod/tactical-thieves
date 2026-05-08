@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using TacticalThievesServer.Data;
+using TacticalThievesServer.DTO;
 using TacticalThievesServer.Models;
 
 
@@ -21,31 +22,33 @@ namespace TacticalThievesServer.Controllers
     [Route("api/auth")]
     public class AuthController : Controller
     {
-        private readonly Fido2 _fido2;
-        private readonly ApplicationDbContext _db; // Ton DbContext
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly Fido2 fido2;
+        private readonly ApplicationDbContext db;
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ILogger<AuthController> logger;
 
-        public AuthController(Fido2 fido2, ApplicationDbContext db, IHttpContextAccessor httpContextAccessor)
+        public AuthController(Fido2 fido2, ApplicationDbContext db, IHttpContextAccessor httpContextAccessor, ILogger<AuthController> logger)
         {
-            _fido2 = fido2;
-            _db = db;
-            _httpContextAccessor = httpContextAccessor;
+            this.fido2 = fido2;
+            this.db = db;
+            this.httpContextAccessor = httpContextAccessor;
+            this.logger = logger;
         }
 
 
 
         [HttpPost("RegisterStart")]
-        public async Task<IActionResult> RegisterStart([FromBody] AuthRequest request)
+        public async Task<IActionResult> RegisterStart([FromBody] AuthRequestDTO request)
         {
             try
             {
-                string username = request.Username.ToLower().Trim();
+                string? username = request.Username?.ToLower().Trim();
 
                 if (string.IsNullOrEmpty(username))
                     return BadRequest("Username missing");
 
                 // récupérer ou créer l'utilisateur
-                var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
+                var user = await db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
                 if (user == null)
                 {
@@ -61,8 +64,8 @@ namespace TacticalThievesServer.Controllers
                         CurrentLevel = progress
                     };
 
-                    _db.Users.Add(user);
-                    await _db.SaveChangesAsync();
+                    db.Users.Add(user);
+                    await db.SaveChangesAsync();
                 }
 
                 // créer l'utilisateur FIDO2
@@ -74,7 +77,7 @@ namespace TacticalThievesServer.Controllers
                 };
 
                 // récupérer les credentials existants
-                var credentials = await _db.StoredCredentials
+                var credentials = await db.StoredCredentials
                     .Where(c => c.UserId == user.Id)
                     .ToListAsync();
 
@@ -82,7 +85,8 @@ namespace TacticalThievesServer.Controllers
 
                 foreach (var credential in credentials)
                 {
-                    existingKeys.Add(new PublicKeyCredentialDescriptor(credential.DescriptorId));
+                    if (credential.DescriptorId != null)
+                        existingKeys.Add(new PublicKeyCredentialDescriptor(credential.DescriptorId));
                 }
 
                 // config authenticator
@@ -110,7 +114,7 @@ namespace TacticalThievesServer.Controllers
                     Extensions = extensions
                 };
 
-                var options = _fido2.RequestNewCredential(requestParams);
+                var options = fido2.RequestNewCredential(requestParams);
 
                 // stocker en session ==> temporaire le temps de l'inscription
                 HttpContext.Session.SetString("fido2.attestationOptions", options.ToJson());
@@ -119,10 +123,11 @@ namespace TacticalThievesServer.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Error in RegisterStart");
                 return BadRequest(new
                 {
                     status = "error",
-                    message = ex.Message
+                    message = "An error occurred"
                 });
             }
         }
@@ -144,7 +149,7 @@ namespace TacticalThievesServer.Controllers
                 // callback pour vérifier que le credentialId est unique
                 async Task<bool> IsCredentialIdUniqueToUser(IsCredentialIdUniqueToUserParams args, CancellationToken ct)
                 {
-                    return !await _db.StoredCredentials
+                    return !await db.StoredCredentials
                         .AnyAsync(c => c.DescriptorId.SequenceEqual(args.CredentialId), ct);
                 }
 
@@ -157,13 +162,13 @@ namespace TacticalThievesServer.Controllers
                 };
 
                 // validation du credential
-                var result = await _fido2.MakeNewCredentialAsync(makeCredentialParams);
+                var result = await fido2.MakeNewCredentialAsync(makeCredentialParams);
 
                 // récupérer l'utilisateur
                 var userIdString = Encoding.UTF8.GetString(result.User.Id);
                 var userId = Guid.Parse(userIdString);
 
-                var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                var user = await db.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
                 if (user == null)
                     return BadRequest("User not found");
@@ -177,40 +182,41 @@ namespace TacticalThievesServer.Controllers
                     UserId = userId
                 };
 
-                _db.StoredCredentials.Add(storedCredential);
+                db.StoredCredentials.Add(storedCredential);
 
-                await _db.SaveChangesAsync();
+                await db.SaveChangesAsync();
 
                 return Ok(result);
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Error in RegisterFinish");
                 return BadRequest(new
                 {
                     status = "error",
-                    message = ex.Message
+                    message = "An error occurred"
                 });
             }
         }
 
         [HttpPost("LoginStart")]
-        public async Task<IActionResult> LoginStart([FromBody] AuthRequest request)
+        public async Task<IActionResult> LoginStart([FromBody] AuthRequestDTO request)
         {
             try
             {
-                string username = request.Username.ToLower().Trim();
+                string? username = request.Username?.ToLower().Trim();
 
                 if (string.IsNullOrEmpty(username))
                     return BadRequest("Username is required");
 
                 //Récupérer l'utilisateur
-                var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
+                var user = await db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
                 if (user == null)
                     return BadRequest("User not found");
 
                 //Récupérer les credentials enregistrés
-                var credentials = await _db.StoredCredentials
+                var credentials = await db.StoredCredentials
                     .Where(c => c.UserId == user.Id)
                     .ToListAsync();
 
@@ -223,12 +229,12 @@ namespace TacticalThievesServer.Controllers
                     .ToList();
 
                 //Générer les options d'assertion
-                var options = _fido2.GetAssertionOptions(
+                var options = fido2.GetAssertionOptions(
                     allowedCredentials,
                     UserVerificationRequirement.Preferred
                 );
 
-                //Stocker en session (OBLIGATOIRE pour LoginFinish)
+                //Stocker en session (pour LoginFinish)
                 HttpContext.Session.SetString("fido2.assertionOptions", options.ToJson());
                 HttpContext.Session.SetString("fido2.username", username);
 
@@ -236,11 +242,12 @@ namespace TacticalThievesServer.Controllers
                 return Ok(options);
             }
             catch (Exception ex)
-            {
+            {  
+                logger.LogError(ex, "Error in LoginStart");
                 return BadRequest(new
                 {
                     status = "error",
-                    message = ex.Message
+                    message = "An error occurred"
                 });
             }
         }
@@ -265,8 +272,8 @@ namespace TacticalThievesServer.Controllers
                 //Reconstruction des options FIDO2 envoyées initialement au client
                 var options = AssertionOptions.FromJson(optionsJson);
 
-                var user = await _db.Users.FirstAsync(u => u.Username == username);
-                var storedCredentials = await _db.StoredCredentials
+                var user = await db.Users.FirstAsync(u => u.Username == username);
+                var storedCredentials = await db.StoredCredentials
                     .Where(c => c.UserId == user.Id)
                     .ToListAsync();
 
@@ -295,7 +302,7 @@ namespace TacticalThievesServer.Controllers
                     //Callback de sécurité : vérifie que le credential appartient bien à l'utilisateur
                     IsUserHandleOwnerOfCredentialIdCallback = async (args, ct) =>
                     {
-                        var userCredentials = await _db.StoredCredentials
+                        var userCredentials = await db.StoredCredentials
                             .Where(c => c.UserId == user.Id)
                             .ToListAsync(ct);
 
@@ -305,12 +312,12 @@ namespace TacticalThievesServer.Controllers
                 };
 
                 //Vérification cryptographique de l'assertion FIDO2
-                var result = await _fido2.MakeAssertionAsync(makeAssertionParams);
+                var result = await fido2.MakeAssertionAsync(makeAssertionParams);
 
                 // Mise à jour du compteur (important pour sécurité future)
                 cred.Counter = result.SignCount;
-                _db.Update(cred);
-                await _db.SaveChangesAsync();
+                db.Update(cred);
+                await db.SaveChangesAsync();
 
                 //Génération d’un JWT pour gérer la session côté client
                 var token = GenerateJwtToken(username);
@@ -323,10 +330,11 @@ namespace TacticalThievesServer.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Error in LoginFinish");
                 return BadRequest(new
                 {
                     status = "error",
-                    message = ex.Message
+                    message = "An error occurred"
                 });
             }
         }
@@ -343,8 +351,7 @@ namespace TacticalThievesServer.Controllers
                 throw new Exception("JWT_KEY n'est pas défini dans le .env");
             }
             /*Clé secrète utilisée pour signer le token
-            Doit faire au moins 32 caractères (256 bits) pour HS256
-            DOTO En production ==> stocker dans appsettings.json ou variable d'environnement*/
+            Doit faire au moins 32 caractères (256 bits) pour HS256*/
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtKey)
             );
@@ -379,14 +386,6 @@ namespace TacticalThievesServer.Controllers
             return new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler()
                 .WriteToken(token);
         }
-    }
-
-    public class AuthRequest
-    {
-        [Required(ErrorMessage="Username is required")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "Username must have between 3 and 20 characters")]
-        [RegularExpression(@"^[a-zA-Z]+[a-zA-Z0-9]+$", ErrorMessage = "Username is not compliant") ]
-        public string Username { get; set; }
     }
 
 }

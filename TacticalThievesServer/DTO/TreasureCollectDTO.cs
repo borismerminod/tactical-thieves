@@ -3,6 +3,6 @@
     [System.Serializable]
     public class TreasureCollectDTO
     {
-        public int Amount { get; set; }
+        public uint Amount { get; set; }
     }
 }
