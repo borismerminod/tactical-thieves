@@ -19,16 +19,14 @@ namespace TacticalThievesServer.Controllers
     public class GameController : ControllerBase
     {
 
-        private readonly ThiefStateService thiefState;
         private readonly WebSocketHandler webSocketHandler;
         private readonly IHubContext<ClientHub> clientHub;
         private readonly ApplicationDbContext db;
         private readonly WebSocketLinkerService linker;
         private readonly ILogger<GameController> logger;
 
-        public GameController(ThiefStateService thiefState, WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db, WebSocketLinkerService linker, ILogger<GameController> logger)
+        public GameController(WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db, WebSocketLinkerService linker, ILogger<GameController> logger)
         {
-            this.thiefState = thiefState;
             this.webSocketHandler = webSocketHandler;
             this.clientHub = clientHub;
             this.db = db;
@@ -56,7 +54,7 @@ namespace TacticalThievesServer.Controllers
                 var json = JsonSerializer.Serialize(gameMessage);
 
                 // Supposons que SendToClient retourne un bool ou Task<bool>
-                bool success = await webSocketHandler.SendToClient(link.UnityGUID, json);
+                bool success = await webSocketHandler.SendToClient(link?.UnityGUID, json);
 
                 if (!success)
                     return StatusCode(500, "Failed to send message to client");
@@ -125,7 +123,7 @@ namespace TacticalThievesServer.Controllers
                 };
                 var json = JsonSerializer.Serialize(gameMessage);
 
-                bool bSuccess = await webSocketHandler.SendToClient(link.UnityGUID, json);
+                bool bSuccess = await webSocketHandler.SendToClient(link?.UnityGUID, json);
 
                 if(bSuccess == false)
                     return StatusCode(500, "Failed to send message to client");
@@ -165,6 +163,9 @@ namespace TacticalThievesServer.Controllers
                     return BadRequest(new { success = false, message = validationErrorMessage });
 
                 var payload = payloadSelector(dto);
+
+                if (link == null ||link.AngularGUID == null)
+                    return NotFound("Link not found for session");
 
                 await clientHub
                     .Clients
@@ -223,6 +224,9 @@ namespace TacticalThievesServer.Controllers
 
             // récupérer le lien
             if (!linker.TryGet(sessionId, out var link))
+                return NotFound("Link not found for session");
+
+            if(link == null || link.AngularGUID == null)
                 return NotFound("Link not found for session");
 
             clientHub.Clients.Client(link.AngularGUID).SendAsync("ThievesDied");
@@ -296,7 +300,7 @@ namespace TacticalThievesServer.Controllers
                 if (string.IsNullOrEmpty(username))
                     return Unauthorized(new { success = false, message = "Invalid token" });
 
-                var existingUser = await db.Users.Include(u => u.CurrentLevel).FirstOrDefaultAsync(u => u.Username?.ToLower() == username.ToLower());
+                var existingUser = await db.Users.Include(u => u.CurrentLevel).FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
 
                 if (existingUser == null)
                     return NotFound(new { success = false, message = "User not found" });
@@ -386,7 +390,7 @@ namespace TacticalThievesServer.Controllers
 
                 var json = JsonSerializer.Serialize(payload);
 
-                bool bSuccess = await webSocketHandler.SendToClient(link.UnityGUID, json);
+                bool bSuccess = await webSocketHandler.SendToClient(link?.UnityGUID, json);
 
                 if (bSuccess == false)
                 {

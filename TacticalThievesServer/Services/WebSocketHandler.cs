@@ -7,11 +7,9 @@ namespace TacticalThievesServer.Services
 {
     public class WebSocketHandler
     {
-        //Obsolète ? 
-        //private readonly ConcurrentBag<WebSocket> _sockets = new();
 
         // Mapping clientId -> WebSocket
-        private readonly ConcurrentDictionary<string, WebSocket> _clients = new();
+        private readonly ConcurrentDictionary<string, WebSocket> clients = new();
 
         public async Task HandleAsync(HttpContext context)
         {
@@ -34,7 +32,7 @@ namespace TacticalThievesServer.Services
             var socket = await context.WebSockets.AcceptWebSocketAsync();
 
             // Enregistrement du client
-            _clients[clientId] = socket;
+            clients[clientId] = socket;
 
             var buffer = new byte[1024 * 4];
 
@@ -75,7 +73,7 @@ namespace TacticalThievesServer.Services
             finally
             {
                 // Nettoyage à la déconnexion
-                _clients.TryRemove(clientId, out _);
+                clients.TryRemove(clientId, out _);
 
                 if (socket.State != WebSocketState.Closed)
                 {
@@ -91,43 +89,11 @@ namespace TacticalThievesServer.Services
             }
         }
 
-        /*public async Task HandleAsync(HttpContext context)
-        {
-            if (context.WebSockets.IsWebSocketRequest)
-            {
-                using var socket = await context.WebSockets.AcceptWebSocketAsync();
-                _sockets.Add(socket);
-
-                var buffer = new byte[1024 * 4];
-
-                while (socket.State == WebSocketState.Open)
-                {
-                    var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-                    if (result.MessageType == WebSocketMessageType.Close)
-                    {
-                        await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed by server", CancellationToken.None);
-                    }
-                    else
-                    {
-                        var msg = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        var response = Encoding.UTF8.GetBytes("Server received: " + msg);
-
-                        await socket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
-                    }
-                }
-            }
-            else
-            {
-                context.Response.StatusCode = 400; // mauvaise requête si ce n’est pas un WS
-            }
-        }*/
-
         //Envoi ciblé
-        public async Task<bool> SendToClient(string clientId, string message)
+        public async Task<bool> SendToClient(string? clientId, string message)
         {
             bool bSuccess = false;
-            if (_clients.TryGetValue(clientId, out var socket) && socket.State == WebSocketState.Open)
+            if (clientId != null && clients.TryGetValue(clientId, out var socket) && socket.State == WebSocketState.Open)
             {
                 var data = Encoding.UTF8.GetBytes(message);
 
@@ -143,20 +109,12 @@ namespace TacticalThievesServer.Services
             return bSuccess;
         }
 
-        /*public async void Broadcast(string message)
-        {
-            var data = Encoding.UTF8.GetBytes(message);
-            foreach (var socket in _sockets.Where(s => s.State == WebSocketState.Open))
-            {
-                await socket.SendAsync(new ArraySegment<byte>(data), WebSocketMessageType.Text, true, CancellationToken.None);
-            }
-        }*/
 
         public async Task Broadcast(string message)
         {
             var data = Encoding.UTF8.GetBytes(message);
 
-            var tasks = _clients
+            var tasks = clients
                 .Where(c => c.Value.State == WebSocketState.Open)
                 .Select(c => c.Value.SendAsync(
                     new ArraySegment<byte>(data),
@@ -170,7 +128,7 @@ namespace TacticalThievesServer.Services
 
         public async Task DisconnectClient(string clientId)
         {
-            if (_clients.TryRemove(clientId, out var socket))
+            if (clients.TryRemove(clientId, out var socket))
             {
                 if (socket.State == WebSocketState.Open)
                 {
@@ -187,7 +145,7 @@ namespace TacticalThievesServer.Services
 
         public int GetConnectedClientsCount()
         {
-            return _clients.Count;
+            return clients.Count;
         }
     }
 }

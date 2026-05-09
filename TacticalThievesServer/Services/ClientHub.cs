@@ -5,7 +5,7 @@ namespace TacticalThievesServer.Services
 {
     public class ClientHub : Hub
     {
-        private static readonly ConcurrentDictionary<string, string> _bindings = new();
+        private static readonly ConcurrentDictionary<string, string> bindings = new();
         public async Task SendPlayerGoldUpdate(int playerGold)
         {
             await Clients.All.SendAsync("ReceivePlayerGoldUpdate", playerGold);
@@ -22,14 +22,14 @@ namespace TacticalThievesServer.Services
             var connectionId = Context.ConnectionId;
 
             // Vérifie si déjà pris
-            if (_bindings.ContainsKey(unityId))
+            if (bindings.ContainsKey(unityId))
             {
                 await Clients.Caller.SendAsync("UnityAlreadyTaken");
                 return;
             }
 
             //Association
-            _bindings[unityId] = connectionId;
+            bindings[unityId] = connectionId;
 
             Console.WriteLine($"Unity {unityId} claim par {connectionId}");
 

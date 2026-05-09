@@ -23,7 +23,7 @@ import { environment } from '../../environments/environment';
 export class ServerHubService {
 
   private hubConnection!: signalR.HubConnection;
-  private readonly hubURL= `${environment.apiURL}/scorehub`;
+  private readonly hubURL= `${environment.apiURL}/hub`;
 
   /**
    * Observable stream of the player's current gold/score amount.
