@@ -18,6 +18,15 @@ using TacticalThievesServer.Models;
 
 namespace TacticalThievesServer.Controllers
 {
+    /// <summary>
+    /// AuthController handles authentication flows using FIDO2 (WebAuthn) and JWT generation.
+    /// Responsibilities:
+    ///  - Start and finish FIDO2 registration (RegisterStart, RegisterFinish).
+    ///  - Start and finish FIDO2 login/assertion (LoginStart, LoginFinish).
+    ///  - Generate JWT tokens after successful authentication.
+    /// The controller persists users and stored credentials to the database and uses session
+    /// to keep temporary FIDO2 options between start and finish calls.
+    /// </summary>
     [ApiController]
     [Route("api/auth")]
     public class AuthController : Controller
@@ -37,6 +46,13 @@ namespace TacticalThievesServer.Controllers
 
 
 
+        /// <summary>
+        /// Initiates FIDO2 registration for a given username.
+        ///  - Creates the user if it does not exist.
+        ///  - Builds FIDO2 credential creation options and stores them in session
+        ///    for the subsequent <see cref="RegisterFinish"/> call.
+        /// Returns the options to be consumed by the client (WebAuthn API).
+        /// </summary>
         [HttpPost("RegisterStart")]
         public async Task<IActionResult> RegisterStart([FromBody] AuthRequestDTO request)
         {
@@ -47,7 +63,7 @@ namespace TacticalThievesServer.Controllers
                 if (string.IsNullOrEmpty(username))
                     return BadRequest("Username missing");
 
-                // récupérer ou créer l'utilisateur
+                // get or create user
                 var user = await db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
                 if (user == null)
@@ -68,7 +84,7 @@ namespace TacticalThievesServer.Controllers
                     await db.SaveChangesAsync();
                 }
 
-                // créer l'utilisateur FIDO2
+                // Create Fido2User object required for options generation
                 var fidoUser = new Fido2User
                 {
                     DisplayName = user.Username,
@@ -76,7 +92,7 @@ namespace TacticalThievesServer.Controllers
                     Id = Encoding.UTF8.GetBytes(user.Id.ToString())
                 };
 
-                // récupérer les credentials existants
+                // get existing credentials for the user to exclude them from registration options
                 var credentials = await db.StoredCredentials
                     .Where(c => c.UserId == user.Id)
                     .ToListAsync();
@@ -89,14 +105,14 @@ namespace TacticalThievesServer.Controllers
                         existingKeys.Add(new PublicKeyCredentialDescriptor(credential.DescriptorId));
                 }
 
-                // config authenticator
+                // configure authenticator selection criteria (e.g. resident key, user verification)
                 var authenticatorSelection = new AuthenticatorSelection
                 {
                     ResidentKey = ResidentKeyRequirement.Discouraged,
                     UserVerification = UserVerificationRequirement.Preferred
                 };
 
-                // extensions
+                // Adding extensions
                 var extensions = new AuthenticationExtensionsClientInputs
                 {
                     Extensions = true,
@@ -104,7 +120,7 @@ namespace TacticalThievesServer.Controllers
                     UserVerificationMethod = true
                 };
 
-                //Paramètres pour la génération des credentials
+                //generate credential creation param options
                 var requestParams = new RequestNewCredentialParams
                 {
                     User = fidoUser,
@@ -116,7 +132,7 @@ namespace TacticalThievesServer.Controllers
 
                 var options = fido2.RequestNewCredential(requestParams);
 
-                // stocker en session ==> temporaire le temps de l'inscription
+                // store options in session for the RegisterFinish step
                 HttpContext.Session.SetString("fido2.attestationOptions", options.ToJson());
 
                 return Ok(options);
@@ -132,12 +148,18 @@ namespace TacticalThievesServer.Controllers
             }
         }
 
+        /// <summary>
+        /// Completes FIDO2 registration by validating the attestation response from the client.
+        ///  - Reads the previously stored credential creation options from session.
+        ///  - Validates the attestation and persists the resulting credential.
+        /// Returns the FIDO2 result to the client or an error if validation fails.
+        /// </summary>
         [HttpPost("RegisterFinish")]
         public async Task<IActionResult> RegisterFinish([FromBody] AuthenticatorAttestationRawResponse clientResponse)
         {
             try
             {
-                // récupérer les options stockées dans la session
+                // get options from session (set in RegisterStart) and remove immediately for security (one-time use)
                 var jsonOptions = HttpContext.Session.GetString("fido2.attestationOptions");
                 HttpContext.Session.Remove("fido2.attestationOptions");
 
@@ -146,14 +168,14 @@ namespace TacticalThievesServer.Controllers
 
                 var options = CredentialCreateOptions.FromJson(jsonOptions);
 
-                // callback pour vérifier que le credentialId est unique
+                // we need to check that the credential ID is unique across all users (not already registered)
                 async Task<bool> IsCredentialIdUniqueToUser(IsCredentialIdUniqueToUserParams args, CancellationToken ct)
                 {
                     return !await db.StoredCredentials
                         .AnyAsync(c => c.DescriptorId.SequenceEqual(args.CredentialId), ct);
                 }
 
-                // construire les paramètres pour MakeNewCredential
+                // create parameters for MakeNewCredentialAsync
                 var makeCredentialParams = new MakeNewCredentialParams
                 {
                     AttestationResponse = clientResponse,
@@ -161,10 +183,10 @@ namespace TacticalThievesServer.Controllers
                     IsCredentialIdUniqueToUserCallback = IsCredentialIdUniqueToUser
                 };
 
-                // validation du credential
+                // get credential validation result (this will throw if validation fails)
                 var result = await fido2.MakeNewCredentialAsync(makeCredentialParams);
 
-                // récupérer l'utilisateur
+                // retrieve the user
                 var userIdString = Encoding.UTF8.GetString(result.User.Id);
                 var userId = Guid.Parse(userIdString);
 
@@ -173,7 +195,7 @@ namespace TacticalThievesServer.Controllers
                 if (user == null)
                     return BadRequest("User not found");
 
-                // sauvegarder le credential
+                // save the credential information in the database
                 var storedCredential = new StoredCredential
                 {
                     DescriptorId = result.Id,
@@ -199,6 +221,12 @@ namespace TacticalThievesServer.Controllers
             }
         }
 
+        /// <summary>
+        /// Initiates FIDO2 login (assertion) for a username.
+        ///  - Loads stored credentials for the user and generates assertion options.
+        ///  - Stores assertion options and username in session for the subsequent <see cref="LoginFinish"/> call.
+        /// Returns assertion options to the client to perform the WebAuthn assertion.
+        /// </summary>
         [HttpPost("LoginStart")]
         public async Task<IActionResult> LoginStart([FromBody] AuthRequestDTO request)
         {
@@ -209,13 +237,13 @@ namespace TacticalThievesServer.Controllers
                 if (string.IsNullOrEmpty(username))
                     return BadRequest("Username is required");
 
-                //Récupérer l'utilisateur
+                //get user
                 var user = await db.Users.FirstOrDefaultAsync(u => u.Username == username);
 
                 if (user == null)
                     return BadRequest("User not found");
 
-                //Récupérer les credentials enregistrés
+                //get stored credentials for the user
                 var credentials = await db.StoredCredentials
                     .Where(c => c.UserId == user.Id)
                     .ToListAsync();
@@ -223,22 +251,21 @@ namespace TacticalThievesServer.Controllers
                 if (!credentials.Any())
                     return BadRequest("No credentials registered");
 
-                //Convertir en descriptors FIDO2
+                //convert stored credentials to PublicKeyCredentialDescriptor list for options generation
                 var allowedCredentials = credentials
                     .Select(c => new PublicKeyCredentialDescriptor(c.DescriptorId))
                     .ToList();
 
-                //Générer les options d'assertion
+                //Create assertion options with the allowed credentials and user verification preference
                 var options = fido2.GetAssertionOptions(
                     allowedCredentials,
                     UserVerificationRequirement.Preferred
                 );
 
-                //Stocker en session (pour LoginFinish)
+                //Store options and username in session for the LoginFinish step (one-time use)
                 HttpContext.Session.SetString("fido2.assertionOptions", options.ToJson());
                 HttpContext.Session.SetString("fido2.username", username);
 
-                // Retourner au client
                 return Ok(options);
             }
             catch (Exception ex)
@@ -253,23 +280,29 @@ namespace TacticalThievesServer.Controllers
         }
 
 
+        /// <summary>
+        /// Completes FIDO2 login by validating the assertion response from the client.
+        ///  - Reads assertion options and username from session, validates the assertion,
+        ///    updates the stored credential counter, and issues a JWT on success.
+        /// Returns a JSON object containing the JWT and username.
+        /// </summary>
         [HttpPost("LoginFinish")]
         public async Task<IActionResult> LoginFinish([FromBody] AuthenticatorAssertionRawResponse assertionResponse)
         {
             try
             {
-                //Récupération des données stockées en session lors du LoginStart
+                //get assertion options and username from session (set in LoginStart) and remove immediately for security (one-time use)
                 var optionsJson = HttpContext.Session.GetString("fido2.assertionOptions");
                 var username = HttpContext.Session.GetString("fido2.username");
 
-                //Nettoyage immédiat de la session (sécurité : usage unique du challenge)
+                //Immediate session cleanup (security: one-time use of the challenge)
                 HttpContext.Session.Remove("fido2.attestationOptions");
                 HttpContext.Session.Remove("fido2.username");
 
                 if (optionsJson == null || username == null)
                     return BadRequest("Login session expired");
 
-                //Reconstruction des options FIDO2 envoyées initialement au client
+                //rebuild options object from JSON stored in session
                 var options = AssertionOptions.FromJson(optionsJson);
 
                 var user = await db.Users.FirstAsync(u => u.Username == username);
@@ -277,29 +310,29 @@ namespace TacticalThievesServer.Controllers
                     .Where(c => c.UserId == user.Id)
                     .ToListAsync();
 
-                //On retrouve le credential utilisé par le client (via RawId)
+                //Get credential that matches the assertion response's raw ID (credential ID)
                 var cred = storedCredentials.FirstOrDefault(c =>
                     c.DescriptorId.SequenceEqual(assertionResponse.RawId));
 
                 if (cred == null)
                     return BadRequest("Credential not found");
 
-                //Construction des paramètres nécessaires à la validation FIDO2
+                //Build parameters for MakeAssertionAsync, including the callback to verify credential ownership
                 var makeAssertionParams = new MakeAssertionParams
                 {
-                    // Réponse brute envoyée par le navigateur (WebAuthn)
+                    // Raw response sent by the browser (WebAuthn)
                     AssertionResponse = assertionResponse,
 
-                    // Options originales (challenge, rpId, etc.)
+                    // original options generated in LoginStart (contains challenge, allowed credentials, etc.)
                     OriginalOptions = options,
 
-                    // Clé publique stockée en base pour ce credential
+                    // public key stored in the database for this credential (used for signature verification)
                     StoredPublicKey = cred.PublicKey,
 
-                    // Compteur de signature (protection contre replay attack)
+                    // signature counter
                     StoredSignatureCounter = cred.Counter,
 
-                    //Callback de sécurité : vérifie que le credential appartient bien à l'utilisateur
+                    //Security callback to verify that the credential ID in the assertion response belongs to the user (defense in depth)
                     IsUserHandleOwnerOfCredentialIdCallback = async (args, ct) =>
                     {
                         var userCredentials = await db.StoredCredentials
@@ -311,15 +344,15 @@ namespace TacticalThievesServer.Controllers
                     }
                 };
 
-                //Vérification cryptographique de l'assertion FIDO2
+                //Check the assertion response against the stored credential and options (this will throw if validation fails)
                 var result = await fido2.MakeAssertionAsync(makeAssertionParams);
 
-                // Mise à jour du compteur (important pour sécurité future)
+                // Update the signature counter in the database to prevent replay attacks (the authenticator should increment this counter on each use)
                 cred.Counter = result.SignCount;
                 db.Update(cred);
                 await db.SaveChangesAsync();
 
-                //Génération d’un JWT pour gérer la session côté client
+                //Generate a JWT token for the authenticated user (you can include claims as needed, e.g. username, roles, etc.)
                 var token = GenerateJwtToken(username);
 
                 return Ok(new
@@ -339,10 +372,16 @@ namespace TacticalThievesServer.Controllers
             }
         }
 
+        /// <summary>
+        /// Generates a signed JWT containing the provided username claim.
+        /// The secret key is read from the environment variable `JWT_KEY` (via .env loader).
+        /// </summary>
+        /// <param name="username">The username to include in the token claims.</param>
+        /// <returns>A signed JWT as a string.</returns>
         private string GenerateJwtToken(string username)
         {
 
-            Env.Load(); // lit le fichier .env à la racine
+            Env.Load(); // Read environment variables from .env file
 
             var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
 
@@ -350,39 +389,35 @@ namespace TacticalThievesServer.Controllers
             {
                 throw new Exception("JWT_KEY n'est pas défini dans le .env");
             }
-            /*Clé secrète utilisée pour signer le token
-            Doit faire au moins 32 caractères (256 bits) pour HS256*/
+ 
+            //Secret key used to sign the token, must be at least 32 characters (256 bits) for HS256
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtKey)
             );
 
-            //Création des credentials de signature avec l'algorithme HmacSha256
+            //Create signing credentials using the secret key and specifying the algorithm (HMAC SHA256)
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            //Définition des informations (claims) contenues dans le token
-            //Ces données seront accessibles côté client et serveur
+            //Define the claims contained in the token
+            //These data will be accessible on both client and server sides
             var claims = new[]
             {
-                //Identité de l'utilisateur
+                //The username claim can be used to identify the user in subsequent requests when the token is sent back to the server
                 new System.Security.Claims.Claim("username", username)
-
-                // Possiblement on peut en ajouter d'autre ici en fonction des attributs liés à l'utilisateur:
-                // new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                // new Claim(ClaimTypes.Role, "Player")
             };
 
-            //Création du token JWT
+            //Create the JWT token with the specified claims, expiration time, and signing credentials
             var token = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
                 claims: claims,
 
-                //Date d'expiration du token (ici 2 heures)
+                //Expiration time of the token (here set to 2 hours, adjust as needed)
                 expires: DateTime.UtcNow.AddHours(2),
 
-                //Signature du token avec la clé secrète
+                //Token signing credentials (the secret key and algorithm used to sign the token)
                 signingCredentials: creds
             );
 
-            //Conversion du token en string (format compact JWT)
+            //Convert the token object to a string format that can be sent to the client (this will be a compact JWT string)
             return new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler()
                 .WriteToken(token);
         }

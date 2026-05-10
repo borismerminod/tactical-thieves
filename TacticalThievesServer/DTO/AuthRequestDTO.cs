@@ -2,6 +2,10 @@
 
 namespace TacticalThievesServer.DTO
 {
+    /// <summary>
+    /// DTO used when the client initiates an authentication-related request that
+    /// requires a username (for registration or login flow start).
+    /// </summary>
     public class AuthRequestDTO
     {
         [Required(ErrorMessage = "Username is required")]
