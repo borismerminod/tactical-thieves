@@ -19,6 +19,9 @@ namespace TacticalThieves
         //DOTO : Delete this variable when the test phase is over
         [SerializeField] private bool bTestMode = true;
 
+        // Dictionary mapping monster action phases to their corresponding processing methods
+        [SerializeField] private Dictionary<Monster.eActionPhase, System.Action> monsterActions;
+
 
         /// <summary>
         /// Starts the AI controller and schedules periodic processing of monster actions.
@@ -30,6 +33,15 @@ namespace TacticalThieves
         {
             try
             {
+                monsterActions = new Dictionary<Monster.eActionPhase, System.Action>
+                {
+                    { Monster.eActionPhase.WAIT, AttackSelect },
+                    { Monster.eActionPhase.PHASE1_FIRST_ATTACK, Attack },
+                    { Monster.eActionPhase.PHASE2_MOVE_SELECT, MoveSelect },
+                    { Monster.eActionPhase.PHASE4_ATTACK_SELECT, AttackSelect },
+                    { Monster.eActionPhase.PHASE5_ATTACK, Attack }
+                };
+
                 InvokeRepeating("ProcessMonsterActions", 0.1f, 0.5f);
                 GameManager.Instance?.OnAIControllerStarted(this);
             }
@@ -48,7 +60,14 @@ namespace TacticalThieves
         {
             try
             {
-                if(currentMonster == null)
+                if (currentMonster == null)
+                    return;
+
+                if (monsterActions.TryGetValue(currentMonster.ActionPhase, out var action))
+                {
+                    action?.Invoke();
+                }
+                /*if(currentMonster == null)
                     return;
 
                 switch(currentMonster.ActionPhase)
@@ -68,7 +87,7 @@ namespace TacticalThieves
                     case Monster.eActionPhase.PHASE5_ATTACK:
                         Attack();
                         break;
-                }
+                }*/
             }
             catch (System.Exception ex)
             {

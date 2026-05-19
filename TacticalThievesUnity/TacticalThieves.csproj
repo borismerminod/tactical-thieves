@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\EazySound\Audio.cs" />
     <Compile Include="Assets\Scripts\Monster.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\AppConfig.cs" />
     <Compile Include="Assets\Scripts\Thief.cs" />
     <Compile Include="Assets\Scripts\WebSocketClient.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />

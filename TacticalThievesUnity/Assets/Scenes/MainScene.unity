@@ -887,6 +887,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 3703767297144401384, guid: 2a9c6ac08f46b8d4eac80cc23c2f0ea2, type: 3}
+      propertyPath: config
+      value: 
+      objectReference: {fileID: 11400000, guid: 9be98005a6c30344283551ba4696d0f6, type: 2}
+    - target: {fileID: 3703767297144401384, guid: 2a9c6ac08f46b8d4eac80cc23c2f0ea2, type: 3}
       propertyPath: apiClient
       value: 
       objectReference: {fileID: 0}

@@ -40,6 +40,7 @@ namespace TacticalThieves
         [SerializeField] private bool bGameStarted;
         [SerializeField] private string unityGUID;
         [SerializeField] private string sessionID;
+        [SerializeField] private AppConfig config;
 
 
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
@@ -53,6 +54,8 @@ namespace TacticalThieves
         public string UnityGUID { get => unityGUID; private set => unityGUID = value; }
 
         public string SessionID { get => sessionID; private set => sessionID = value; }
+
+        public AppConfig Config { get => config; private set => config = value; }
 
 
         public GameState GetGameState() => gameState;
