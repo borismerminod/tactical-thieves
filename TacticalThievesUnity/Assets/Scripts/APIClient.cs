@@ -36,14 +36,14 @@ namespace TacticalThieves
             apiClientStarted = false;
         }
 
-        private void Update()
+        /*private void Update()
         {
             if(!apiClientStarted && GameManager.Instance != null)
             {
                 apiClientStarted = true;
                 GameManager.Instance.OnAPIClientStarted(this);
             }
-        }
+        }*/
 
 
         /// <summary>

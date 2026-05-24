@@ -60,6 +60,21 @@ namespace TacticalThieves
 
         public GameState GetGameState() => gameState;
 
+        public GameState State {
+            get => gameState;
+            private set
+            {
+                gameState = value;
+                Debug.Log("Game state changed to: " + gameState);
+                if (gameState == GameState.IN_GAME && !bInit)
+                {
+                    InitCharacterTurnIndex();
+                    bInit = true;
+                }
+
+            }
+        }
+
         public int PlayerGold
         {
             get => playerGold;
@@ -77,11 +92,34 @@ namespace TacticalThieves
 
         private void Awake()
         {
-            Instance = this;
-            unityGUID = System.Guid.NewGuid().ToString();
+            try
+            {
+                if (InitGameManagerInstance() == true)
+                    InitGameIDs();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error during GameManager Awake: " + ex.Message);
+            }
+        }
 
-            string url = Application.absoluteURL;
-            Debug.Log("URL: " + url);
+        private bool InitGameManagerInstance()
+                    {
+            if (Instance != null && Instance != this)
+            {
+                Debug.LogWarning("Another instance of GameManager already exists. Destroying this instance.");
+                Destroy(gameObject);
+                return false;
+            }
+            Instance = this;
+            return true;
+        }   
+
+        private void InitGameIDs()
+        {
+            unityGUID = System.Guid.NewGuid().ToString();
+            Debug.Log("Unity GUID: " + unityGUID);
+
 
             SessionID = GetQueryParam("sessionId");
             Debug.Log("SessionId: " + SessionID);
@@ -112,14 +150,53 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
-            gameState = GameState.LOADING;
-            bInit = false;
-            bGameStarted = false;
-
-            Invoke("InitCharacterTurnIndex", 1.0f);
+            try
+            {
+                gameState = GameState.LOADING;
+                bInit = false;
+                bGameStarted = false;
+                StartCoroutine(WaitAndConnect());
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error during GameManager Start: " + ex.Message);
+            }
         }
 
-        public void OnWebSocketClientStarted(WebSocketClient client)
+        // Update is called once per frame
+        void Update()
+        {
+            /*if (bGameStarted == false && webSocketClient != null && apiClient != null)
+            {
+                await webSocketClient.ConnectWebSocket();
+                bGameStarted = true;
+            }*/
+
+            /*if (bInit == false && gameState == GameState.IN_GAME)
+            {
+                InitCharacterTurnIndex();
+                bInit = true;
+            }*/
+        }
+
+        private IEnumerator WaitAndConnect()
+        {
+            yield return new WaitUntil(() => webSocketClient != null && apiClient != null);
+
+            // Convertir l'awaitable en coroutine-friendly
+            var task = webSocketClient.ConnectWebSocket();
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (task.IsFaulted)
+            {
+                Debug.LogError("WebSocket connection failed: " + task.Exception);
+                yield break;
+            }
+
+            bGameStarted = true;
+        }
+
+        /*public void OnWebSocketClientStarted(WebSocketClient client)
         {
             webSocketClient = client;
         }
@@ -138,34 +215,25 @@ namespace TacticalThieves
         {
             apiClient = client;
             //OnGameStart();
-        }
+        }*/
 
         public void OnGridStarted(Grid grid)
         {
+            if (grid == null) return;
+            if (currentGrid != null)
+                Debug.LogWarning("GameManager: Existing grid is being replaced!");
             currentGrid = grid;
         }
 
 
         public void OnCharacterStarted(Character character)
         {
+            if (character == null) return;
+            if (characters.Contains(character)) return;
             characters.Add(character);
         }
 
-        // Update is called once per frame
-        async void Update()
-        {
-            if (bGameStarted == false && webSocketClient != null && apiClient != null)
-            {
-                await webSocketClient.ConnectWebSocket();
-                bGameStarted = true;
-            }
-
-            if (bInit == false && gameState == GameState.IN_GAME)
-            {
-                InitCharacterTurnIndex();
-                bInit = true;
-            }
-        }
+        
 
         public void OnTreasureCollected(int gold)
         {
@@ -300,7 +368,7 @@ namespace TacticalThieves
             return true;
         }
 
-        public void OnLevelManagerStarted(LevelManager levelManager)
+        /*public void OnLevelManagerStarted(LevelManager levelManager)
         {
             this.levelManager = levelManager;
         }
@@ -308,7 +376,7 @@ namespace TacticalThieves
         public void OnAudioManagerStarted(AudioManager audioManager)
         {
             CurrentAudioManager = audioManager;
-        }
+        }*/
 
         // Remplace l'ancienne version incorrecte : renvoie Task<int> et await LoadLevelAsync
         public async Task<int> GetCurrentLevelAsync()

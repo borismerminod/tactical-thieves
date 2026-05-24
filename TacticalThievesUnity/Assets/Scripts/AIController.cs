@@ -43,7 +43,7 @@ namespace TacticalThieves
                 };
 
                 InvokeRepeating("ProcessMonsterActions", 0.1f, 0.5f);
-                GameManager.Instance?.OnAIControllerStarted(this);
+                //GameManager.Instance?.OnAIControllerStarted(this);
             }
             catch (System.Exception ex)
             {

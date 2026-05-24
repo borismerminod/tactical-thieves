@@ -37,7 +37,7 @@ public class WebSocketClient : MonoBehaviour
         webSocketClientStarted = true;
 
         GameObject debugText = GameObject.FindGameObjectWithTag("DebugText");
-        GameManager.Instance.OnWebSocketClientStarted(this);
+        //GameManager.Instance.OnWebSocketClientStarted(this);
 
         /*try
         {
