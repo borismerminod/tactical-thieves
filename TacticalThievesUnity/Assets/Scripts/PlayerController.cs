@@ -15,7 +15,7 @@ namespace TacticalThieves
         // Start is called before the first frame update
         void Start()
         {
-            GameManager.Instance?.OnPlayerControllerStarted(this);
+            //GameManager.Instance?.OnPlayerControllerStarted(this);
             levelLoaded = false;
         }
 

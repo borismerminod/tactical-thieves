@@ -16,8 +16,6 @@ namespace TacticalThieves
         // List of tile positions where the monster can attack or move
         [SerializeField] private List<Vector2> tilesEnabledPos;
 
-        //DOTO : Delete this variable when the test phase is over
-        [SerializeField] private bool bTestMode = true;
 
         // Dictionary mapping monster action phases to their corresponding processing methods
         [SerializeField] private Dictionary<Monster.eActionPhase, System.Action> monsterActions;
@@ -67,27 +65,6 @@ namespace TacticalThieves
                 {
                     action?.Invoke();
                 }
-                /*if(currentMonster == null)
-                    return;
-
-                switch(currentMonster.ActionPhase)
-                {
-                    case Monster.eActionPhase.WAIT:
-                        AttackSelect();
-                        break;
-                    case Monster.eActionPhase.PHASE1_FIRST_ATTACK:
-                        Attack();
-                        break;
-                    case Monster.eActionPhase.PHASE2_MOVE_SELECT:
-                        MoveSelect();
-                        break;
-                    case Monster.eActionPhase.PHASE4_ATTACK_SELECT :
-                        AttackSelect();
-                        break;
-                    case Monster.eActionPhase.PHASE5_ATTACK:
-                        Attack();
-                        break;
-                }*/
             }
             catch (System.Exception ex)
             {
@@ -187,7 +164,7 @@ namespace TacticalThieves
         private void Attack()
         {
             bool thiefAttacked = false;
-            foreach(Character character in GameManager.Instance.Characters)
+            foreach(Character character in GameManager.Instance.CharactersManager.Characters)
             {
                 Thief thief = character as Thief;
                 if(thief == null)
@@ -322,7 +299,7 @@ namespace TacticalThieves
         {
             tilesEnabledPos = SetMonsterMove(currentMonster, GameManager.Instance?.CurrentGrid);
             List<Thief> thieves = new List<Thief>();
-            foreach(Character character in GameManager.Instance?.Characters)
+            foreach(Character character in GameManager.Instance?.CharactersManager.Characters)
             {
                 Thief thief = character as Thief;
                 if (thief != null)

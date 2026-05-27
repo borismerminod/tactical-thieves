@@ -30,22 +30,6 @@ namespace TacticalThieves
         [SerializeField] private bool apiClientStarted;
 
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            apiClientStarted = false;
-        }
-
-        /*private void Update()
-        {
-            if(!apiClientStarted && GameManager.Instance != null)
-            {
-                apiClientStarted = true;
-                GameManager.Instance.OnAPIClientStarted(this);
-            }
-        }*/
-
-
         /// <summary>
         /// This method centralizes the logic for sending API requests, including setting headers and handling responses. 
         /// It takes care of both success and error cases, allowing the caller to simply provide callbacks for each scenario. 
