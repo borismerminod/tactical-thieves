@@ -22,32 +22,10 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        /*if(!levelManagerStarted && GameManager.Instance != null && GameManager.Instance.IsAPIClientStarted())
-        {
-            levelManagerStarted = true;
-            //GameManager.Instance.OnLevelManagerStarted(this);
-            //await LoadLevel();
-        }*/
-    }
-
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    //Obsolète ?
-    /*public async Task SaveLevel(GameManager gameManager)
-    {
-        int nextLevelIndex = loadedLevelIndex + 1;
-        if (nextLevelIndex >= levels.Length)
-        {
-            nextLevelIndex = 0;
-        }
-        await gameManager.SaveNextLevelAsync(nextLevelIndex);
-    }*/
 
     public int SaveLevel()
     {
@@ -68,21 +46,6 @@ public class LevelManager : MonoBehaviour
 
         return nextLevelIndex;
     }
-
-    //Obsolète ?
-    /*public async Task LoadLevel()
-    {
-        if(currentLevelIndex == -1)
-        {
-            loadedLevelIndex = await GameManager.Instance.GetCurrentLevelAsync();
-            LoadLevel(loadedLevelIndex, GameManager.Instance);
-
-        }
-        else
-        {
-            LoadLevel(currentLevelIndex, GameManager.Instance);
-        }
-    }*/
 
     //Obsolète ? 
     public bool LoadLevel(int levelIndex, GameManager gameManager)

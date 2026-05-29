@@ -85,18 +85,20 @@ namespace TacticalThieves
             playerController.OnThiefSelected(this, moveTest);
         }
 
-        public void EnableMove(bool bCanMove, Grid grid)
+        public void EnableMove(bool bCanMove, GridActionHandler gridActionHandler)
         {
             if (bCanMove)
             {
                 status = eThiefStatus.MovementEnable;
-                grid.OnThiefMoveEnable(this);
+                gridActionHandler.EnableTilesForMove(this);
+                //grid.OnThiefMoveEnable(this);
 
             }
             else
             {
                 status = eThiefStatus.Wait;
-                grid.OnThiefMoveDisable();
+                gridActionHandler.DisableTilesForMove();
+                //grid.OnThiefMoveDisable();
                 //Debug.Log("TEST");
                 model?.GetComponent<Animator>().SetBool("Run", false);
             }       
@@ -139,7 +141,7 @@ namespace TacticalThieves
                 {
                     ProceedMovement(false);
 
-                    EnableMove(false, GameManager.Instance?.CurrentGrid);
+                    EnableMove(false, GameManager.Instance?.GridActionHandler);
                 }
 
             }

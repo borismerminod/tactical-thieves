@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &289372711 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665718646210255626, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+  m_PrefabInstance: {fileID: 7665718645922472237}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c0c900456e04841aa10c68e4fceae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &346547130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,6 +1185,10 @@ PrefabInstance:
       propertyPath: charactersManager
       value: 
       objectReference: {fileID: 163453818260658768}
+    - target: {fileID: 3703767297144401384, guid: 2a9c6ac08f46b8d4eac80cc23c2f0ea2, type: 3}
+      propertyPath: gridActionHandler
+      value: 
+      objectReference: {fileID: 289372711}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a9c6ac08f46b8d4eac80cc23c2f0ea2, type: 3}
 --- !u!4 &6244357042037486178 stripped
@@ -1321,3 +1336,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c60a45ce7bc21c4984460fa3f74f6a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &7665718645922472237
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6244357042037486178}
+    m_Modifications:
+    - target: {fileID: 7665718646210255624, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_Name
+      value: GridActionHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.0137293
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.548355
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.468051
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7665718646210255627, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}

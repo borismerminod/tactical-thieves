@@ -42,7 +42,7 @@ namespace TacticalThieves
             if(thief != null)
             {
                 if (leftClickUsed)
-                    thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, GameManager.Instance?.CurrentGrid);
+                    thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, GameManager.Instance?.GridActionHandler);
                 else
                     thief.EnableStealth(!thief.Stealth);
             }
@@ -73,7 +73,7 @@ namespace TacticalThieves
                 selectedThief = thief;
             }
 
-            selectedThief.EnableMove(true, GameManager.Instance?.CurrentGrid);
+            selectedThief.EnableMove(true, GameManager.Instance?.GridActionHandler);
         }
 
         public void HandleThiefEndTurn()
@@ -92,7 +92,7 @@ namespace TacticalThieves
 
             if(selectedThief.Status == eThiefStatus.MovementEnable)
             {
-                selectedThief?.EnableMove(false, GameManager.Instance?.CurrentGrid);
+                selectedThief?.EnableMove(false, GameManager.Instance?.GridActionHandler);
                 selectedThief?.ProceedMovement(false);
             }
 
