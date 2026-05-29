@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Exit.cs" />
+    <Compile Include="Assets\Scripts\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Treasure.cs" />
     <Compile Include="Assets\Scripts\PingTest.cs" />
     <Compile Include="Assets\Scripts\EazySound\Audio.cs" />
@@ -74,9 +75,13 @@
     <Compile Include="Assets\Scripts\WebSocketClient.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\AIController.cs" />
+    <Compile Include="Assets\Scripts\GoldManager.cs" />
+    <Compile Include="Assets\Scripts\CharactersManager.cs" />
     <Compile Include="Assets\Scripts\Object.cs" />
     <Compile Include="Assets\Scripts\EazySound\EazySoundManager.cs" />
     <Compile Include="Assets\Scripts\Grid.cs" />
+    <Compile Include="Assets\Scripts\PathFinder.cs" />
+    <Compile Include="Assets\Scripts\GridActionHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\TacticalThieves.asmdef" />

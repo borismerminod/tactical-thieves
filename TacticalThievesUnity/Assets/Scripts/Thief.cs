@@ -60,7 +60,7 @@ namespace TacticalThieves
             if (currentRouteIndex < 0 || currentRouteIndex >= currentMoveRoute.Count)
                 return;
 
-            Tile nextTileDestination = GameManager.Instance?.CurrentGrid.GetNextTileMove(currentMoveRoute[currentRouteIndex]);
+            Tile nextTileDestination = GameManager.Instance?.CurrentGrid.GetTile(currentMoveRoute[currentRouteIndex]);
 
             Vector3 direction = (nextTileDestination.transform.position - transform.position).normalized;
             direction = new Vector3(direction.x, 0.0f, direction.z);

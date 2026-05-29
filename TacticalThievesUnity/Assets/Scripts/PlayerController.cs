@@ -9,7 +9,7 @@ namespace TacticalThieves
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] Thief selectedThief;
-        [SerializeField] Grid levelGrid;
+        //[SerializeField] Grid levelGrid;
         [SerializeField] bool levelLoaded;
 
         // Start is called before the first frame update
@@ -29,10 +29,10 @@ namespace TacticalThieves
             }
         }
 
-        public void OnGridStarted(Grid grid)
+        /*public void OnGridStarted(Grid grid)
         {
             levelGrid = grid;
-        }
+        }*/
 
         public void OnThiefSelected(Thief thief, bool leftClickUsed)
         {
@@ -42,7 +42,7 @@ namespace TacticalThieves
             if(thief != null)
             {
                 if (leftClickUsed)
-                    thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, levelGrid);
+                    thief.EnableMove(thief.Status != eThiefStatus.MovementEnable, GameManager.Instance?.CurrentGrid);
                 else
                     thief.EnableStealth(!thief.Stealth);
             }
@@ -55,7 +55,7 @@ namespace TacticalThieves
                 return;
 
             Vector2 tileLoc = new Vector2(tile.X, tile.Y);
-            List<Vector2> moveRoute = levelGrid.ComputeMoveRoute(selectedThief, tileLoc, selectedThief.MoveRange, true ); 
+            List<Vector2> moveRoute = PathFinder.ComputeMoveRoute(selectedThief, GameManager.Instance?.CurrentGrid, tileLoc, selectedThief.MoveRange, true ); 
             selectedThief.SetMoveRoute(moveRoute);
 
         }
@@ -73,7 +73,7 @@ namespace TacticalThieves
                 selectedThief = thief;
             }
 
-            selectedThief.EnableMove(true, levelGrid);
+            selectedThief.EnableMove(true, GameManager.Instance?.CurrentGrid);
         }
 
         public void HandleThiefEndTurn()
@@ -92,7 +92,7 @@ namespace TacticalThieves
 
             if(selectedThief.Status == eThiefStatus.MovementEnable)
             {
-                selectedThief?.EnableMove(false, levelGrid);
+                selectedThief?.EnableMove(false, GameManager.Instance?.CurrentGrid);
                 selectedThief?.ProceedMovement(false);
             }
 

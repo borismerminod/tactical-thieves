@@ -124,7 +124,7 @@ namespace TacticalThieves
             if (currentRouteIndex < 0 || currentRouteIndex >= currentMoveRoute.Count)
                 return;
 
-            Tile nextTileDestination = grid.GetNextTileMove(currentMoveRoute[currentRouteIndex]);
+            Tile nextTileDestination = grid.GetTile(currentMoveRoute[currentRouteIndex]);
 
             Vector3 direction = (nextTileDestination.transform.position - transform.position).normalized;
             direction = new Vector3(direction.x, 0.0f, direction.z);
@@ -152,11 +152,12 @@ namespace TacticalThieves
                     model?.GetComponent<Animator>().SetBool("Run", false);
 
 
-                    Grid grid = GameManager.Instance?.CurrentGrid;
-                    if (grid == null)
+                    GridActionHandler gridActionHandler = GameManager.Instance?.GridActionHandler;
+                    if (gridActionHandler == null)
                         return;
 
-                    grid.OnMonsterMoveDisable();
+
+                    gridActionHandler.DisableTilesForMove();
                 }
 
             }

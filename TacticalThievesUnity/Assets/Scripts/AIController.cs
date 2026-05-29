@@ -95,17 +95,17 @@ namespace TacticalThieves
         /// Determines and returns the set of grid tiles which can be selected by the monster for an attack.
         /// </summary>
         /// <param name="monster">The monster whose attack area is to be calculated. Cannot be <see langword="null"/>.</param>
-        /// <param name="grid">The grid on which the monster's attack is to be evaluated. Cannot be <see langword="null"/>.</param>
+        /// <param name="gridActionHandler">The grid action handler to manage monster attack action onto the grid</param>
         /// <returns>A list of <see cref="Vector2"/> objects representing the grid tiles affected by the monster's attack.
         /// Returns an empty list if <paramref name="monster"/> or <paramref name="grid"/> is <see langword="null"/>, or
         /// if an error occurs.</returns>
-        public List<Vector2> SetMonsterAttack(Monster monster, Grid grid)
+        public List<Vector2> SetMonsterAttack(Monster monster, GridActionHandler gridActionHandler)
         {
             
             List<Vector2> tiles = new List<Vector2>();
-            if(monster != null && grid != null)
+            if(monster != null && gridActionHandler != null)
             {
-                tiles = grid.OnMonsterAttackEnable(monster);
+                tiles = gridActionHandler.OnMonsterAttackEnable(monster);
             }
 
             return tiles;
@@ -118,7 +118,7 @@ namespace TacticalThieves
         /// </summary>
         private void AttackSelect()
         {
-            tilesEnabledPos = SetMonsterAttack(CurrentMonster, GameManager.Instance?.CurrentGrid);
+            tilesEnabledPos = SetMonsterAttack(CurrentMonster, GameManager.Instance?.GridActionHandler);
 
             if(tilesEnabledPos != null && tilesEnabledPos.Count > 0)
             {
@@ -176,7 +176,7 @@ namespace TacticalThieves
                 }
             }
 
-            GameManager.Instance?.CurrentGrid.OnMonsterAttackDisable();
+            GameManager.Instance?.GridActionHandler.OnMonsterAttackDisable();
             if (thiefAttacked || currentMonster.ActionPhase == Monster.eActionPhase.PHASE5_ATTACK)
             {
                 currentMonster.EndTurn();
@@ -196,17 +196,17 @@ namespace TacticalThieves
         /// <remarks>This method does not move the monster; it only determines which tiles are available
         /// for movement.</remarks>
         /// <param name="monster">The monster for which to calculate available movement tiles. Cannot be <c>null</c>.</param>
-        /// <param name="grid">The grid on which the monster is located. Cannot be <c>null</c>.</param>
+        /// <param name="grid">The grid action handler to manage monster move action on the grid.</param>
         /// <returns>A list of <see cref="Vector2"/> positions representing the tiles the monster can move to. Returns an empty
         /// list if no valid moves are available or if either parameter is <c>null</c>.</returns>
-        public List<Vector2> SetMonsterMove(Monster monster, Grid grid)
+        public List<Vector2> SetMonsterMove(Monster monster, GridActionHandler gridActionHandler)
         {
             
             List<Vector2> enabledTiles = new List<Vector2>();
 
-            if(grid != null && monster != null)
+            if(gridActionHandler != null && monster != null)
             {
-                enabledTiles = grid.OnMonsterMoveEnable(monster);
+                enabledTiles = gridActionHandler.OnMonsterMoveEnable(monster);
             }
 
             return enabledTiles;
@@ -236,7 +236,7 @@ namespace TacticalThieves
             foreach(Thief thief in thieves)
             {
                 Vector2 thiefLoc = new Vector2(thief.X, thief.Y);
-                List<Vector2> moveRoute = grid.ComputeMoveRoute(monster, thiefLoc, grid.Height, true);
+                List<Vector2> moveRoute = PathFinder.ComputeMoveRoute(monster, GameManager.Instance?.CurrentGrid, thiefLoc, grid.Height, true);
 
                 if (moveRoute != null)
                 {
@@ -297,7 +297,7 @@ namespace TacticalThieves
         /// </summary>
         private void MoveSelect()
         {
-            tilesEnabledPos = SetMonsterMove(currentMonster, GameManager.Instance?.CurrentGrid);
+            tilesEnabledPos = SetMonsterMove(currentMonster, GameManager.Instance?.GridActionHandler);
             List<Thief> thieves = new List<Thief>();
             foreach(Character character in GameManager.Instance?.CharactersManager.Characters)
             {
@@ -309,7 +309,7 @@ namespace TacticalThieves
 
             if(moveRoute.Count ==0)
             {
-                moveRoute = GameManager.Instance?.CurrentGrid.GetRandomMoveRoute(currentMonster);
+                moveRoute = PathFinder.GetRandomMoveRoute(currentMonster, GameManager.Instance?.CurrentGrid);
             }
             else
             {

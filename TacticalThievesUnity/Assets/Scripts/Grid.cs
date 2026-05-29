@@ -11,13 +11,13 @@ namespace TacticalThieves
         [SerializeField] Dictionary<string, Tile> tiles;
         [SerializeField] int width;
         [SerializeField] int height;
-        [SerializeField] private Vector2 minTileCoords;
-        [SerializeField] private Vector2 maxTileCoords;
+        //[SerializeField] private Vector2 minTileCoords;
+        //[SerializeField] private Vector2 maxTileCoords;
         [SerializeField] private bool testMode;
 
         public bool TestMode { get => testMode; set => testMode = value; }
-        public Vector2 MinTileCoords { get => minTileCoords; private set => minTileCoords = value; }
-        public Vector2 MaxTileCoords { get => maxTileCoords; private set => maxTileCoords = value; }
+        //public Vector2 MinTileCoords { get => minTileCoords; private set => minTileCoords = value; }
+        //public Vector2 MaxTileCoords { get => maxTileCoords; private set => maxTileCoords = value; }
 
         public Dictionary<string, Tile> Tiles
         {
@@ -43,10 +43,12 @@ namespace TacticalThieves
         {
             GameManager.Instance?.OnGridStarted(this);
             InitTilesDictionnary();
-            SendGridToPlayerController();
+            
+            //SendGridToPlayerController();
         }
 
-        private void SendGridToPlayerController()
+        //Obsolète ? 
+        /*private void SendGridToPlayerController()
         {
             GameObject playerControllerGO = GameObject.FindGameObjectWithTag("PlayerController");
             if (playerControllerGO == null)
@@ -57,7 +59,7 @@ namespace TacticalThieves
                 return;
 
             playerController.OnGridStarted(this);
-        }
+        }*/
 
         public bool InitTilesDictionnary()
         {
@@ -66,7 +68,7 @@ namespace TacticalThieves
             tiles = new Dictionary<string, Tile>();
             tiles.Clear();
             GameObject[] tilesGO = GameObject.FindGameObjectsWithTag("Tile");
-            //Debug.Log("Debut >>");
+            
             foreach (GameObject tileGO in tilesGO)
             {
                 Tile tile = tileGO.GetComponent<Tile>();
@@ -96,7 +98,7 @@ namespace TacticalThieves
             return width > 0 && height > 0;
         }
 
-        public void OnThiefMoveEnable(Thief thief)
+        /*public void OnThiefMoveEnable(Thief thief)
         {
             if (thief == null || tiles == null || tiles.Count == 0)
             {
@@ -107,27 +109,27 @@ namespace TacticalThieves
             ComputeMaxTileCoords(thief, thief.MoveRange);
             EnableTilesForCharacterAction(thief, false);
 
-        }
+        }*/
 
-        public void OnThiefMoveDisable()
+        /*public void OnThiefMoveDisable()
         {
 
             DisableTileForCharacterAction(false);
             minTileCoords = Vector2.zero;
             maxTileCoords = Vector2.zero;
-        }
+        }*/
 
-        public List<Vector2> OnMonsterAttackEnable(Monster monster)
+        /*public List<Vector2> OnMonsterAttackEnable(Monster monster)
         {
             return OnMonsterActionEnable(monster, monster.AttackRange, true);
-        }
+        }*/
 
-        public List<Vector2> OnMonsterMoveEnable(Monster monster)
+        /*public List<Vector2> OnMonsterMoveEnable(Monster monster)
         {
             return OnMonsterActionEnable(monster, monster.MoveRange, false);
-        }
+        }*/
 
-        private List<Vector2> OnMonsterActionEnable(Monster monster, int range, bool actionIsAttack)
+        /*private List<Vector2> OnMonsterActionEnable(Monster monster, int range, bool actionIsAttack)
         {
             List<Vector2> enabledTiles = new List<Vector2>();
             if (monster == null || tiles == null || tiles.Count == 0)
@@ -141,25 +143,25 @@ namespace TacticalThieves
             enabledTiles = EnableTilesForCharacterAction(monster, actionIsAttack);
 
             return enabledTiles;
-        }
+        }*/
 
 
-        public void OnMonsterAttackDisable()
+        /*public void OnMonsterAttackDisable()
         {
             DisableTileForCharacterAction(true);
             minTileCoords = Vector2.zero;
             maxTileCoords = Vector2.zero;
-        }
+        }*/
 
         //TODO : A tester
-        public void OnMonsterMoveDisable()
+       /*public void OnMonsterMoveDisable()
         {
             DisableTileForCharacterAction(false);
             minTileCoords = Vector2.zero;
             maxTileCoords = Vector2.zero;
-        }
+        }*/
 
-        private void DisableTileForCharacterAction(bool actionIsAttack)
+        /*private void DisableTileForCharacterAction(bool actionIsAttack)
         {
             for (int x = (int)minTileCoords.x; x <= (int)maxTileCoords.x; x++)
             {
@@ -175,9 +177,9 @@ namespace TacticalThieves
                     }
                 }
             }
-        }
+        }*/
 
-        private List<Vector2> EnableTilesForCharacterAction(Character character, bool actionIsAttack)
+        /*private List<Vector2> EnableTilesForCharacterAction(Character character, bool actionIsAttack)
         {
             List<Vector2> enabledTiles = new List<Vector2>();
             int squareMoveRange = character.MoveRange * character.MoveRange;
@@ -209,9 +211,9 @@ namespace TacticalThieves
 
 
             return enabledTiles;
-        }
+        }*/
 
-        private Tile HandleTileMoveToggle(Character character, int x, int y)
+        /*private Tile HandleTileMoveToggle(Character character, int x, int y)
         {
             Tile enabledTile = null;
             string tileKey = x + "_" + y;
@@ -231,9 +233,9 @@ namespace TacticalThieves
                 }
             }
             return enabledTile;
-        }
+        }*/
 
-        private Tile HandleTileAttackToggle(Monster monster, int x, int y)
+        /*private Tile HandleTileAttackToggle(Monster monster, int x, int y)
         {
             Tile enabledTile = null;
             string tileKey = x + "_" + y;
@@ -255,26 +257,26 @@ namespace TacticalThieves
             }
 
             return enabledTile;
-        }
+        }*/
 
-        private void ComputeMinTileCoords(Character character, int range)
+        /*private void ComputeMinTileCoords(Character character, int range)
         {
             int posX = Mathf.Max(character.X - range, 1);
             int posY = Mathf.Max(character.Y - range, 1);
 
             minTileCoords = new Vector2(posX, posY);
             //Debug.Log("minTileCoords " + minTileCoords + " "+ character);
-        }
+        }*/
 
-        private void ComputeMaxTileCoords(Character character, int range)
+        /*private void ComputeMaxTileCoords(Character character, int range)
         {
             int posX = Mathf.Min(character.X + range, width);
             int posY = Mathf.Min(character.Y + range, height);
             maxTileCoords = new Vector2(posX, posY);
            // Debug.Log("maxTileCoords " + maxTileCoords);
-        }
+        }*/
 
-        public List<Vector2> ComputeMoveRoute(Character character, Vector2 targetLocation, int range, bool bUseWalkableParam)
+        /*public List<Vector2> ComputeMoveRoute(Character character, Vector2 targetLocation, int range, bool bUseWalkableParam)
         {
             List<Vector2> moveRoute = new List<Vector2>();
             Vector2 currentLocation = new Vector2(character.X, character.Y);
@@ -319,9 +321,9 @@ namespace TacticalThieves
             }
 
             return moveRoute;
-        }
+        }*/
 
-        public Tile GetNextTileMove(Vector2 moveDestination)
+        public Tile GetTile(Vector2 moveDestination)
         {
             string tileKey = moveDestination.x + "_" + moveDestination.y;
 
@@ -352,13 +354,13 @@ namespace TacticalThieves
             return result;
         }
 
-        public List<Vector2> GetRandomMoveRoute(Character character)
+        /*public List<Vector2> GetRandomMoveRoute(Character character)
         {
             Vector2 randomTileLocation = GetRandomTileLocation(1, 1, Width, Height);
             List<Vector2> randomMoveRoute =  ComputeMoveRoute(character, randomTileLocation, character.MoveRange, true);
             
             return randomMoveRoute;
-        }
+        }*/
 
         public Vector2 GetRandomTileLocation(int xMin, int yMin, int xMax, int yMax)
         {
@@ -381,12 +383,6 @@ namespace TacticalThieves
             return new Vector2(x, y);
         }
 
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
 

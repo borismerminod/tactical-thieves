@@ -52,12 +52,18 @@ namespace TacticalThieves
         [SerializeField] private GoldManager goldManager;
         [SerializeField] private CharactersManager charactersManager;
         [SerializeField] private TurnManager turnManager;
+        [SerializeField] private GridActionHandler gridActionHandler;
 
 
         /// <summary>
         /// The currently active grid instance in the scene.
         /// </summary>
         public Grid CurrentGrid { get => currentGrid; set => currentGrid = value; }
+
+        /// <summary>
+        /// Gets the <see cref="GridActionHandler"/> instance responsible for handling grid-related actions.
+        /// </summary>
+        public GridActionHandler GridActionHandler { get => gridActionHandler; private set => gridActionHandler = value; }
 
         public bool TestMode { get => testMode; set => testMode = value; }
 
@@ -236,6 +242,7 @@ namespace TacticalThieves
             if (currentGrid != null)
                 Debug.LogWarning("GameManager: Existing grid is being replaced!");
             currentGrid = grid;
+            gridActionHandler.OnGridStarted(grid);
         }
 
 
