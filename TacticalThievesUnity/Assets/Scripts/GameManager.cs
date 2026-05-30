@@ -276,7 +276,7 @@ namespace TacticalThieves
 
             if (apiClient != null && TestMode == false)
             {
-                int nextLevel = levelManager.SaveLevel();
+                int nextLevel = levelManager.ComputeNextLevel();
                 Debug.Log("OnThiefReachExit " + nextLevel);
 
                 StartCoroutine(apiClient.ThiefReachedExit(nextLevel));                

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TacticalThieves
 {
-    public class Utils
+    public static class Utils
     {
         public static void SetMaterialTransparent(Material mat)
         {
@@ -17,6 +17,15 @@ namespace TacticalThieves
             mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
             mat.renderQueue = 3000;
         }
+
+        public static class AnimatorParam
+        {
+            public const string Run = "Run";
+            public const string Defeat = "Defeat";
+            public const string Win = "Win";
+            public const string Attack = "Attack";
+        }
+
     }
 
 }
