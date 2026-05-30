@@ -69,9 +69,16 @@ namespace TacticalThieves
         /// </summary>
         void Start()
         {
-            GameManager.Instance?.OnGridStarted(this);
-            InitTilesDictionnary();
-            
+            try
+            {
+                GameManager.Instance?.OnGridStarted(this);
+                InitTilesDictionnary();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError("Error during Grid Start: " + ex.Message);
+            }
+
         }
 
 

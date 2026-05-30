@@ -92,10 +92,16 @@ namespace TacticalThieves
         /// </summary>
         void Start()
         {
-            Init();
-            GameManager.Instance?.OnCharacterStarted(this);
-
-            animator = model?.GetComponent<Animator>();
+            try
+            {
+                Init();
+                GameManager.Instance?.OnCharacterStarted(this);
+                animator = model?.GetComponent<Animator>();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Error initializing Monster: {ex.Message}");
+            }
         }
 
         /// <summary>
@@ -114,9 +120,16 @@ namespace TacticalThieves
         /// </summary>
         void Update()
         {
-            SetEndGameAnimation();
-            if (ActionPhase == eActionPhase.PHASE3_MOVE)
-                Move();
+            try
+            {
+                SetEndGameAnimation();
+                if (ActionPhase == eActionPhase.PHASE3_MOVE)
+                    Move();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Error in Monster Update: {ex.Message}");
+            }
         }
 
         /// <summary>
