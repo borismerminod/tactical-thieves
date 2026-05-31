@@ -11,6 +11,7 @@ namespace TacticalThieves
 {
     public class WebSocketClientDev : MonoBehaviour
     {
+#if UNITY_EDITOR
         private ClientWebSocket _websocket;
         private CancellationTokenSource _cts;
         [SerializeField] private string finalURI;
@@ -138,7 +139,7 @@ namespace TacticalThieves
                 Debug.LogWarning($"Unknown command: {serverMessage.Type}");
 
         }
-
+#endif
     }
 
 }

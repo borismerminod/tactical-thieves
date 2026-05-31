@@ -94,9 +94,9 @@ namespace TacticalThieves
         {
             try
             {
-                Init();
                 GameManager.Instance?.OnCharacterStarted(this);
                 animator = model?.GetComponent<Animator>();
+                Init();
             }
             catch (System.Exception ex)
             {

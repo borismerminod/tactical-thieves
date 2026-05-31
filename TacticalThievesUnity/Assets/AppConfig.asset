@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8a901eed288ed45883050ec5e5054d, type: 3}
   m_Name: AppConfig
   m_EditorClassIdentifier: 
-  serverUrl: https://localhost:7186/
+  serverUrl: https://localhost:7186
+  websocketURL: wss://localhost:7186/ws?clientId={$clientId}

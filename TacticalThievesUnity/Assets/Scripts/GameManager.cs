@@ -207,14 +207,16 @@ namespace TacticalThieves
                 State = GameState.LOADING;
                 bInit = false;
 
-                if (webSocketClient.gameObject.activeSelf == true)
+                if (webSocketClient.gameObject.activeInHierarchy == true)
                 {
                     StartCoroutine(WaitAndConnect());
                 }
-                if (webSocketClientDev.gameObject.activeSelf == true)
+#if UNITY_EDITOR
+                if (webSocketClientDev.gameObject.activeInHierarchy == true)
                 {
                     StartCoroutine(WaitAndConnectDev());
                 }
+#endif
             }
             catch (Exception ex)
             {
@@ -245,6 +247,7 @@ namespace TacticalThieves
         /// Waits until required clients are available then connects the websocket client.
         /// </summary>
         /// <returns>Coroutine enumerator</returns>
+#if UNITY_EDITOR
         private IEnumerator WaitAndConnectDev()
         {
             yield return new WaitUntil(() => webSocketClientDev != null && apiClient != null);
@@ -253,6 +256,7 @@ namespace TacticalThieves
             StartCoroutine(webSocketClientDev.Connect());
             //yield return new WaitUntil(() => webSocketClientDev != null && webSocketClientDev.IsConnected);
         }
+#endif
 
         /// <summary>
         /// Notifies the GameManager that a grid has started and becomes the active grid.

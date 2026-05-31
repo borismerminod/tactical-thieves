@@ -40,7 +40,7 @@ namespace TacticalThieves
         {
             if(levelLoaded == false && Input.GetKey(KeyCode.Space))
             {
-                GameManager.Instance?.LoadLevel(1);
+                GameManager.Instance?.LoadLevel(0);
                 levelLoaded = true;
             }
         }

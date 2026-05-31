@@ -102,7 +102,7 @@ namespace TacticalThieves
             yield return SendRequest(
                     endpoint,
                     "POST",
-                    JsonUtility.ToJson(new SaveLevelDto { CurrentLevel = nextLevel }),
+                    JsonUtility.ToJson(new SaveLevelDto {Pseudo="userTest", CurrentLevel = nextLevel }),
                     onSuccess: response => Debug.Log("Response: " + response),
                     onError: error => Debug.LogError("Error: " + error)
             );

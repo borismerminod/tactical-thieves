@@ -24,8 +24,8 @@ public class WebSocketClient : MonoBehaviour
             {
                 {"move", _ => playerController.HandleThiefMove()},
                 {"stealth", _ => playerController.HandleThiefStealth()},
-                {"end-turn",  msg => GameManager.Instance.LoadLevel(msg.Level)},
-                {"load-level", _ => playerController.HandleThiefEndTurn()},
+                {"end-turn",  _ => playerController.HandleThiefEndTurn()},
+                {"load-level", msg => GameManager.Instance.LoadLevel(msg.Level) },
                 { "load-random-level", _ => GameManager.Instance.LoadRandomLevel() },
                 { "restart", _ => GameManager.Instance.RestartLevel() }
             };
