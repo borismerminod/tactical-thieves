@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.WebSockets;
 using System.Text;
+using UnityEngine;
+
+#if UNITY_EDITOR
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
+#endif
 
 namespace TacticalThieves
 {
@@ -137,8 +140,8 @@ namespace TacticalThieves
                 handler(serverMessage);
             else
                 Debug.LogWarning($"Unknown command: {serverMessage.Type}");
-
         }
+        
 #endif
     }
 

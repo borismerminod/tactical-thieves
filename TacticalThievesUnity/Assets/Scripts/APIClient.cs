@@ -21,12 +21,7 @@ namespace TacticalThieves
     /// </remarks>
     public class APIClient : MonoBehaviour
     {
-<<<<<<< HEAD
-        //[SerializeField] private string serverUrl = "http://localhost:5140/api";
-        //[SerializeField] private string serverUrl = "https://localhost:7186/api";
-        [SerializeField] private string serverUrl = "https://mozell-fortifiable-moshe.ngrok-free.dev/api";
-=======
->>>>>>> 046a149 (Reprise de la classe APIClient + Ajout d'un scriptable object pour les paramètres globaux du jeu)
+
         [SerializeField] private bool apiClientStarted;
 
 
