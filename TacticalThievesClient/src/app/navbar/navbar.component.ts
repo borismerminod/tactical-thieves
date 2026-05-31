@@ -2,6 +2,8 @@ import { Component, DoCheck } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,35 +12,19 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements DoCheck {
+export class NavbarComponent {
 
-  isLoggedIn: boolean
-  username: string 
+  isLoggedIn$: Observable<boolean>
+  username$: Observable<string>
 
-  constructor(private router: Router) {
-    this.isLoggedIn = false;
-    this.username = ""
-  }
-
-  isUserLoggedIn(): boolean {
-    return !!sessionStorage.getItem('authToken');
-  }
-
-  getUsername(): string {
-    return sessionStorage.getItem('username') || '';
+  constructor(private router: Router, private authService : AuthService) {
+    this.isLoggedIn$ = this.authService.isLoggedIn$
+    this.username$ = this.authService.username$
   }
 
   logout() {
-    sessionStorage.removeItem('authToken');
-    sessionStorage.removeItem('username');
-    this.isLoggedIn = false;
-    this.username = '';
-    
+    this.authService.logout()
      this.router.navigate(['/home']);
   }
 
-  ngDoCheck() {
-    this.isLoggedIn = this.isUserLoggedIn();
-    this.username = this.getUsername();
-  }
 }

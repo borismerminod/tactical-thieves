@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using TacticalThievesServer.Data;
 using TacticalThievesServer.Services;
-using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -49,12 +48,20 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddHttpContextAccessor();
 
+string ServerDomain = "localhost";
+//string ServerDomain = "mozell-fortifiable-moshe.ngrok-free.dev"; 
+
+string ServerName = "TacticalThievesServer";
+string Origin = "https://localhost:7186";
+//string Origin = "https://mozell-fortifiable-moshe.ngrok-free.dev
+//string Origin = "https://localhost:4200";
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularClient", policy =>
     {
         policy
-            .WithOrigins("http://localhost:4200", "https://localhost:4200", "https://localhost:7186", "https://mozell-fortifiable-moshe.ngrok-free.dev", "https://tactical-thieves.loca.lt")
+            .WithOrigins(Origin)
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -63,18 +70,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton(new Fido2(new Fido2Configuration
 {
-    //ServerDomain = "localhost",
-    ServerDomain = "mozell-fortifiable-moshe.ngrok-free.dev",
-    //ServerDomain = "https://tactical-thieves.loca.lt",
-    ServerName = "TacticalThievesServer",
-    //Origins = new HashSet<string> {"https://localhost:4200" }
-    //Origins = new HashSet<string> { "https://localhost:7186" }
-    Origins = new HashSet<string> { "https://mozell-fortifiable-moshe.ngrok-free.dev/" }
-    //Origins = new HashSet<string> { "https://tactical-thieves.loca.lt/" }
+    ServerDomain = ServerDomain,
+    ServerName = ServerName,
+    Origins = new HashSet<string> { Origin }
 }));
 
 builder.Services.AddSingleton<WebSocketHandler>();
-builder.Services.AddSingleton<ThiefStateService>();
 builder.Services.AddSingleton<WebSocketLinkerService>();
 
 builder.Services.AddControllers();
@@ -92,9 +93,9 @@ if (string.IsNullOrEmpty(dbPassword))
     throw new Exception("SA_PASSWORD n'est pas défini dans le .env");
 }
 
-var connectionStringWithoutPassword = builder.Configuration.GetConnectionString("DefaultConnection");
+string? connectionStringWithoutPassword = builder.Configuration.GetConnectionString("DefaultConnection");
 
-string finalConnectionString = connectionStringWithoutPassword.Replace("{DB_PASSWORD}", dbPassword);
+string finalConnectionString = (connectionStringWithoutPassword == null) ? "" : connectionStringWithoutPassword.Replace("{DB_PASSWORD}", dbPassword);
 
 // <-- Ajout : enregistrement du DbContext pour SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -122,7 +123,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// ✅ IMPORTANT : Static Files AVANT TOUT
+// IMPORTANT : Static Files AVANT TOUT
 var provider = new FileExtensionContentTypeProvider();
 
 // Unity WebGL
@@ -131,24 +132,6 @@ provider.Mappings[".data"] = "application/octet-stream";
 provider.Mappings[".framework.js"] = "application/javascript";
 provider.Mappings[".symbols.json"] = "application/json";
 
-/*// Angular
-provider.Mappings[".js"] = "application/javascript";
-provider.Mappings[".mjs"] = "application/javascript";
-provider.Mappings[".css"] = "text/css";
-provider.Mappings[".json"] = "application/json";*/
-
-/*// Angular
-provider.Mappings[".js"] = "application/javascript";
-provider.Mappings[".mjs"] = "application/javascript";
-provider.Mappings[".css"] = "text/css";
-provider.Mappings[".json"] = "application/json";
-provider.Mappings[".html"] = "text/html";
-
-// Unity WebGL files
-provider.Mappings[".wasm"] = "application/wasm";
-provider.Mappings[".data"] = "application/octet-stream";
-provider.Mappings[".framework.js"] = "application/javascript";
-provider.Mappings[".symbols.json"] = "application/octet-stream";*/
 
 // (Option: if using compressed builds with fallback)
 provider.Mappings[".unityweb"] = "application/octet-stream";
@@ -191,7 +174,7 @@ app.UseAuthentication(); // Attention avant Authorization
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<ClientHub>("/scorehub");
+app.MapHub<ClientHub>("/hub");
 
 app.Run();
 

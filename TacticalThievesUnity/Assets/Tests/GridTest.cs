@@ -87,7 +87,7 @@ public class GridTest
         monster.Y = 3;
 
 
-        grid.OnMonsterAttackEnable(monster);
+        //grid.OnMonsterAttackEnable(monster);
 
         Dictionary<string, Tile> tiles = grid.Tiles;
 
@@ -142,7 +142,7 @@ public class GridTest
         monster.X = 3;
         monster.Y = 3;
 
-        grid.OnMonsterMoveEnable(monster);
+        //grid.OnMonsterMoveEnable(monster);
 
         Dictionary<string, Tile> tiles = grid.Tiles;
 

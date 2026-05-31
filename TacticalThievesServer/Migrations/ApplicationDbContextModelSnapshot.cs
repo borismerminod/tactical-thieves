@@ -30,8 +30,8 @@ namespace TacticalThievesServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CurrentLevel")
-                        .HasColumnType("int");
+                    b.Property<long>("CurrentLevel")
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");

@@ -2,8 +2,8 @@
   <a routerLink="/home">Home</a>
   <a routerLink="/unity-game">Game</a>
 
-  <div *ngIf="isLoggedIn; else loggedOut">
-    <a (click)="logout()">Logout {{username}}</a>
+  <div *ngIf="isLoggedIn$ | async; else loggedOut">
+    <a (click)="logout()">Logout {{username$ | async}}</a>
   </div>
 
   <ng-template #loggedOut>

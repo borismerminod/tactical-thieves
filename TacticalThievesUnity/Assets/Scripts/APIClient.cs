@@ -10,148 +10,142 @@ using static System.Net.WebRequestMethods;
 namespace TacticalThieves
 {
 
+    /// <summary>
+    /// Responsible for communicating with the game's remote API.
+    /// </summary>
+    /// <remarks>
+    /// This MonoBehaviour centralizes HTTP request logic (GET and POST) and exposes a set of
+    /// coroutine-based methods used by the GameManager and game systems to report events
+    /// (game start, treasure collection, level save/load, etc.). It also provides awaitable
+    /// Task-based wrappers for save/load level operations.
+    /// </remarks>
     public class APIClient : MonoBehaviour
     {
-        //[SerializeField] private string serverUrl = "http://localhost:5140/api";
-        //[SerializeField] private string serverUrl = "https://localhost:7186/api";
-        [SerializeField] private string serverUrl = "https://mozell-fortifiable-moshe.ngrok-free.dev/api";
+
         [SerializeField] private bool apiClientStarted;
 
 
-        // Start is called before the first frame update
-        void Start()
+        /// <summary>
+        /// This method centralizes the logic for sending API requests, including setting headers and handling responses. 
+        /// It takes care of both success and error cases, allowing the caller to simply provide callbacks for each scenario. 
+        /// This helps reduce code duplication across different API calls and makes it easier to maintain the request logic in one place.
+        /// </summary>
+        /// <param name="url">The endpoint to reach</param>
+        /// <param name="method">POST or GET</param>
+        /// <param name="jsonBody">The json body to send</param>
+        /// <param name="onSuccess">The call back function on success case</param>
+        /// <param name="onError">The call back function on failure case</param>
+        /// <returns>IEnumerator for use with StartCoroutine</returns>
+        private IEnumerator SendRequest(string url, string method, string jsonBody, System.Action<string> onSuccess, System.Action<string> onError = null)
         {
-            //GameManager.Instance.OnAPIClientStarted(this);        
-            //StartCoroutine(InitWebGL());
-            apiClientStarted = false;
-        }
-
-        private void Update()
-        {
-            if(!apiClientStarted && GameManager.Instance != null)
+            if(method != "POST" && method != "GET")
             {
-                apiClientStarted = true;
-                GameManager.Instance.OnAPIClientStarted(this);
+                onError?.Invoke($"Unsupported HTTP method: {method}");
+                yield break;
             }
+
+            var request = new UnityWebRequest(url, method);
+
+            if (!string.IsNullOrEmpty(jsonBody))
+            {
+                byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+                request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            }
+
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("X-Session-Id", GameManager.Instance.SessionID);
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+                onSuccess?.Invoke(request.downloadHandler.text);
+            else
+                onError?.Invoke(request.error);
         }
 
-        IEnumerator InitWebGL()
-        {
-            // Attendre 1 frame minimum
-            //yield return null;
-
-            // Attendre encore un peu (sécurité WebGL)
-            //yield return new WaitForSeconds(1.0f);
-
-            GameManager.Instance.OnAPIClientStarted(this);
-            yield return null;
-        }
-
+        /// <summary>
+        /// Sends a request to collect treasure on the server for the current session.
+        /// </summary>
+        /// <param name="amount">Number of treasure units to collect</param>
+        /// <returns>IEnumerator that completes when the request finishes</returns>
         public IEnumerator CollectTreasure(int amount)
         {
-            string endpoint = $"{serverUrl}/Game/collect-treasure";
+            string endpoint = $"{GameManager.Instance.Config.serverUrl}/api/Game/collect-treasure";
 
-            var json = JsonUtility.ToJson(new TreasureCollectDto { Amount = amount });
-            var request = new UnityWebRequest(endpoint, "POST");
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("X-Session-Id", GameManager.Instance.SessionID);
-
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Response: " + request.downloadHandler.text);
+            yield return SendRequest(
+                    endpoint, 
+                    "POST", 
+                    JsonUtility.ToJson(new TreasureCollectDto { Amount = amount }),
+                    onSuccess: response => Debug.Log("Response: " + response),
+                    onError: error => Debug.LogError("Error: " + error)
+            );
             }
-            else
-            {
-                Debug.LogError("Error: " + request.error);
-            }
-        }
+           
 
+
+        /// <summary>
+        /// Notifies the server that a thief has reached the exit and optionally save the next level number.
+        /// </summary>
+        /// <param name="nextLevel">The next level index to save on the server</param>
+        /// <returns>IEnumerator that completes when the request finishes</returns>
         public IEnumerator ThiefReachedExit(int nextLevel)
         {
-            string endpoint = $"{serverUrl}/Game/exit-reached";
+            string endpoint = $"{GameManager.Instance.Config.serverUrl}/api/Game/exit-reached";
 
-            var dto = new SaveLevelDto { CurrentLevel = nextLevel };
-            var json = JsonUtility.ToJson(dto);
+            yield return SendRequest(
+                    endpoint,
+                    "POST",
+                    JsonUtility.ToJson(new SaveLevelDto {Pseudo="userTest", CurrentLevel = nextLevel }),
+                    onSuccess: response => Debug.Log("Response: " + response),
+                    onError: error => Debug.LogError("Error: " + error)
+            );
 
-            var request = new UnityWebRequest(endpoint, "POST");
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("X-Session-Id", GameManager.Instance.SessionID);
-
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Response: " + request.downloadHandler.text);
-            }
-            else
-            {
-                Debug.LogError("Error: " + request.error);
-            }
         }
 
+        /// <summary>
+        /// Notifies the server that all thieves died in the current game.
+        /// </summary>
+        /// <returns>IEnumerator that completes when the request finishes</returns>
         public IEnumerator AllThievesDied()
         {
-            string endpoint = $"{serverUrl}/Game/thieves-died";
+            string endpoint = $"{GameManager.Instance.Config.serverUrl}/api/Game/thieves-died";
+            yield return SendRequest(
+                    endpoint,
+                    "POST",
+                    jsonBody: "",
+                    onSuccess: response => Debug.Log("Response: " + response),
+                    onError: error => Debug.LogError("Error: " + error)
+            );
 
-            var request = new UnityWebRequest(endpoint, "POST");
-            request.uploadHandler = new UploadHandlerRaw(new byte[0]);
-            request.downloadHandler = new DownloadHandlerBuffer();
-
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("X-Session-Id", GameManager.Instance.SessionID);
-
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Response: " + request.downloadHandler.text);
-            }
-            else
-            {
-                Debug.LogError("Error: " + request.error);
-            }
         }
 
+        /// <summary>
+        /// Sends the game-start event to the server including session and client identifiers.
+        /// </summary>
+        /// <returns>IEnumerator that completes when the request finishes</returns>
         public IEnumerator GameStart()
         {
-            string endpoint = $"{serverUrl}/Game/game-start";
+            string endpoint = $"{GameManager.Instance.Config.serverUrl}/api/Game/game-start";
 
-            var payload = new GameStartDto
-            {
-                SessionID = GameManager.Instance.SessionID,
-                UnityGUID = GameManager.Instance.UnityGUID
-            };
+            yield return SendRequest(
+                    endpoint,
+                    "POST",
+                    JsonUtility.ToJson(new GameStartDto { SessionID = GameManager.Instance.SessionID, UnityGUID = GameManager.Instance.UnityGUID }),
+                    onSuccess: response => Debug.Log("Response: " + response),
+                    onError: error => Debug.LogError("Error: " + error)
+            );
 
-            string json = JsonUtility.ToJson(payload);
-            byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
-            Debug.Log(json);
-            var request = new UnityWebRequest(endpoint, "POST");
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Response: " + request.downloadHandler.text);
-            }
-            else
-            {
-                Debug.LogError("Error: " + request.error);
-            }
         }
 
         // Version awaitable pour SaveLevel : Task (lève une exception en cas d'erreur)
+        /// <summary>
+        /// Asynchronously saves the player's current level on the remote service.
+        /// </summary>
+        /// <param name="pseudo">Player pseudo to save</param>
+        /// <param name="nextLevel">Level index to save</param>
+        /// <returns>A Task that completes when the save operation finishes. Throws on error.</returns>
         public Task SaveLevelAsync(string pseudo, int nextLevel)
         {
             var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -159,34 +153,39 @@ namespace TacticalThieves
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Coroutine implementation for SaveLevelAsync. Completes or faults the provided TaskCompletionSource.
+        /// </summary>
+        /// <param name="pseudo">Player pseudo to save</param>
+        /// <param name="nextLevel">Level index to save</param>
+        /// <param name="tcs">TaskCompletionSource to signal completion or failure</param>
+        /// <returns>IEnumerator for use with StartCoroutine</returns>
         private IEnumerator SaveLevel(string pseudo, int nextLevel, TaskCompletionSource<bool> tcs)
         {
-            string endpoint = $"{serverUrl}/Game/save-level";
+            string endpoint = $"{GameManager.Instance.Config.serverUrl}/api/Game/save-level";
 
-            var dto = new SaveLevelDto { Pseudo = pseudo, CurrentLevel = nextLevel };
-            var json = JsonUtility.ToJson(dto);
-            var request = new UnityWebRequest(endpoint, "POST");
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
+            yield return SendRequest(
+                    endpoint,
+                    "POST",
+                    JsonUtility.ToJson(new SaveLevelDto { Pseudo = pseudo, CurrentLevel = nextLevel }),
+                    onSuccess: response => {
+                        Debug.Log("SaveLevelAsync Response: " + response);
+                        tcs.SetResult(true);
+                    },
+                    onError: error => {
+                        Debug.LogError("SaveLevelAsync Error: " + error);
+                        tcs.SetException(new System.Exception(error));
+                    }
+            );
 
-            yield return request.SendWebRequest();
-            //request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("SaveLevelAsync Response: " + request.downloadHandler.text);
-                tcs.SetResult(true);
-            }
-            else
-            {
-                Debug.LogError("SaveLevelAsync Error: " + request.error);
-                tcs.SetException(new System.Exception(request.error));
-            }
         }
 
         // Expose une API awaitable : Task<int>
+        /// <summary>
+        /// Asynchronously loads the saved level for a given player pseudo.
+        /// </summary>
+        /// <param name="pseudo">Player pseudo to load</param>
+        /// <returns>A Task that evaluates to the loaded level index. Throws on error.</returns>
         public Task<int> LoadLevelAsync(string pseudo)
         {
             var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -194,49 +193,42 @@ namespace TacticalThieves
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Coroutine implementation for LoadLevelAsync. Parses the server response and completes the TaskCompletionSource.
+        /// </summary>
+        /// <param name="pseudo">Player pseudo to load</param>
+        /// <param name="tcs">TaskCompletionSource to signal completion or failure</param>
+        /// <returns>IEnumerator for use with StartCoroutine</returns>
         private IEnumerator LoadLevel(string pseudo, TaskCompletionSource<int> tcs)
         {
             string escaped = UnityWebRequest.EscapeURL(pseudo);
-            string endpoint = $"{serverUrl}/Game/load-level/{escaped}";
+            string endpoint = $"{GameManager.Instance.Config.serverUrl}/api/Game/load-level/{escaped}";
 
-            var request = UnityWebRequest.Get(endpoint);
-            request.SetRequestHeader("Content-Type", "application/json");
+            yield return SendRequest(
+                    endpoint,
+                    "GET",
+                    jsonBody: "",
+                    onSuccess: response => {
+                        Debug.Log("LoadLevelAsync Response: " + response);
+                        try
+                        {
+                            LoadLevelResponseDto resp = JsonUtility.FromJson<LoadLevelResponseDto>(response);
+                            if (resp.success)
+                                tcs.SetResult(resp.level);
+                            else
+                                tcs.SetException(new System.Exception($"LoadLevel failed, response: {response}"));
+                        }
+                        catch (System.Exception ex)
+                        {
+                            tcs.SetException(new System.Exception($"LoadLevel parse error, response: {response}", ex));
+                        }
+                    },
+                    onError: error => {
+                        Debug.LogError("LoadLevelAsync Error: " + error);
+                        tcs.SetException(new System.Exception(error));
+                    }
+            );
 
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                string text = request.downloadHandler.text;
-                // Essayer de parser d'abord en JSON { level: n } ou formulaire complet
-                LoadLevelResponseDto resp = null;
-                try
-                {
-                    resp = JsonUtility.FromJson<LoadLevelResponseDto>(text);
-                }
-                catch
-                {
-                    resp = null;
-                }
-
-                if (resp != null)
-                {
-                    tcs.SetResult(resp.level);
-                    yield break;
-                }
-
-                if (int.TryParse(text, out int level))
-                {
-                    tcs.SetResult(level);
-                }
-                else
-                {
-                    tcs.SetException(new System.Exception($"LoadLevel parse error, response: {text}"));
-                }
-            }
-            else
-            {
-                tcs.SetException(new System.Exception(request.error));
-            }
         }
 
         class TreasureCollectDto
@@ -245,6 +237,9 @@ namespace TacticalThieves
         }
 
         // DTO pour SaveLevel
+        /// <summary>
+        /// DTO used to save the current level for a player.
+        /// </summary>
         class SaveLevelDto
         {
             public int CurrentLevel;
@@ -252,6 +247,9 @@ namespace TacticalThieves
         }
 
         // DTO pour la réponse LoadLevel { success, id, pseudo, level }
+        /// <summary>
+        /// DTO representing the server response when loading a player's saved level.
+        /// </summary>
         class LoadLevelResponseDto
         {
             public bool success;
@@ -261,6 +259,9 @@ namespace TacticalThieves
         }
 
 
+        /// <summary>
+        /// DTO used when notifying the server that the game has started.
+        /// </summary>
         public class GameStartDto
         {
             public string SessionID;
