@@ -927,7 +927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4408889484601821998, guid: 897be6211bfad454194511e639884e77, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4408889484601821999, guid: 897be6211bfad454194511e639884e77, type: 3}
       propertyPath: serverUri
@@ -1189,6 +1189,10 @@ PrefabInstance:
       propertyPath: gridActionHandler
       value: 
       objectReference: {fileID: 289372711}
+    - target: {fileID: 3703767297144401384, guid: 2a9c6ac08f46b8d4eac80cc23c2f0ea2, type: 3}
+      propertyPath: webSocketClientDev
+      value: 
+      objectReference: {fileID: 1267780451518257620, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a9c6ac08f46b8d4eac80cc23c2f0ea2, type: 3}
 --- !u!4 &6244357042037486178 stripped
@@ -1393,3 +1397,60 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dafa770c6ee62824c8b52342bd591eaf, type: 3}
+--- !u!1001 &8715543480654490475
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6244357042037486178}
+    m_Modifications:
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.0137293
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.548355
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.468051
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912642669926968401, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322973718246511127, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}
+      propertyPath: m_Name
+      value: WebSocketClientDev
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ed2d19424b72604a827fb9d618add18, type: 3}

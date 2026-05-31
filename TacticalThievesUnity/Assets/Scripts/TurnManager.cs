@@ -11,18 +11,6 @@ namespace TacticalThieves
         [SerializeField] private int characterTurnIndex;
         public int CharacterTurnIndex { get => characterTurnIndex; set => characterTurnIndex = value; }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
-
         public void InitCharacterTurnIndex(CharactersManager charactersManager, PlayerController playerController, AIController aiController)
         {
 
@@ -34,7 +22,7 @@ namespace TacticalThieves
             {
                 playerController.OnThiefSelected(thief, true);
                 return;
-            }
+            } 
 
             Monster monster = character as Monster;
             if (monster != null)

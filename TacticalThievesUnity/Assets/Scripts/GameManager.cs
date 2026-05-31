@@ -35,6 +35,7 @@ namespace TacticalThieves
 
         
         [SerializeField] private WebSocketClient webSocketClient;
+        [SerializeField] private WebSocketClientDev webSocketClientDev;
         [SerializeField] private APIClient apiClient;
         [SerializeField] private GameState gameState;
         [SerializeField] private Grid currentGrid;
@@ -205,7 +206,15 @@ namespace TacticalThieves
             {
                 State = GameState.LOADING;
                 bInit = false;
-                StartCoroutine(WaitAndConnect());
+
+                if (webSocketClient.gameObject.activeSelf == true)
+                {
+                    StartCoroutine(WaitAndConnect());
+                }
+                if (webSocketClientDev.gameObject.activeSelf == true)
+                {
+                    StartCoroutine(WaitAndConnectDev());
+                }
             }
             catch (Exception ex)
             {
@@ -230,6 +239,19 @@ namespace TacticalThieves
                 Debug.LogError("WebSocket connection failed: " + task.Exception);
                 yield break;
             }
+        }
+
+        /// <summary>
+        /// Waits until required clients are available then connects the websocket client.
+        /// </summary>
+        /// <returns>Coroutine enumerator</returns>
+        private IEnumerator WaitAndConnectDev()
+        {
+            yield return new WaitUntil(() => webSocketClientDev != null && apiClient != null);
+
+            // Convertir l'awaitable en coroutine-friendly
+            StartCoroutine(webSocketClientDev.Connect());
+            //yield return new WaitUntil(() => webSocketClientDev != null && webSocketClientDev.IsConnected);
         }
 
         /// <summary>

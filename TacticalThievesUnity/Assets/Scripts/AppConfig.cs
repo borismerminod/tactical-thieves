@@ -6,4 +6,5 @@ using UnityEngine;
 public class AppConfig : ScriptableObject
 {
    public string serverUrl = "https://localhost:7186/";
+    public string websocketURL = "wss://localhost:7186/ws?clientId={$clientId}";
 }

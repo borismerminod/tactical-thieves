@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,13 @@ namespace TacticalThieves
             public const string Defeat = "Defeat";
             public const string Win = "Win";
             public const string Attack = "Attack";
+        }
+
+        [Serializable]
+        public class ServerMessage
+        {
+            public string Type;
+            public int Level;
         }
 
     }
