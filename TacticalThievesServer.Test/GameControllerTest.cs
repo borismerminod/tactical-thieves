@@ -10,15 +10,15 @@ using Xunit;
 
 namespace TacticalThievesServer.Test
 {
-    public class GameControllerTest : IClassFixture<GameControllerTestFactory>
+    public class GameControllerTest : IClassFixture<ControllerTestFactory>
     {
         private readonly HttpClient _client;
         private readonly FakeWebSocketHandler _fakeHandler;
         private readonly FakeHubContext _fakeHub;
         private readonly WebSocketLinkerService _linker;
-        private readonly GameControllerTestFactory _factory;
+        private readonly ControllerTestFactory _factory;
 
-        public GameControllerTest(GameControllerTestFactory factory)
+        public GameControllerTest(ControllerTestFactory factory)
         {
             _factory = factory;
             _client = factory.CreateClient();
@@ -401,6 +401,95 @@ namespace TacticalThievesServer.Test
             Assert.True(result.Success);
         }
 
+        // cas : DTO null (corps absent ou malformé) → 400
+        // Note : la branche !isValid(dto) dans HandleClientEventAsync est inatteignable
+        // pour CollectTreasure et ExitReached car leurs champs sont uint (toujours >= 0).
+        // La seule façon d'atteindre la branche dto == null est d'envoyer un corps null.
+
+        [Fact]
+        public async Task CollectTreasure_NullBody_ReturnsBadRequest()
+        {
+            var sessionId = Guid.NewGuid().ToString();
+            _linker.AddOrUpdate(sessionId, angularGuid: "angular-ok");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/Game/collect-treasure")
+            {
+                Content = new StringContent("null", System.Text.Encoding.UTF8, "application/json")
+            };
+            request.Headers.Add("X-Session-Id", sessionId);
+            var response = await _client.SendAsync(request);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task ExitReached_NullBody_ReturnsBadRequest()
+        {
+            var sessionId = Guid.NewGuid().ToString();
+            _linker.AddOrUpdate(sessionId, angularGuid: "angular-ok");
+
+            var request = new HttpRequestMessage(HttpMethod.Post, "/api/Game/exit-reached")
+            {
+                Content = new StringContent("null", System.Text.Encoding.UTF8, "application/json")
+            };
+            request.Headers.Add("X-Session-Id", sessionId);
+            var response = await _client.SendAsync(request);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        // vérification du payload SignalR (valeur transmise)
+
+        [Fact]
+        public async Task CollectTreasure_ValidRequest_SendsCorrectAmountAsPayload()
+        {
+            var sessionId = Guid.NewGuid().ToString();
+            var angularGuid = "angular-" + Guid.NewGuid();
+            _linker.AddOrUpdate(sessionId, angularGuid: angularGuid);
+
+            var body = new { Amount = 42u };
+            var request = BuildSignalRRequest("/api/Game/collect-treasure", sessionId, body);
+            await _client.SendAsync(request);
+
+            Assert.Equal(angularGuid, _fakeHub.LastClientId);
+            Assert.Equal("ScoreUpdated", _fakeHub.LastEventName);
+            Assert.Equal(42u, Convert.ToUInt32(_fakeHub.LastPayload));
+        }
+
+        [Fact]
+        public async Task ExitReached_ValidRequest_SendsCorrectLevelAsPayload()
+        {
+            var sessionId = Guid.NewGuid().ToString();
+            var angularGuid = "angular-" + Guid.NewGuid();
+            _linker.AddOrUpdate(sessionId, angularGuid: angularGuid);
+
+            var body = new { CurrentLevel = 3u, Pseudo = "test" };
+            var request = BuildSignalRRequest("/api/Game/exit-reached", sessionId, body);
+            await _client.SendAsync(request);
+
+            Assert.Equal(angularGuid, _fakeHub.LastClientId);
+            Assert.Equal("ExitReached", _fakeHub.LastEventName);
+            Assert.Equal(3u, Convert.ToUInt32(_fakeHub.LastPayload));
+        }
+
+        // vérification du body de réponse CollectTreasure → champ gold
+
+        [Fact]
+        public async Task CollectTreasure_ValidRequest_ReturnsGoldInResponseBody()
+        {
+            var sessionId = Guid.NewGuid().ToString();
+            _linker.AddOrUpdate(sessionId, angularGuid: "angular-ok");
+
+            var request = BuildSignalRRequest("/api/Game/collect-treasure", sessionId, new { Amount = 10 });
+            var response = await _client.SendAsync(request);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var json = await response.Content.ReadFromJsonAsync<CollectTreasureResponse>();
+            Assert.NotNull(json);
+            Assert.True(json.Success);
+            Assert.Equal(10, json.Gold);
+        }
+
         // vérification de l'événement SignalR envoyé
 
         [Theory]
@@ -738,5 +827,11 @@ namespace TacticalThievesServer.Test
     {
         public bool Success { get; set; }
         public uint Level { get; set; }
+    }
+
+    public class CollectTreasureResponse
+    {
+        public bool Success { get; set; }
+        public int Gold { get; set; }
     }
 }

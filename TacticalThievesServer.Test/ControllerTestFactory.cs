@@ -10,7 +10,7 @@ using TacticalThievesServer.Test.Fakes;
 
 namespace TacticalThievesServer.Test
 {
-    public class GameControllerTestFactory : WebApplicationFactory<Program>
+    public class ControllerTestFactory : WebApplicationFactory<Program>
     {
         public FakeWebSocketHandler FakeWebSocketHandler { get; } = new();
         public FakeHubContext FakeHubContext { get; } = new();
