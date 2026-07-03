@@ -22,7 +22,9 @@ var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
 
 if (string.IsNullOrEmpty(jwtKey))
 {
-    throw new Exception("JWT_KEY n'est pas défini dans le .env");
+    if (!builder.Environment.IsEnvironment("Testing"))
+        throw new Exception("JWT_KEY n'est pas défini dans le .env");
+    jwtKey = "test-jwt-key-for-testing-purposes-32chars!";
 }
 
 var key = Encoding.UTF8.GetBytes(jwtKey);
@@ -75,7 +77,7 @@ builder.Services.AddSingleton(new Fido2(new Fido2Configuration
     Origins = new HashSet<string> { Origin }
 }));
 
-builder.Services.AddSingleton<WebSocketHandler>();
+builder.Services.AddSingleton<IWebSocketHandler, WebSocketHandler>();
 builder.Services.AddSingleton<WebSocketLinkerService>();
 
 builder.Services.AddControllers();
@@ -88,10 +90,11 @@ builder.Services.AddSignalR();
 
 
 var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
-if (string.IsNullOrEmpty(dbPassword))
+if (string.IsNullOrEmpty(dbPassword) && !builder.Environment.IsEnvironment("Testing"))
 {
     throw new Exception("SA_PASSWORD n'est pas défini dans le .env");
 }
+dbPassword ??= "test";
 
 string? connectionStringWithoutPassword = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -107,8 +110,9 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Appliquer les migrations au démarrage (créera la base si nécessaire)
-using (var scope = app.Services.CreateScope())
+if (!app.Environment.IsEnvironment("Testing"))
 {
+    using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
 }
@@ -158,7 +162,7 @@ app.UseWebSockets();
 
 app.Map("/ws", async context =>
 {
-    var handler = context.RequestServices.GetRequiredService<WebSocketHandler>();
+    var handler = context.RequestServices.GetRequiredService<IWebSocketHandler>();
     await handler.HandleAsync(context);
 });
 

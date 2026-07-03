@@ -28,7 +28,7 @@ namespace TacticalThievesServer.Controllers
     {
 
         //This service is used to send messages to the Unity client via WebSocket
-        private readonly WebSocketHandler webSocketHandler;
+        private readonly IWebSocketHandler webSocketHandler;
 
         // This service is used to send messages to the Angular client via SignalR
         private readonly IHubContext<ClientHub> clientHub;
@@ -41,7 +41,7 @@ namespace TacticalThievesServer.Controllers
 
         private readonly ILogger<GameController> logger;
 
-        public GameController(WebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db, WebSocketLinkerService linker, ILogger<GameController> logger)
+        public GameController(IWebSocketHandler webSocketHandler, IHubContext<ClientHub> clientHub, ApplicationDbContext db, WebSocketLinkerService linker, ILogger<GameController> logger)
         {
             this.webSocketHandler = webSocketHandler;
             this.clientHub = clientHub;

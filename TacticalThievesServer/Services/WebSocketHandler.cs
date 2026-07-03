@@ -14,7 +14,7 @@ namespace TacticalThievesServer.Services
     /// mapping of client identifiers to WebSocket instances and provides helpers to
     /// send messages to a single client or broadcast to all connected clients.
     /// </summary>
-    public class WebSocketHandler
+    public class WebSocketHandler : IWebSocketHandler
     {
 
         /// <summary>
