@@ -17,7 +17,7 @@ souscrit) :
 
 | Méthode | Requête | Corps | Header `X-Session-Id` |
 |---------|---------|-------|-----------------------|
-| `sendMove()` | `POST .../api/Game/move` | `{}` | — |
+| `sendMove()` | `POST .../api/Game/move` | `{}` | oui (depuis `sessionStorage`) |
 | `sendEndTurn()` | `POST .../api/Game/end-turn` | `{}` | oui (depuis `sessionStorage`) |
 | `sendRestartLevel()` | `POST .../api/Game/restart` | `{}` | oui (depuis `sessionStorage`) |
 
@@ -26,8 +26,8 @@ souscrit) :
 
 ### Détail du header de session
 
-`sendEndTurn` et `sendRestartLevel` lisent `sessionStorage.getItem("sessionId")`
-et posent l'en-tête `X-Session-Id` :
+`sendMove`, `sendEndTurn` et `sendRestartLevel` lisent
+`sessionStorage.getItem("sessionId")` et posent l'en-tête `X-Session-Id` :
 
 ```ts
 const sessionId = sessionStorage.getItem("sessionId");
@@ -38,7 +38,9 @@ const headers = { 'X-Session-Id': sessionId ? sessionId : '' };
 - si `sessionId` est absent (`null`) → `X-Session-Id: ''` (chaîne vide, **jamais**
   la chaîne `"null"`).
 
-`sendMove` n'ajoute **aucun** header.
+> **Correctif** : `sendMove` a été aligné sur `sendEndTurn`/`sendRestartLevel` —
+> il manquait le header `X-Session-Id`, désormais ajouté. Les cas B2/B3
+> verrouillent ce comportement.
 
 ## Stratégie de test — boîte noire
 
@@ -68,13 +70,14 @@ tests déterministes indépendants de l'ordre d'exécution.
 |----|-----|--------------|
 | A1 | `should create` | le service s'instancie (`toBeTruthy`). |
 
-### Groupe B — `sendMove` (sans header)
+### Groupe B — `sendMove` (avec header de session)
 
 | Id | Cas | Vérification |
 |----|-----|--------------|
 | B1 | requête bien formée | après `subscribe`, `POST .../api/Game/move`, corps `{}`. |
-| B2 | pas de header de session | la requête ne porte pas de `X-Session-Id`. |
-| B3 | retourne la réponse serveur | la valeur `flush`ée est bien reçue par l'abonné. |
+| B2 | header présent quand `sessionId` existe | `sessionStorage['sessionId'] = 'sess-move'` → `X-Session-Id === 'sess-move'`. |
+| B3 | header vide quand `sessionId` absent | pas de `sessionId` → `X-Session-Id === ''` (chaîne vide, pas `"null"`). |
+| B4 | retourne la réponse serveur | la valeur `flush`ée est bien reçue par l'abonné. |
 
 ### Groupe D — `sendEndTurn` (avec header de session)
 
@@ -158,16 +161,28 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // B2 : sendMove n'ajoute pas de header de session.
-  it('should not set an X-Session-Id header on move', () => {
+  // B2 : le sessionId présent dans sessionStorage est envoyé dans X-Session-Id.
+  it('should send the stored sessionId in the X-Session-Id header on move', () => {
+    sessionStorage.setItem('sessionId', 'sess-move');
+
     service.sendMove().subscribe();
 
     const req = httpMock.expectOne(moveUrl);
-    expect(req.request.headers.has('X-Session-Id')).toBeFalse();
+    expect(req.request.headers.get('X-Session-Id')).toBe('sess-move');
     req.flush({});
   });
 
-  // B3 : l'observable retourné transmet la réponse du serveur à l'abonné.
+  // B3 : sans sessionId, X-Session-Id vaut '' (chaîne vide, jamais "null").
+  it('should send an empty X-Session-Id header on move when no sessionId is stored', () => {
+    // sessionStorage déjà vidé par beforeEach.
+    service.sendMove().subscribe();
+
+    const req = httpMock.expectOne(moveUrl);
+    expect(req.request.headers.get('X-Session-Id')).toBe('');
+    req.flush({});
+  });
+
+  // B4 : l'observable retourné transmet la réponse du serveur à l'abonné.
   it('should relay the server response to the subscriber', () => {
     const serverResponse = { reaction: 'moved' };
     let received: unknown;
@@ -269,7 +284,7 @@ describe('PlayerControlsService', () => {
 npm test -- --include='**/player-controls.service.spec.ts' --watch=false
 ```
 
-Tous les cas A1, B1–B3, D1–D3, E1–E3 et F1 doivent passer, sans casser les
+Tous les cas A1, B1–B4, D1–D3, E1–E3 et F1 doivent passer, sans casser les
 tests existants. Le bouton **stealth** reste à couvrir ultérieurement.
 
 ## Notes / points ouverts
@@ -279,13 +294,17 @@ tests existants. Le bouton **stealth** reste à couvrir ultérieurement.
   C'est voulu : le contrat du service est de **fournir** l'observable, la
   souscription est la responsabilité de l'appelant (le composant).
 - **`X-Session-Id` vide, pas `"null"`** : le ternaire `sessionId ? sessionId : ''`
-  garantit une chaîne vide quand la clé est absente. D3/E3 le verrouillent — si
+  garantit une chaîne vide quand la clé est absente. B3/D3/E3 le verrouillent — si
   un jour le code envoyait `String(null)` (`"null"`), ces tests le détecteraient.
+- **Correctif `sendMove`** : le header `X-Session-Id` manquait initialement sur
+  `sendMove` ; il a été ajouté pour aligner l'action de déplacement sur
+  `sendEndTurn`/`sendRestartLevel`. Les cas B2/B3 servent de garde-fou contre une
+  régression (retrait accidentel du header).
 - **`sessionStorage.clear()` obligatoire** : sans nettoyage, une clé `sessionId`
   résiduelle d'un autre test (ou du `login`) fausserait D3/E3.
 - **Pas de validation métier** : le service ne fait aucune logique conditionnelle
   au-delà du header ; il n'y a donc pas de cas « corps invalide » à ce niveau —
   ces vérifications relèvent du serveur.
 - Piste ultérieure : si l'API évolue pour ajouter le header de session à
-  `sendMove`, il faudra transformer B2 en cas « header présent ».
+  `sendStealth`, il faudra le couvrir sur le même modèle que `sendMove` (B1–B3).
 ```

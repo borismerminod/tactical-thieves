@@ -31,7 +31,11 @@ export class PlayerControlsService {
    */
   sendMove() : Observable<any>
   {
-    return this.http.post(`${environment.apiURL}/api/Game/move`, {});
+
+    const sessionId = sessionStorage.getItem("sessionId");
+    const headers = { 'X-Session-Id': sessionId ? sessionId : '' };
+
+    return this.http.post(`${environment.apiURL}/api/Game/move`, {}, { headers });
   }
 
   /**
