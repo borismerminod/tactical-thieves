@@ -145,7 +145,7 @@ export class ServerHubService {
    * @param connectionId The SignalR connection ID for server-side session linking.
    * @returns A promise that resolves when the level loading command is sent.
    */
-  public async sendLoadLevelCommand(sessionId: string, connectionId: string): Promise<void>
+  private async sendLoadLevelCommand(sessionId: string, connectionId: string): Promise<void>
   {
     const authToken = sessionStorage.getItem("authToken");
 
@@ -178,7 +178,7 @@ export class ServerHubService {
    * @param nextLevel The level number that has been completed.
    * @returns A promise that resolves when the save command is processed by the server.
    */
-  public async sendSaveLevelCommand(nextLevel: number) : Promise<void>
+  private async sendSaveLevelCommand(nextLevel: number) : Promise<void>
   {
     const authToken = sessionStorage.getItem("authToken");
 
@@ -207,7 +207,7 @@ export class ServerHubService {
    * 
    * @returns A promise that resolves when the claim command is processed by the server.
    */
-  public async sendClaimUnity() : Promise<void>
+  private async sendClaimUnity() : Promise<void>
   {
     const connectionId = this.hubConnection.connectionId;
     const body = {

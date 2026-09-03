@@ -1,18 +1,23 @@
-# Plan de test — `ServerHubService` · `startConnection` · `onScoreUpdated` · `onExitReached` · `sendLoadLevelCommand`
+# Plan de test — `ServerHubService` (service complet)
 
 Ce document décrit les cas de test unitaires du service
 [`ServerHubService`](../src/services/server-hub-service/server-hub.service.ts).
-Il couvre pour l'instant **`startConnection`**, **`onScoreUpdated`**,
-**`onExitReached`** et **`sendLoadLevelCommand`**.
+Il couvre **`startConnection`**, **`onScoreUpdated`**, **`onExitReached`**,
+**`onGameStart`**, **`onThievesDied`** et **`onUnityAlreadyTaken`** — soit tous
+les listeners publics du service.
 
-> **Périmètre progressif.** On couvre ici `startConnection` (groupes A–C),
-> `onScoreUpdated` (groupe D), `onExitReached` (groupe E) et `sendLoadLevelCommand`
-> (groupe F). Les autres méthodes (`sendSaveLevelCommand`, `sendClaimUnity`,
-> `onGameStart`, `onUnityAlreadyTaken`, `onThievesDied`) seront traitées ensuite.
+> **Périmètre.** `startConnection` (groupes A–C), `onScoreUpdated` (groupe D),
+> `onExitReached` (groupe E), `onGameStart` (groupe F), `onThievesDied` (groupe G)
+> et `onUnityAlreadyTaken` (groupe H).
+>
+> Les commandes HTTP `sendLoadLevelCommand`, `sendSaveLevelCommand` et
+> `sendClaimUnity` sont **privées** : elles ne sont pas testées en appel direct,
+> mais **indirectement** via les listeners publics qui les déclenchent
+> (`sendSaveLevelCommand` via `onExitReached`, groupe E ; `sendLoadLevelCommand`
+> via `onGameStart`, groupe F).
 
-> **⏳ Statut du groupe F.** La description, la stratégie, le tableau de cas et le
-> **code des tests** (F1–F3) sont rédigés **dans ce plan**, mais **pas encore
-> reportés dans le `.spec.ts`** : ils y seront ajoutés après ta validation.
+> **✅ Statut.** Tous les groupes (A–H) sont rédigés dans ce plan **et** reportés
+> dans le `.spec.ts`. Le service est intégralement couvert côté listeners publics.
 
 Le style s'aligne sur les plans/specs existants
 ([`player-controls.service.test-plan.md`](./player-controls.service.test-plan.md),
@@ -240,65 +245,108 @@ fourni) pour :
 `sessionStorage` en `beforeEach`/`afterEach` pour des tests déterministes, et on
 pose explicitement `authToken` quand on veut vérifier le header (E4).
 
-## Ce que fait `sendLoadLevelCommand`
+## Ce que fait `onGameStart`
 
 ```ts
-public async sendLoadLevelCommand(sessionId: string, connectionId: string): Promise<void> {
-  const authToken = sessionStorage.getItem("authToken");
+public onGameStart() : void {
+  this.hubConnection.on('GameStart', (sessionID: string) => {
+    console.log("Game start")
+    this.gameOverMessage.next("")
+    this.playerGoldSource.next(0)
+    this.levelBtnMessage.next("Restart level")
 
-  const headers: any = {
-    "X-Connection-Id": connectionId,
-    "X-Session-Id": sessionId
-  };
-
-  if (authToken) {
-    headers["Authorization"] = `Bearer ${authToken}`;
-  }
-
-  const endpoint = authToken === null
-    ? `${environment.apiURL}/api/Game/load-random-level`
-    : `${environment.apiURL}/api/Game/load-level`;
-
-  await firstValueFrom(this.http.post(endpoint, {}, { headers }));
+    if (sessionStorage.getItem("sessionId") === sessionID && this.hubConnection.connectionId !== null) {
+      this.sendLoadLevelCommand(sessionID, this.hubConnection.connectionId)
+    }
+  })
 }
 ```
 
-Contrairement aux groupes D/E, ce n'est **pas un listener** : c'est une méthode
-**appelée directement** (par `onGameStart`, avec `sessionId` et `connectionId`).
-Elle poste un **corps vide** `{}` vers un endpoint qui dépend de l'authentification :
+Comme D et E, la méthode **enregistre un listener** — ici sur `'GameStart'`. Son
+callback **réinitialise l'état de jeu** puis **charge conditionnellement** le niveau :
 
-| Cas | `authToken` (sessionStorage) | Endpoint | Header `Authorization` |
-|-----|------------------------------|----------|------------------------|
-| Anonyme | absent (`null`) | `POST .../api/Game/load-random-level` | **absent** |
-| Authentifié | présent (`"tok-…"`) | `POST .../api/Game/load-level` | `Bearer <token>` |
+1. journalise `"Game start"` (⚠️ **sans** garde `logEnabled`, contrairement aux
+   autres journaux du service — voir points ouverts) ;
+2. **réinitialise** les trois flux à leur valeur de départ :
+   - `gameOverMessage$` → `""`,
+   - `playerGold$` → `0`,
+   - `levelBtnMessage$` → `"Restart level"` ;
+3. **si** `sessionStorage.getItem("sessionId") === sessionID` **et**
+   `hubConnection.connectionId !== null` → appelle `sendLoadLevelCommand(sessionID,
+   connectionId)`, qui **poste** vers le serveur (chargement du niveau).
 
-Dans **tous** les cas, les headers `X-Connection-Id` (= `connectionId`) et
-`X-Session-Id` (= `sessionId`) sont posés à partir des **paramètres** reçus.
+### La garde de chargement
 
-### Deux conditions divergentes sur `authToken` — point ouvert
+Le chargement n'est déclenché que si **deux** conditions sont réunies :
 
-Le choix du header et le choix de l'endpoint n'utilisent **pas** le même test :
+| Condition | Source | Pilotée dans les tests par |
+|-----------|--------|----------------------------|
+| `sessionId` stocké == `sessionID` reçu | `sessionStorage.getItem("sessionId")` | `sessionStorage.setItem("sessionId", …)` |
+| `connectionId` non `null` | `hubConnection.connectionId` | `fakeConnection.connectionId` |
 
-- header : `if (authToken)` → **truthy** ;
-- endpoint : `authToken === null` → **strictement `null`**.
+`sendLoadLevelCommand` étant **privée**, on ne l'appelle pas directement : on
+observe son **effet HTTP**. Sans `authToken` en session, l'endpoint est
+`POST .../api/Game/load-random-level`, avec les headers `X-Session-Id`
+(= `sessionID`) et `X-Connection-Id` (= `connectionId`).
 
-Ces conditions coïncident pour les deux cas réalistes (`null` vs `"tok-…"`), mais
-**divergent** pour `authToken === ""` (chaîne vide) : on obtiendrait l'endpoint
-**authentifié** `load-level` **sans** header `Authorization`. En pratique
-`sessionStorage.getItem` ne renvoie `""` que si on a explicitement stocké une
-chaîne vide — cas peu probable. Je le **signale** (voir F-edge) plutôt que de le
-verrouiller : c'est peut-être une incohérence à corriger côté service.
+> **Conséquence** : un test qui rejoue `GameStart` **avec** garde vraie émet une
+> requête `load-random-level` à `flush` (F3). Les tests à garde fausse (sessionId
+> différent, ou `connectionId` null) n'émettent **aucune** requête (F4/F5).
 
-### Stratégie de test
+## Ce que fait `onThievesDied`
 
-- Frontière mockée : le `HttpClient` via `HttpTestingController` (déjà en place
-  depuis le groupe E).
-- **Ce n'est pas un observable retourné** mais une `Promise` : `firstValueFrom`
-  **s'abonne immédiatement**, donc l'appel émet la requête HTTP de façon
-  synchrone. On peut appeler `service.sendLoadLevelCommand(...)` puis
-  `httpMock.expectOne(...)` sans `await`, et `flush` la réponse.
-- On pilote la branche via `sessionStorage` : rien de posé → cas anonyme ;
-  `sessionStorage.setItem("authToken", "tok-…")` → cas authentifié.
+```ts
+public onThievesDied() : void {
+  this.hubConnection.on("ThievesDied", () => {
+    if (environment.logEnabled)
+      console.log("All thieves died")
+    this.gameOverMessage.next("Try again !!!")
+  })
+}
+```
+
+Comme D/E/F, la méthode **enregistre un listener** — ici sur `'ThievesDied'` — et
+elle est **appelée par le constructeur** (`this.onThievesDied()`), donc le listener
+est déjà en place au montage. Son callback :
+
+- journalise `"All thieves died"` **si** `logEnabled` ;
+- **émet** `"Try again !!!"` sur `gameOverMessage$`.
+
+`gameOverMessage$` est un `BehaviorSubject<string>` initialisé à `""` : un abonné
+qui rejoue ensuite `ThievesDied` observe la séquence `["", "Try again !!!"]`. Aucun
+effet HTTP : le groupe G n'émet donc **aucune** requête.
+
+## Ce que fait `onUnityAlreadyTaken`
+
+```ts
+public onUnityAlreadyTaken(): void {
+  this.hubConnection.on("UnityAlreadyTaken", () => {
+    if (environment.logEnabled)
+      console.log("Unity déjà prise par un autre client");
+  });
+}
+```
+
+La méthode enregistre un listener sur `'UnityAlreadyTaken'` dont le callback **ne
+fait que journaliser** (si `logEnabled`) — aucun flux, aucun effet HTTP.
+
+> **⚠️ Point ouvert — listener non branché.** Contrairement à `onScoreUpdated`,
+> `onExitReached`, `onGameStart` et `onThievesDied`, **`onUnityAlreadyTaken` n'est
+> PAS appelée par le constructeur**. Son listener n'est donc **jamais enregistré**
+> au montage : l'événement serveur `'UnityAlreadyTaken'` est **actuellement ignoré**
+> par l'application. C'est probablement un oubli de câblage (le constructeur devrait
+> appeler `this.onUnityAlreadyTaken()`). On le **signale** et on le **verrouille**
+> par un test (H1 : aucun listener au montage), puis on teste le comportement de la
+> méthode en l'appelant **explicitement** (H2–H4).
+
+### Tester une méthode au callback purement journalisant
+
+Comme il n'y a pas d'effet observable (flux/HTTP), on teste `onUnityAlreadyTaken`
+via un **espion sur `console.log`** : on appelle `service.onUnityAlreadyTaken()`
+pour enregistrer le listener, on récupère le callback via `getRegisteredHandler`,
+on le rejoue, puis on vérifie la journalisation. La branche « silencieuse » se teste
+en basculant temporairement `environment.logEnabled` à `false` (restauré en fin de
+test, comme en C4).
 
 ## Cas de test
 
@@ -344,18 +392,31 @@ verrouiller : c'est peut-être une incohérence à corriger côté service.
 | E3 | messages de victoire | rejouer `ExitReached(3)` → `gameOverMessage$` émet `["", "You win !!!"]` et `levelBtnMessage$` émet `["Restart level", "Next level"]` (puis on solde la requête `save-level`). |
 | E4 | commande de sauvegarde | rejouer `ExitReached(5)` (avec `authToken='tok-123'`) → `POST .../api/Game/save-level`, corps `{ Pseudo: "", CurrentLevel: 5 }`, header `Authorization: Bearer tok-123`. |
 
-### Groupe F — `sendLoadLevelCommand` (appel direct)
+### Groupe F — `onGameStart` (listener `GameStart`)
 
 | Id | Cas | Vérification |
 |----|-----|--------------|
-| F1 | anonyme → niveau aléatoire | sans `authToken`, `sendLoadLevelCommand('sess-1','conn-1')` → `POST .../api/Game/load-random-level`, corps `{}`, `X-Session-Id='sess-1'`, `X-Connection-Id='conn-1'`, **pas** de header `Authorization`. |
-| F2 | authentifié → niveau sauvegardé | `authToken='tok-9'` → `POST .../api/Game/load-level`, corps `{}`, headers `X-Session-Id`/`X-Connection-Id` + `Authorization='Bearer tok-9'`. |
-| F3 | propagation d'erreur | si le `POST` répond `500`, la `Promise` renvoyée **rejette** (l'erreur n'est pas avalée). |
-| F-edge | `authToken=''` (point ouvert) | comportement **actuel** : endpoint `load-level` **sans** header `Authorization` (divergence `=== null` vs *truthy*). À trancher : verrouiller le comportement tel quel, ou corriger le service ? |
+| F1 | listener enregistré | `hubConnection.on` appelé avec `'GameStart'` et une fonction. |
+| F2 | réinitialisation de l'état | après avoir « sali » l'état (`ScoreUpdated(50)`, `ExitReached(2)` soldé), rejouer `GameStart('sess-x')` (sessionId non posé → pas de chargement) → `playerGold$`=`0`, `gameOverMessage$`=`""`, `levelBtnMessage$`=`"Restart level"`. |
+| F3 | chargement si garde vraie | `sessionId='sess-42'` en session + `connectionId='conn-test'` → rejouer `GameStart('sess-42')` → `POST .../api/Game/load-random-level`, `X-Session-Id='sess-42'`, `X-Connection-Id='conn-test'`. |
+| F4 | pas de chargement si sessionId différent | `sessionId='sess-A'` en session → rejouer `GameStart('sess-B')` → **aucune** requête `load-*`. |
+| F5 | pas de chargement si connectionId null | `sessionId='sess-42'` + `fakeConnection.connectionId=null` → rejouer `GameStart('sess-42')` → **aucune** requête `load-*`. |
 
-> **Décision attendue pour F-edge** : je propose de **ne pas** l'inclure dans le
-> premier jet (comportement douteux), et d'ouvrir plutôt une correction du service
-> si tu confirmes que c'est un bug. Dis-moi.
+### Groupe G — `onThievesDied` (listener `ThievesDied`)
+
+| Id | Cas | Vérification |
+|----|-----|--------------|
+| G1 | listener enregistré | `hubConnection.on` appelé avec `'ThievesDied'` et une fonction (enregistré par le constructeur). |
+| G2 | message d'échec | rejouer `ThievesDied()` → `gameOverMessage$` émet `["", "Try again !!!"]` ; **aucune** requête HTTP. |
+
+### Groupe H — `onUnityAlreadyTaken` (listener `UnityAlreadyTaken`)
+
+| Id | Cas | Vérification |
+|----|-----|--------------|
+| H1 | **non branché au montage** (point ouvert) | après construction, `hubConnection.on` **n'a pas** été appelé avec `'UnityAlreadyTaken'` (le constructeur n'appelle pas `onUnityAlreadyTaken`). |
+| H2 | enregistrement explicite | appeler `service.onUnityAlreadyTaken()` → `hubConnection.on` appelé avec `'UnityAlreadyTaken'` et une fonction. |
+| H3 | journalisation (`logEnabled=true`) | après `onUnityAlreadyTaken()`, rejouer l'événement → `console.log('Unity déjà prise par un autre client')`. |
+| H4 | silencieux (`logEnabled=false`) | même scénario avec `logEnabled=false` → **aucun** `console.log` du message. |
 
 ## Code des tests
 
@@ -625,57 +686,155 @@ describe('ServerHubService', () => {
     req.flush({});
   });
 
-  // ===== Groupe F — sendLoadLevelCommand (appel direct) =====
+  // ===== Groupe F — onGameStart (listener 'GameStart') =====
 
-  // Endpoints de chargement de niveau (dépendent de l'authentification).
+  // Endpoints de chargement (déclenchés indirectement par la garde de onGameStart).
   const loadRandomLevelUrl = `${environment.apiURL}/api/Game/load-random-level`;
   const loadLevelUrl = `${environment.apiURL}/api/Game/load-level`;
 
-  // F1 : sans authToken → niveau aléatoire, sans header Authorization.
-  it('should POST to load-random-level with session/connection headers when anonymous', () => {
-    // sessionStorage déjà vidé par beforeEach → pas d'authToken.
-    service.sendLoadLevelCommand('sess-1', 'conn-1');
+  // F1 : un listener est bien enregistré sur l'événement 'GameStart'.
+  it('should register a listener for the GameStart event', () => {
+    expect(fakeConnection.on).toHaveBeenCalledWith(
+      'GameStart',
+      jasmine.any(Function),
+    );
+  });
+
+  // F2 : GameStart réinitialise les trois flux à leur valeur de départ.
+  it('should reset gameOver, gold and level-button messages on GameStart', () => {
+    // Salir l'état via des événements publics.
+    getRegisteredHandler('ScoreUpdated')(50);
+    getRegisteredHandler('ExitReached')(2);
+    httpMock.expectOne(saveLevelUrl).flush({}); // solder le save-level de ExitReached
+
+    // sessionId non posé (beforeEach) → garde fausse, aucun chargement.
+    getRegisteredHandler('GameStart')('sess-x');
+
+    let gold: number | undefined;
+    let gameOver: string | undefined;
+    let btn: string | undefined;
+    service.playerGold$.subscribe((v) => (gold = v));
+    service.gameOverMessage$.subscribe((v) => (gameOver = v));
+    service.levelBtnMessage$.subscribe((v) => (btn = v));
+
+    expect(gold).toBe(0);
+    expect(gameOver).toBe('');
+    expect(btn).toBe('Restart level');
+  });
+
+  // F3 : garde vraie (sessionId correspond + connectionId non null) → chargement.
+  it('should load the level when the session id matches and a connection id exists', () => {
+    sessionStorage.setItem('sessionId', 'sess-42');
+    // fakeConnection.connectionId === 'conn-test' (non null).
+
+    getRegisteredHandler('GameStart')('sess-42');
 
     const req = httpMock.expectOne(loadRandomLevelUrl);
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({});
-    expect(req.request.headers.get('X-Session-Id')).toBe('sess-1');
-    expect(req.request.headers.get('X-Connection-Id')).toBe('conn-1');
-    expect(req.request.headers.has('Authorization')).toBeFalse();
+    expect(req.request.headers.get('X-Session-Id')).toBe('sess-42');
+    expect(req.request.headers.get('X-Connection-Id')).toBe('conn-test');
     req.flush({});
   });
 
-  // F2 : avec authToken → niveau sauvegardé, header Authorization présent.
-  it('should POST to load-level with the Authorization header when authenticated', () => {
-    sessionStorage.setItem('authToken', 'tok-9');
+  // F4 : sessionId différent → garde fausse, aucun chargement.
+  it('should not load the level when the session id does not match', () => {
+    sessionStorage.setItem('sessionId', 'sess-A');
 
-    service.sendLoadLevelCommand('sess-2', 'conn-2');
+    getRegisteredHandler('GameStart')('sess-B');
 
-    const req = httpMock.expectOne(loadLevelUrl);
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({});
-    expect(req.request.headers.get('X-Session-Id')).toBe('sess-2');
-    expect(req.request.headers.get('X-Connection-Id')).toBe('conn-2');
-    expect(req.request.headers.get('Authorization')).toBe('Bearer tok-9');
-    req.flush({});
+    httpMock.expectNone(loadRandomLevelUrl);
+    httpMock.expectNone(loadLevelUrl);
+    expect().nothing(); // expectNone s'auto-vérifie : on déclare l'intention à Jasmine
   });
 
-  // F3 : une erreur HTTP fait rejeter la Promise (l'erreur n'est pas avalée).
-  it('should reject when the load request fails', async () => {
-    const promise = service.sendLoadLevelCommand('sess-3', 'conn-3');
+  // F5 : connectionId null → garde fausse, aucun chargement.
+  it('should not load the level when there is no connection id', () => {
+    sessionStorage.setItem('sessionId', 'sess-42');
+    fakeConnection.connectionId = null;
 
-    httpMock
-      .expectOne(loadRandomLevelUrl)
-      .flush('boom', { status: 500, statusText: 'Server Error' });
+    getRegisteredHandler('GameStart')('sess-42');
 
-    await expectAsync(promise).toBeRejected();
+    httpMock.expectNone(loadRandomLevelUrl);
+    httpMock.expectNone(loadLevelUrl);
+    expect().nothing(); // expectNone s'auto-vérifie : on déclare l'intention à Jasmine
   });
+
+  // ===== Groupe G — onThievesDied (listener 'ThievesDied') =====
+
+  // G1 : un listener est bien enregistré sur l'événement 'ThievesDied'.
+  it('should register a listener for the ThievesDied event', () => {
+    expect(fakeConnection.on).toHaveBeenCalledWith(
+      'ThievesDied',
+      jasmine.any(Function),
+    );
+  });
+
+  // G2 : rejouer ThievesDied émet le message d'échec sur gameOverMessage$.
+  it('should emit the retry message on ThievesDied', () => {
+    const messages: string[] = [];
+    service.gameOverMessage$.subscribe((v) => messages.push(v));
+
+    getRegisteredHandler('ThievesDied')();
+
+    // "" = valeur initiale, puis "Try again !!!" = message d'échec.
+    expect(messages).toEqual(['', 'Try again !!!']);
+  });
+
+  // ===== Groupe H — onUnityAlreadyTaken (listener 'UnityAlreadyTaken') =====
+
+  // H1 : le constructeur n'appelle PAS onUnityAlreadyTaken → aucun listener au
+  // montage (point ouvert : l'événement 'UnityAlreadyTaken' est actuellement ignoré).
+  it('should NOT register the UnityAlreadyTaken listener on construction', () => {
+    expect(fakeConnection.on).not.toHaveBeenCalledWith(
+      'UnityAlreadyTaken',
+      jasmine.any(Function),
+    );
+  });
+
+  // H2 : appeler onUnityAlreadyTaken() enregistre le listener.
+  it('should register the UnityAlreadyTaken listener when called explicitly', () => {
+    service.onUnityAlreadyTaken();
+
+    expect(fakeConnection.on).toHaveBeenCalledWith(
+      'UnityAlreadyTaken',
+      jasmine.any(Function),
+    );
+  });
+
+  // H3 : rejouer l'événement journalise le message (logEnabled=true).
+  it('should log when the Unity is already taken', () => {
+    const logSpy = spyOn(console, 'log');
+    service.onUnityAlreadyTaken();
+
+    getRegisteredHandler('UnityAlreadyTaken')();
+
+    expect(logSpy).toHaveBeenCalledWith('Unity déjà prise par un autre client');
+  });
+
+  // H4 : quand logEnabled=false, aucune journalisation du message.
+  it('should stay silent when logEnabled is false', () => {
+    const original = environment.logEnabled;
+    environment.logEnabled = false;
+
+    const logSpy = spyOn(console, 'log');
+    service.onUnityAlreadyTaken();
+
+    getRegisteredHandler('UnityAlreadyTaken')();
+
+    expect(logSpy).not.toHaveBeenCalledWith(
+      'Unity déjà prise par un autre client',
+    );
+
+    environment.logEnabled = original; // restauration
+  });
+
 });
 ```
 
-> **F-edge (`authToken === ''`)** : non couvert volontairement — le comportement
-> actuel (endpoint `load-level` sans header `Authorization`) semble être une
-> incohérence du service. À traiter séparément si confirmé comme bug.
+> **Note — commandes HTTP privées.** `sendLoadLevelCommand`, `sendSaveLevelCommand`
+> et `sendClaimUnity` sont **privées** : on ne les teste **pas** en appel direct.
+> `sendSaveLevelCommand` reste exercée **indirectement** par `onExitReached`
+> (E3/E4), qui émet le `POST .../api/Game/save-level`.
 
 ## Exécution
 
@@ -683,8 +842,8 @@ describe('ServerHubService', () => {
 npm test -- --include='**/server-hub.service.spec.ts' --watch=false
 ```
 
-Tous les cas A1, B1–B4, C1–C4, D1–D4, E1–E4 et F1–F3 doivent passer, sans casser
-les tests existants.
+Tous les cas A1, B1–B4, C1–C4, D1–D4, E1–E4, F1–F5, G1–G2 et H1–H4 doivent passer
+(28 specs), sans casser les tests existants.
 
 ## Notes / points ouverts
 
@@ -726,12 +885,40 @@ les tests existants.
   s'instancie même serveur injoignable. C3 verrouille ce comportement.
 - **Restaurer `environment.logEnabled`** : C4 modifie un objet **partagé** ; sans
   restauration, on pollue les tests suivants. D'où la sauvegarde/restauration.
-- **`connectionId`** : posé à `'conn-test'` sur la fausse connexion pour anticiper
-  les tests futurs (`onGameStart`, `sendClaimUnity`) qui le lisent ; inutile pour
-  `startConnection` seul, mais évite un `undefined` gênant plus tard.
-- **Prochaines étapes** : couvrir les listeners (`on...`) en déclenchant les
-  callbacks enregistrés sur `fakeConnection.on` (récupérables via
-  `on.calls.allArgs()`), puis les commandes HTTP (`sendLoadLevelCommand`,
-  `sendSaveLevelCommand`, `sendClaimUnity`) avec `HttpTestingController`, sur le
-  modèle de [`player-controls.service.test-plan.md`](./player-controls.service.test-plan.md).
+- **`connectionId`** : posé à `'conn-test'` sur la fausse connexion ; c'est lui que
+  `onGameStart` lit pour le header `X-Connection-Id` (F3) et pour sa garde de
+  chargement. F5 le repasse à `null` pour vérifier que la garde bloque alors le
+  chargement.
+- **Commandes HTTP privées** : `sendLoadLevelCommand`, `sendSaveLevelCommand` et
+  `sendClaimUnity` sont **privées** — elles ne sont **pas** testées en appel direct.
+  Leur comportement est couvert **au travers des méthodes publiques** qui les
+  déclenchent (`sendSaveLevelCommand` via `onExitReached`, groupe E ;
+  `sendLoadLevelCommand` via `onGameStart`, groupe F).
+- **onGameStart : garde de chargement** : la garde combine
+  `sessionStorage.getItem("sessionId")` et `hubConnection.connectionId`. On la pilote
+  via `sessionStorage.setItem("sessionId", …)` et `fakeConnection.connectionId`.
+  Garde vraie → une requête `load-random-level` à `flush` (F3) ; garde fausse →
+  `httpMock.expectNone(...)` (F4/F5). Sans `authToken`, l'endpoint est
+  `load-random-level`.
+- **`console.log("Game start")` non gardé** : contrairement aux autres journaux du
+  service (gardés par `environment.logEnabled`), celui de `onGameStart` est
+  **inconditionnel**. Incohérence mineure **signalée** — non verrouillée par un test.
+- **onThievesDied (G)** : listener enregistré par le constructeur ; seul effet
+  observable = `gameOverMessage$.next("Try again !!!")`. On vérifie la séquence
+  `["", "Try again !!!"]` (BehaviorSubject initial `""`). Aucun effet HTTP.
+- **onUnityAlreadyTaken NON branché (H1)** : le constructeur appelle
+  `startConnection`, `onScoreUpdated`, `onExitReached`, `onGameStart` et
+  `onThievesDied` — **mais pas** `onUnityAlreadyTaken`. Son listener n'est donc
+  jamais posé au montage et l'événement `'UnityAlreadyTaken'` est **ignoré**.
+  Probable oubli de câblage : H1 le **verrouille** (aucun listener au montage) et le
+  **signale**. À trancher séparément — si on corrige le service (ajouter
+  `this.onUnityAlreadyTaken()` au constructeur), H1 devra devenir « listener
+  enregistré au montage » (comme D/E/F/G).
+- **Callback purement journalisant (H3/H4)** : `onUnityAlreadyTaken` n'a aucun effet
+  observable (flux/HTTP) ; on teste via un espion `console.log` et on pilote la
+  branche silencieuse en basculant `environment.logEnabled` (restauré en fin de
+  test, comme C4).
+- **Prochaines étapes** : reporter les groupes **G** et **H** de ce plan dans le
+  `.spec.ts` (après validation). Tous les listeners publics du service sont alors
+  couverts.
 ```
