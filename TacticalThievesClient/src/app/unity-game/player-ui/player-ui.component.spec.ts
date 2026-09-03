@@ -9,13 +9,13 @@ describe('PlayerUiComponent', () => {
   let component: PlayerUiComponent;
   let fixture: ComponentFixture<PlayerUiComponent>;
 
-  // Mock ServerHubService : le composant s'abonne à ces observables dans ngOnInit.
-  // On les pilote via .next(...) pour simuler les messages du serveur.
+  // Mock ServerHubService: the component subscribes to these observables in ngOnInit.
+  // We drive them via .next(...) to simulate the server messages.
   let mockServerHubService: jasmine.SpyObj<ServerHubService>;
   let goldSubject: BehaviorSubject<number>;
   let gameOverSubject: BehaviorSubject<string>;
 
-  // Utilitaires DOM.
+  // DOM helpers.
   function goldValueEl() {
     return fixture.debugElement.query(By.css('#player-ui-gold-value'));
   }
@@ -41,29 +41,29 @@ describe('PlayerUiComponent', () => {
 
     fixture = TestBed.createComponent(PlayerUiComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // déclenche ngOnInit
+    fixture.detectChanges(); // triggers ngOnInit
   });
 
   // ===================================================================
-  // Groupe A — Création
+  // Group A — Creation
   // ===================================================================
 
-  // A1 : le composant s'instancie correctement.
+  // A1: the component instantiates correctly.
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   // ===================================================================
-  // Groupe B — ngOnInit & playerGold
+  // Group B — ngOnInit & playerGold
   // ===================================================================
 
-  // B1 : après ngOnInit, playerGold est défini (valeur initiale 0 de l'observable).
+  // B1: after ngOnInit, playerGold is defined (initial value 0 from the observable).
   it('should have a defined playerGold (0) after ngOnInit', () => {
     expect(component.playerGold).toBeDefined();
     expect(component.playerGold).toBe(0);
   });
 
-  // B2 : une nouvelle émission du service met à jour playerGold.
+  // B2: a new emission from the service updates playerGold.
   it('should update playerGold when the service emits a new value', () => {
     goldSubject.next(150);
     fixture.detectChanges();
@@ -71,16 +71,16 @@ describe('PlayerUiComponent', () => {
   });
 
   // ===================================================================
-  // Groupe C — ngOnInit & gameOverMessage
+  // Group C — ngOnInit & gameOverMessage
   // ===================================================================
 
-  // C1 : après ngOnInit, gameOverMessage est défini et vide (pas de fin de partie).
+  // C1: after ngOnInit, gameOverMessage is defined and empty (no game over).
   it('should have a defined empty gameOverMessage after ngOnInit', () => {
     expect(component.gameOverMessage).toBeDefined();
     expect(component.gameOverMessage).toBe('');
   });
 
-  // C2 : une émission du service met à jour gameOverMessage.
+  // C2: an emission from the service updates gameOverMessage.
   it('should update gameOverMessage when the service emits a value', () => {
     gameOverSubject.next('You win !!!');
     fixture.detectChanges();
@@ -88,10 +88,10 @@ describe('PlayerUiComponent', () => {
   });
 
   // ===================================================================
-  // Groupe D — Structure HTML
+  // Group D — HTML structure
   // ===================================================================
 
-  // D1 : l'espace d'affichage de l'or est présent et reflète la valeur.
+  // D1: the gold display area is present and reflects the value.
   it('should display the player gold value in the DOM', () => {
     expect(goldValueEl()).toBeTruthy();
     expect(goldValueEl().nativeElement.textContent).toContain('0');
@@ -101,12 +101,12 @@ describe('PlayerUiComponent', () => {
     expect(goldValueEl().nativeElement.textContent).toContain('150');
   });
 
-  // D2 : le message de game over est masqué tant qu'il est vide (*ngIf).
+  // D2: the game over message is hidden while empty (*ngIf).
   it('should not render the game over message when it is empty', () => {
     expect(gameOverEl()).toBeNull();
   });
 
-  // D3 : le message de game over s'affiche quand il est non vide.
+  // D3: the game over message shows when it is non-empty.
   it('should render the game over message when it is not empty', () => {
     gameOverSubject.next('You win !!!');
     fixture.detectChanges();
@@ -115,10 +115,10 @@ describe('PlayerUiComponent', () => {
   });
 
   // ===================================================================
-  // Groupe E — Style conditionnel victoire / défaite
+  // Group E — Conditional victory / defeat styling
   // ===================================================================
 
-  // E1 : un message de victoire (contient "win") applique la classe "victory".
+  // E1: a winning message (contains "win") applies the "victory" class.
   it('should apply the "victory" class on a winning message', () => {
     gameOverSubject.next('You win !!!');
     fixture.detectChanges();
@@ -126,7 +126,7 @@ describe('PlayerUiComponent', () => {
     expect(gameOverEl().nativeElement.classList).not.toContain('defeat');
   });
 
-  // E2 : un message de défaite applique la classe "defeat".
+  // E2: a losing message applies the "defeat" class.
   it('should apply the "defeat" class on a losing message', () => {
     gameOverSubject.next('Try again !!!');
     fixture.detectChanges();
@@ -134,7 +134,7 @@ describe('PlayerUiComponent', () => {
     expect(gameOverEl().nativeElement.classList).not.toContain('victory');
   });
 
-  // E3 : la détection de victoire est insensible à la casse (toLowerCase).
+  // E3: victory detection is case-insensitive (toLowerCase).
   it('should detect victory regardless of case', () => {
     gameOverSubject.next('VICTORY');
     fixture.detectChanges();
@@ -142,10 +142,10 @@ describe('PlayerUiComponent', () => {
   });
 
   // ===================================================================
-  // Groupe F — Complément
+  // Group F — Extra
   // ===================================================================
 
-  // F1 : repasser à un message vide masque de nouveau le bloc (reset de partie).
+  // F1: going back to an empty message hides the block again (game reset).
   it('should hide the game over message again when reset to empty', () => {
     gameOverSubject.next('You win !!!');
     fixture.detectChanges();

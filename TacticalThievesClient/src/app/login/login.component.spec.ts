@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-// Fournisseurs HttpClient pour la version "test" : le composant injecte HttpClient,
-// il faut donc que l'injection de dépendances puisse le résoudre (aucun vrai appel réseau).
+// HttpClient providers for the "test" version: the component injects HttpClient,
+// so dependency injection must be able to resolve it (no real network call).
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { LoginComponent } from './login.component';
@@ -10,33 +10,33 @@ import { AuthService } from '../../services/auth-service/auth.service';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  // Faux AuthService : on ne garde que les deux méthodes utilisées par le composant.
+  // Fake AuthService: we only keep the two methods used by the component.
   let authServiceMock: {
     login: jasmine.Spy;
     getErrorDetailForUser: jasmine.Spy;
   };
-  // Faux Router : on surveille juste navigate.
+  // Fake Router: we only watch navigate.
   let routerMock: { navigate: jasmine.Spy };
 
-  // Utilitaires DOM pour éviter la répétition.
+  // DOM helpers to avoid repetition.
   function getInput(): HTMLInputElement {
     return fixture.nativeElement.querySelector('input');
   }
   function getButton(): HTMLButtonElement {
     return fixture.nativeElement.querySelector('button');
   }
-  // Simule une saisie utilisateur dans le champ (met à jour ngModel).
+  // Simulates user input in the field (updates ngModel).
   function typeUsername(value: string): void {
     const input = getInput();
     input.value = value;
-    input.dispatchEvent(new Event('input')); // ngModel réagit à l'événement 'input'
+    input.dispatchEvent(new Event('input')); // ngModel reacts to the 'input' event
     fixture.detectChanges();
   }
 
   beforeEach(async () => {
     authServiceMock = {
       login: jasmine.createSpy('login'),
-      // Par défaut, le formatage d'erreur renvoie 'boom' (valeur de test arbitraire).
+      // By default, the error formatting returns 'boom' (arbitrary test value).
       getErrorDetailForUser: jasmine
         .createSpy('getErrorDetailForUser')
         .and.returnValue('boom'),
@@ -44,7 +44,7 @@ describe('LoginComponent', () => {
     routerMock = { navigate: jasmine.createSpy('navigate') };
 
     await TestBed.configureTestingModule({
-      imports: [LoginComponent], // standalone → apporte aussi FormsModule (pour ngModel)
+      imports: [LoginComponent], // standalone → also brings FormsModule (for ngModel)
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -59,56 +59,56 @@ describe('LoginComponent', () => {
   });
 
   // ===================================================================
-  // Groupe A — Composant & liaison du username
+  // Group A — Component & username binding
   // ===================================================================
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // A2 : saisir dans le champ met bien à jour la propriété username (two-way binding).
+  // A2: typing in the field updates the username property (two-way binding).
   it('should bind the input value to the username property', () => {
     typeUsername('Alice');
     expect(component.username).toBe('Alice');
   });
 
   // ===================================================================
-  // Groupe B — Clic sur le bouton (avec / sans username)
+  // Group B — Button click (with / without username)
   // ===================================================================
 
-  // B1 : clic sans username → message d'invite, et on ne tente PAS de se connecter.
+  // B1: click with no username → prompt message, and we do NOT attempt to log in.
   it('should show "Please enter a username" when clicking with empty username', () => {
-    // username est vide (état initial), on clique directement.
+    // username is empty (initial state), we click directly.
     getButton().click();
     fixture.detectChanges();
 
     expect(component.message).toBe('Please enter a username');
-    // On n'a pas appelé le service de connexion puisque le username manque.
+    // We did not call the login service since the username is missing.
     expect(authServiceMock.login).not.toHaveBeenCalled();
-    // Le message est aussi réellement affiché à l'écran.
+    // The message is also actually displayed on screen.
     expect(fixture.nativeElement.querySelector('p').textContent).toContain(
       'Please enter a username',
     );
   });
 
-  // B2 : clic avec un username → authService.login est appelé avec ce username.
+  // B2: click with a username → authService.login is called with that username.
   it('should call authService.login with the username when clicking with a username', async () => {
-    authServiceMock.login.and.resolveTo(true); // login renvoie une Promise<boolean>
+    authServiceMock.login.and.resolveTo(true); // login returns a Promise<boolean>
     typeUsername('Alice');
 
     getButton().click();
-    // onLogin() est asynchrone : on attend que les promesses en attente se règlent.
+    // onLogin() is asynchronous: we wait for pending promises to settle.
     await fixture.whenStable();
 
     expect(authServiceMock.login).toHaveBeenCalledWith('Alice');
   });
 
   // ===================================================================
-  // Groupe C — Valeurs de `message` selon l'issue de login
-  // (on pilote l'async en appelant directement onLogin())
+  // Group C — `message` values depending on the login outcome
+  // (we drive the async by calling onLogin() directly)
   // ===================================================================
 
-  // C1 : login réussit → redirection vers /home, message resté à 'Starting login...'.
+  // C1: login succeeds → redirect to /home, message stays at 'Starting login...'.
   it('should navigate to /home on successful login', async () => {
     component.username = 'Alice';
     authServiceMock.login.and.resolveTo(true);
@@ -119,7 +119,7 @@ describe('LoginComponent', () => {
     expect(component.message).toBe('Starting login...');
   });
 
-  // C2 : login échoue (false) → message d'erreur "token manquant", pas de navigation.
+  // C2: login fails (false) → "missing token" error message, no navigation.
   it('should set message to "Error: Missing token" when login returns false', async () => {
     component.username = 'Alice';
     authServiceMock.login.and.resolveTo(false);
@@ -130,7 +130,7 @@ describe('LoginComponent', () => {
     expect(routerMock.navigate).not.toHaveBeenCalled();
   });
 
-  // C3 : login lève une exception → message "Login failed" + détail formaté, pas de navigation.
+  // C3: login throws → "Login failed" message + formatted detail, no navigation.
   it('should set a "Login failed" message when login throws', async () => {
     component.username = 'Alice';
     authServiceMock.login.and.rejectWith(new Error('network down'));
@@ -138,7 +138,7 @@ describe('LoginComponent', () => {
     await component.onLogin();
 
     expect(component.message).toContain('Login failed');
-    expect(component.message).toContain('boom'); // ce que renvoie getErrorDetailForUser (mock)
+    expect(component.message).toContain('boom'); // what getErrorDetailForUser (mock) returns
     expect(authServiceMock.getErrorDetailForUser).toHaveBeenCalled();
     expect(routerMock.navigate).not.toHaveBeenCalled();
   });

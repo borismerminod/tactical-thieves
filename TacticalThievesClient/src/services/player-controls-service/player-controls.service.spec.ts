@@ -12,13 +12,13 @@ describe('PlayerControlsService', () => {
   let service: PlayerControlsService;
   let httpMock: HttpTestingController;
 
-  // URLs des endpoints du jeu.
+  // URLs of the game endpoints.
   const moveUrl    = `${environment.apiURL}/api/Game/move`;
   const endTurnUrl = `${environment.apiURL}/api/Game/end-turn`;
   const restartUrl = `${environment.apiURL}/api/Game/restart`;
 
   beforeEach(() => {
-    sessionStorage.clear(); // état de session déterministe avant chaque test
+    sessionStorage.clear(); // deterministic session state before each test
 
     TestBed.configureTestingModule({
       providers: [
@@ -32,20 +32,20 @@ describe('PlayerControlsService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // aucune requête en attente non traitée
+    httpMock.verify(); // no pending unhandled request
     sessionStorage.clear();
   });
 
-  // ===== Groupe A — Création =====
+  // ===== Group A — Creation =====
 
-  // A1 : le service s'instancie correctement.
+  // A1: the service instantiates correctly.
   it('should create', () => {
     expect(service).toBeTruthy();
   });
 
-  // ===== Groupe B — sendMove (header de session) =====
+  // ===== Group B — sendMove (session header) =====
 
-  // B1 : sendMove poste vers /api/Game/move avec un corps vide.
+  // B1: sendMove posts to /api/Game/move with an empty body.
   it('should POST an empty body to the move endpoint', () => {
     service.sendMove().subscribe();
 
@@ -55,7 +55,7 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // B2 : le sessionId présent dans sessionStorage est envoyé dans X-Session-Id.
+  // B2: the sessionId present in sessionStorage is sent in X-Session-Id.
   it('should send the stored sessionId in the X-Session-Id header on move', () => {
     sessionStorage.setItem('sessionId', 'sess-move');
 
@@ -66,9 +66,9 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // B3 : sans sessionId, X-Session-Id vaut '' (chaîne vide, jamais "null").
+  // B3: with no sessionId, X-Session-Id equals '' (empty string, never "null").
   it('should send an empty X-Session-Id header on move when no sessionId is stored', () => {
-    // sessionStorage déjà vidé par beforeEach.
+    // sessionStorage already cleared by beforeEach.
     service.sendMove().subscribe();
 
     const req = httpMock.expectOne(moveUrl);
@@ -76,7 +76,7 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // B4 : l'observable retourné transmet la réponse du serveur à l'abonné.
+  // B4: the returned observable relays the server response to the subscriber.
   it('should relay the server response to the subscriber', () => {
     const serverResponse = { reaction: 'moved' };
     let received: unknown;
@@ -87,9 +87,9 @@ describe('PlayerControlsService', () => {
     expect(received).toEqual(serverResponse);
   });
 
-  // ===== Groupe D — sendEndTurn (header de session) =====
+  // ===== Group D — sendEndTurn (session header) =====
 
-  // D1 : sendEndTurn poste vers /api/Game/end-turn avec un corps vide.
+  // D1: sendEndTurn posts to /api/Game/end-turn with an empty body.
   it('should POST an empty body to the end-turn endpoint', () => {
     service.sendEndTurn().subscribe();
 
@@ -99,7 +99,7 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // D2 : le sessionId présent dans sessionStorage est envoyé dans X-Session-Id.
+  // D2: the sessionId present in sessionStorage is sent in X-Session-Id.
   it('should send the stored sessionId in the X-Session-Id header on end-turn', () => {
     sessionStorage.setItem('sessionId', 'sess-123');
 
@@ -110,9 +110,9 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // D3 : sans sessionId, X-Session-Id vaut '' (chaîne vide, jamais "null").
+  // D3: with no sessionId, X-Session-Id equals '' (empty string, never "null").
   it('should send an empty X-Session-Id header on end-turn when no sessionId is stored', () => {
-    // sessionStorage déjà vidé par beforeEach.
+    // sessionStorage already cleared by beforeEach.
     service.sendEndTurn().subscribe();
 
     const req = httpMock.expectOne(endTurnUrl);
@@ -120,9 +120,9 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // ===== Groupe E — sendRestartLevel (header de session) =====
+  // ===== Group E — sendRestartLevel (session header) =====
 
-  // E1 : sendRestartLevel poste vers /api/Game/restart avec un corps vide.
+  // E1: sendRestartLevel posts to /api/Game/restart with an empty body.
   it('should POST an empty body to the restart endpoint', () => {
     service.sendRestartLevel().subscribe();
 
@@ -132,7 +132,7 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // E2 : le sessionId présent est envoyé dans X-Session-Id.
+  // E2: the present sessionId is sent in X-Session-Id.
   it('should send the stored sessionId in the X-Session-Id header on restart', () => {
     sessionStorage.setItem('sessionId', 'sess-999');
 
@@ -143,7 +143,7 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // E3 : sans sessionId, X-Session-Id vaut ''.
+  // E3: with no sessionId, X-Session-Id equals ''.
   it('should send an empty X-Session-Id header on restart when no sessionId is stored', () => {
     service.sendRestartLevel().subscribe();
 
@@ -152,9 +152,9 @@ describe('PlayerControlsService', () => {
     req.flush({});
   });
 
-  // ===== Groupe F — Propagation des erreurs =====
+  // ===== Group F — Error propagation =====
 
-  // F1 : une erreur HTTP est propagée au callback error de l'abonné.
+  // F1: an HTTP error is propagated to the subscriber's error callback.
   it('should propagate HTTP errors to the subscriber', () => {
     let errored = false;
 

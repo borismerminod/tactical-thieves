@@ -9,16 +9,16 @@ describe('PlayerControlsComponent', () => {
   let component: PlayerControlsComponent;
   let fixture: ComponentFixture<PlayerControlsComponent>;
 
-  // Faux PlayerControlsService : chaque méthode renvoie un Observable "neutre"
-  // (of({})) pour que le .subscribe(...) du composant s'exécute sans appel HTTP.
+  // Fake PlayerControlsService: each method returns a "neutral" Observable
+  // (of({})) so the component's .subscribe(...) runs without an HTTP call.
   let playerControlsServiceMock: jasmine.SpyObj<PlayerControlsService>;
 
-  // Faux ServerHubService : on n'expose que l'observable utilisé par ngOnInit.
-  // On le pilote via .next(...) pour simuler les messages du serveur.
+  // Fake ServerHubService: we only expose the observable used by ngOnInit.
+  // We drive it via .next(...) to simulate the server messages.
   let mockServerHubService: jasmine.SpyObj<ServerHubService>;
   let levelBtnSubject: BehaviorSubject<string>;
 
-  // Utilitaires DOM.
+  // DOM helpers.
   function getButton(id: string): HTMLButtonElement {
     return fixture.nativeElement.querySelector(id);
   }
@@ -28,13 +28,13 @@ describe('PlayerControlsComponent', () => {
       'PlayerControlsService',
       ['sendMove', 'sendStealth', 'sendEndTurn', 'sendRestartLevel'],
     );
-    // Par défaut, toutes les commandes "réussissent" (Observable qui émet puis complète).
+    // By default, every command "succeeds" (Observable that emits then completes).
     playerControlsServiceMock.sendMove.and.returnValue(of({}));
     playerControlsServiceMock.sendStealth.and.returnValue(of({}));
     playerControlsServiceMock.sendEndTurn.and.returnValue(of({}));
     playerControlsServiceMock.sendRestartLevel.and.returnValue(of({}));
 
-    // Valeur initiale identique au vrai service.
+    // Initial value identical to the real service.
     levelBtnSubject = new BehaviorSubject<string>('Restart level');
     mockServerHubService = jasmine.createSpyObj('ServerHubService', [], {
       levelBtnMessage$: levelBtnSubject.asObservable(),
@@ -50,31 +50,31 @@ describe('PlayerControlsComponent', () => {
 
     fixture = TestBed.createComponent(PlayerControlsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // déclenche ngOnInit
+    fixture.detectChanges(); // triggers ngOnInit
   });
 
-  // ===== Groupe A — Création =====
+  // ===== Group A — Creation =====
 
-  // A1 : le composant s'instancie correctement.
+  // A1: the component instantiates correctly.
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // ===== Groupe B — restartLabel : initialisation & modification à la victoire =====
+  // ===== Group B — restartLabel: initialization & change on victory =====
 
-  // B1 : après construction + ngOnInit, restartLabel vaut "Restart level".
+  // B1: after construction + ngOnInit, restartLabel equals "Restart level".
   it('should initialize restartLabel to "Restart level"', () => {
     expect(component.restartLabel).toBe('Restart level');
   });
 
-  // B2 : à la victoire, le service émet "Next level" → restartLabel est mis à jour.
+  // B2: on victory, the service emits "Next level" → restartLabel is updated.
   it('should update restartLabel to "Next level" when the player wins', () => {
-    levelBtnSubject.next('Next level'); // émis par onExitReached (ExitReached)
+    levelBtnSubject.next('Next level'); // emitted by onExitReached (ExitReached)
     fixture.detectChanges();
     expect(component.restartLabel).toBe('Next level');
   });
 
-  // B3 : le bouton restart affiche restartLabel et suit ses changements.
+  // B3: the restart button displays restartLabel and follows its changes.
   it('should display restartLabel on the restart button', () => {
     expect(getButton('#restart-btn').textContent).toContain('Restart level');
 
@@ -83,38 +83,38 @@ describe('PlayerControlsComponent', () => {
     expect(getButton('#restart-btn').textContent).toContain('Next level');
   });
 
-  // B4 : un nouveau GameStart remet le libellé à "Restart level".
+  // B4: a new GameStart resets the label to "Restart level".
   it('should reset restartLabel to "Restart level" on a new game start', () => {
     levelBtnSubject.next('Next level');
     fixture.detectChanges();
     expect(component.restartLabel).toBe('Next level');
 
-    levelBtnSubject.next('Restart level'); // émis par onGameStart (GameStart)
+    levelBtnSubject.next('Restart level'); // emitted by onGameStart (GameStart)
     fixture.detectChanges();
     expect(component.restartLabel).toBe('Restart level');
   });
 
-  // ===== Groupe C — Boutons move / endTurn / restart =====
+  // ===== Group C — move / endTurn / restart buttons =====
 
-  // C1 : cliquer sur #move-btn déclenche sendMove.
+  // C1: clicking #move-btn triggers sendMove.
   it('should call sendMove when the move button is clicked', () => {
     getButton('#move-btn').click();
     expect(playerControlsServiceMock.sendMove).toHaveBeenCalledTimes(1);
   });
 
-  // C2 : cliquer sur #end-btn déclenche sendEndTurn.
+  // C2: clicking #end-btn triggers sendEndTurn.
   it('should call sendEndTurn when the end turn button is clicked', () => {
     getButton('#end-btn').click();
     expect(playerControlsServiceMock.sendEndTurn).toHaveBeenCalledTimes(1);
   });
 
-  // C3 : cliquer sur #restart-btn déclenche sendRestartLevel.
+  // C3: clicking #restart-btn triggers sendRestartLevel.
   it('should call sendRestartLevel when the restart button is clicked', () => {
     getButton('#restart-btn').click();
     expect(playerControlsServiceMock.sendRestartLevel).toHaveBeenCalledTimes(1);
   });
 
-  // C4 : un clic sur move n'appelle QUE sendMove (pas les autres commandes).
+  // C4: a click on move calls ONLY sendMove (not the other commands).
   it('should only call sendMove when the move button is clicked', () => {
     getButton('#move-btn').click();
     expect(playerControlsServiceMock.sendMove).toHaveBeenCalledTimes(1);
@@ -123,17 +123,17 @@ describe('PlayerControlsComponent', () => {
     expect(playerControlsServiceMock.sendStealth).not.toHaveBeenCalled();
   });
 
-  // ===== Groupe D — Compléments (robustesse) =====
+  // ===== Group D — Extras (robustness) =====
 
-  // D1 : en cas de succès, le callback next s'exécute (console.log), sans exception.
+  // D1: on success, the next callback runs (console.log), without an exception.
   it('should log a success when the command succeeds', () => {
     const logSpy = spyOn(console, 'log');
     expect(() => component.move()).not.toThrow();
     expect(logSpy).toHaveBeenCalled();
   });
 
-  // D2 : en cas d'erreur de la commande, le callback error s'exécute (console.error),
-  //      sans exception propagée.
+  // D2: on a command error, the error callback runs (console.error),
+  //     without a propagated exception.
   it('should log an error when the command fails', () => {
     const errorSpy = spyOn(console, 'error');
     playerControlsServiceMock.sendEndTurn.and.returnValue(

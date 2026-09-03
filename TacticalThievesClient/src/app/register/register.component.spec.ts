@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-// Fournisseurs HttpClient version "test" : le composant injecte HttpClient, la DI doit
-// pouvoir le résoudre (aucun vrai appel réseau une fois AuthService mocké).
+// HttpClient providers for the "test" version: the component injects HttpClient, so DI
+// must be able to resolve it (no real network call once AuthService is mocked).
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { RegisterComponent } from './register.component';
@@ -10,26 +10,26 @@ import { AuthService } from '../../services/auth-service/auth.service';
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-  // Faux AuthService : uniquement les deux méthodes utilisées par le composant.
+  // Fake AuthService: only the two methods used by the component.
   let authServiceMock: {
     register: jasmine.Spy;
     getErrorDetailForUser: jasmine.Spy;
   };
-  // Faux Router : on surveille navigate.
+  // Fake Router: we watch navigate.
   let routerMock: { navigate: jasmine.Spy };
 
-  // Utilitaires DOM (mêmes que dans login.component.spec.ts).
+  // DOM helpers (same as in login.component.spec.ts).
   function getInput(): HTMLInputElement {
     return fixture.nativeElement.querySelector('input');
   }
   function getButton(): HTMLButtonElement {
     return fixture.nativeElement.querySelector('button');
   }
-  // Simule une saisie utilisateur dans le champ (met à jour ngModel).
+  // Simulates user input in the field (updates ngModel).
   function typeUsername(value: string): void {
     const input = getInput();
     input.value = value;
-    input.dispatchEvent(new Event('input')); // ngModel réagit à l'événement 'input'
+    input.dispatchEvent(new Event('input')); // ngModel reacts to the 'input' event
     fixture.detectChanges();
   }
 
@@ -43,7 +43,7 @@ describe('RegisterComponent', () => {
     routerMock = { navigate: jasmine.createSpy('navigate') };
 
     await TestBed.configureTestingModule({
-      imports: [RegisterComponent], // standalone → apporte aussi FormsModule (pour ngModel)
+      imports: [RegisterComponent], // standalone → also brings FormsModule (for ngModel)
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -58,24 +58,24 @@ describe('RegisterComponent', () => {
   });
 
   // ===================================================================
-  // Groupe A — Composant & liaison du username
+  // Group A — Component & username binding
   // ===================================================================
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // A2 : saisir dans le champ met bien à jour la propriété username (two-way binding).
+  // A2: typing in the field updates the username property (two-way binding).
   it('should bind the input value to the username property', () => {
     typeUsername('Alice');
     expect(component.username).toBe('Alice');
   });
 
   // ===================================================================
-  // Groupe B — Clic sur le bouton (validation de longueur : < 3 caractères)
+  // Group B — Button click (length validation: < 3 characters)
   // ===================================================================
 
-  // B1 : username vide → message d'invite, et on ne tente PAS de s'inscrire.
+  // B1: empty username → prompt message, and we do NOT attempt to register.
   it('should reject an empty username', () => {
     getButton().click();
     fixture.detectChanges();
@@ -84,7 +84,7 @@ describe('RegisterComponent', () => {
     expect(authServiceMock.register).not.toHaveBeenCalled();
   });
 
-  // B2 : username trop court ('ab' → 2 caractères) → même rejet (cas limite < 3).
+  // B2: username too short ('ab' → 2 characters) → same rejection (edge case < 3).
   it('should reject a username shorter than 3 characters', () => {
     typeUsername('ab');
     getButton().click();
@@ -94,24 +94,24 @@ describe('RegisterComponent', () => {
     expect(authServiceMock.register).not.toHaveBeenCalled();
   });
 
-  // B3 : username valide → authService.register est appelé avec ce username.
+  // B3: valid username → authService.register is called with that username.
   it('should call authService.register with a valid username', async () => {
-    authServiceMock.register.and.resolveTo(true); // register renvoie une Promise<boolean>
+    authServiceMock.register.and.resolveTo(true); // register returns a Promise<boolean>
     typeUsername('Alice');
 
     getButton().click();
-    // onRegister() est asynchrone : on attend le règlement des promesses en attente.
+    // onRegister() is asynchronous: we wait for pending promises to settle.
     await fixture.whenStable();
 
     expect(authServiceMock.register).toHaveBeenCalledWith('Alice');
   });
 
   // ===================================================================
-  // Groupe C — Valeurs de `message` selon l'issue de register
-  // (on pilote l'async en appelant directement onRegister())
+  // Group C — `message` values depending on the register outcome
+  // (we drive the async by calling onRegister() directly)
   // ===================================================================
 
-  // C1 : register réussit → message de succès + redirection vers /login.
+  // C1: register succeeds → success message + redirect to /login.
   it('should navigate to /login and set success message on success', async () => {
     component.username = 'Alice';
     authServiceMock.register.and.resolveTo(true);
@@ -122,7 +122,7 @@ describe('RegisterComponent', () => {
     expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
   });
 
-  // C2 : register échoue (false) → message "Registration failed", pas de navigation.
+  // C2: register fails (false) → "Registration failed" message, no navigation.
   it('should set message to "Registration failed" when register returns false', async () => {
     component.username = 'Alice';
     authServiceMock.register.and.resolveTo(false);
@@ -133,7 +133,7 @@ describe('RegisterComponent', () => {
     expect(routerMock.navigate).not.toHaveBeenCalled();
   });
 
-  // C3 : register lève une exception → message "Registration failed" + détail formaté.
+  // C3: register throws → "Registration failed" message + formatted detail.
   it('should set a "Registration failed" message when register throws', async () => {
     component.username = 'Alice';
     authServiceMock.register.and.rejectWith(new Error('network down'));
@@ -141,7 +141,7 @@ describe('RegisterComponent', () => {
     await component.onRegister();
 
     expect(component.message).toContain('Registration failed');
-    expect(component.message).toContain('boom'); // ce que renvoie getErrorDetailForUser (mock)
+    expect(component.message).toContain('boom'); // what getErrorDetailForUser (mock) returns
     expect(authServiceMock.getErrorDetailForUser).toHaveBeenCalled();
     expect(routerMock.navigate).not.toHaveBeenCalled();
   });

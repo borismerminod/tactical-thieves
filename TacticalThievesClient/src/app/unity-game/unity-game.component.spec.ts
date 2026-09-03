@@ -11,14 +11,14 @@ describe('UnityGameComponent', () => {
   let component: UnityGameComponent;
   let fixture: ComponentFixture<UnityGameComponent>;
 
-  // Mock ServerHubService : les enfants (player-ui / player-controls) s'abonnent
-  // à ces observables dans leur ngOnInit → on fournit des BehaviorSubject.
+  // Mock ServerHubService: the children (player-ui / player-controls) subscribe
+  // to these observables in their ngOnInit → we provide BehaviorSubjects.
   let mockServerHubService: jasmine.SpyObj<ServerHubService>;
-  // Mock PlayerControlsService : injecté par player-controls, non sollicité ici.
+  // Mock PlayerControlsService: injected by player-controls, not exercised here.
   let mockPlayerControlsService: jasmine.SpyObj<PlayerControlsService>;
 
   beforeEach(async () => {
-    sessionStorage.clear(); // éviter la pollution entre tests
+    sessionStorage.clear(); // avoid pollution between tests
 
     mockServerHubService = jasmine.createSpyObj('ServerHubService', [], {
       levelBtnMessage$: new BehaviorSubject<string>('Restart level').asObservable(),
@@ -30,7 +30,7 @@ describe('UnityGameComponent', () => {
     ]);
 
     await TestBed.configureTestingModule({
-      imports: [UnityGameComponent], // standalone → importe aussi les enfants
+      imports: [UnityGameComponent], // standalone → also imports the children
       providers: [
         { provide: ServerHubService, useValue: mockServerHubService },
         { provide: PlayerControlsService, useValue: mockPlayerControlsService },
@@ -39,52 +39,52 @@ describe('UnityGameComponent', () => {
 
     fixture = TestBed.createComponent(UnityGameComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // déclenche ngOnInit
+    fixture.detectChanges(); // triggers ngOnInit
   });
 
   afterEach(() => sessionStorage.clear());
 
-  // Utilitaire : lit l'attribut src (string sanitisée) de l'iframe.
+  // Helper: reads the iframe's src attribute (sanitized string).
   function getIframeSrc(): string {
     return fixture.debugElement.query(By.css('iframe')).nativeElement.getAttribute('src');
   }
 
   // ===================================================================
-  // Groupe A — Création & état initial
+  // Group A — Creation & initial state
   // ===================================================================
 
-  // A1 : le composant s'instancie correctement.
+  // A1: the component instantiates correctly.
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // A2 : le constructeur initialise unityUrl (SafeResourceUrl).
+  // A2: the constructor initializes unityUrl (SafeResourceUrl).
   it('should initialize a defined unityUrl', () => {
     expect(component.unityUrl).toBeDefined();
   });
 
   // ===================================================================
-  // Groupe B — ngOnInit & sessionId (cœur de la demande)
+  // Group B — ngOnInit & sessionId (core of the requirement)
   // ===================================================================
 
-  // B1 : après ngOnInit, un sessionId est présent en sessionStorage.
+  // B1: after ngOnInit, a sessionId is present in sessionStorage.
   it('should store a sessionId in sessionStorage after ngOnInit', () => {
     const stored = sessionStorage.getItem('sessionId');
     expect(stored).toBeTruthy();
   });
 
-  // B2 : le sessionId stocké est exactement celui renvoyé par crypto.randomUUID.
+  // B2: the stored sessionId is exactly the one returned by crypto.randomUUID.
   it('should store the exact generated sessionId', () => {
     const fakeId = '11111111-1111-1111-1111-111111111111';
     spyOn(crypto, 'randomUUID').and.returnValue(fakeId);
 
     const localFixture = TestBed.createComponent(UnityGameComponent);
-    localFixture.detectChanges(); // ngOnInit avec le crypto espionné
+    localFixture.detectChanges(); // ngOnInit with crypto spied on
 
     expect(sessionStorage.getItem('sessionId')).toBe(fakeId);
   });
 
-  // B3 : l'URL de l'iframe est construite à partir de apiURL + sessionId.
+  // B3: the iframe URL is built from apiURL + sessionId.
   it('should build the iframe URL with apiURL and sessionId', () => {
     const sessionId = sessionStorage.getItem('sessionId')!;
     const src = getIframeSrc();
@@ -94,29 +94,29 @@ describe('UnityGameComponent', () => {
   });
 
   // ===================================================================
-  // Groupe C — Structure HTML
+  // Group C — HTML structure
   // ===================================================================
 
-  // C1 : le composant d'UI est rendu.
+  // C1: the UI component is rendered.
   it('should render the player UI component', () => {
     expect(fixture.debugElement.query(By.css('app-player-ui'))).toBeTruthy();
   });
 
-  // C2 : l'iframe du jeu Unity est rendue.
+  // C2: the Unity game iframe is rendered.
   it('should render the Unity game iframe', () => {
     expect(fixture.debugElement.query(By.css('iframe'))).toBeTruthy();
   });
 
-  // C3 : le composant des contrôles est rendu.
+  // C3: the controls component is rendered.
   it('should render the player controls component', () => {
     expect(fixture.debugElement.query(By.css('app-player-controls'))).toBeTruthy();
   });
 
   // ===================================================================
-  // Groupe D — Complément
+  // Group D — Extra
   // ===================================================================
 
-  // D1 : chaque instance génère un sessionId différent (pas de réutilisation).
+  // D1: each instance generates a different sessionId (no reuse).
   it('should generate a different sessionId for each instance', () => {
     const firstId = sessionStorage.getItem('sessionId');
     sessionStorage.clear();

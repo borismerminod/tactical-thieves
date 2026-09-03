@@ -1,83 +1,83 @@
-// Outils fournis par Angular pour tester un composant :
-// - TestBed : le "banc de test" qui construit une mini-application autour du composant.
-// - ComponentFixture : l'enveloppe qui donne accès à l'instance du composant ET à son DOM.
+// Angular tools for testing a component:
+// - TestBed: the "test bench" that builds a mini-application around the component.
+// - ComponentFixture: the wrapper giving access to the component instance AND its DOM.
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-// Le Router : c'est la dépendance qu'on va remplacer par un faux (mock) pour ne pas
-// réellement changer de page pendant les tests.
+// The Router: the dependency we replace with a fake (mock) so we don't
+// actually change pages during the tests.
 import { Router } from '@angular/router';
-// Le composant que l'on teste.
+// The component under test.
 import { GameTitleComponent } from './game-title.component';
 
-// describe(...) regroupe tous les tests de ce composant dans une même "suite".
+// describe(...) groups all the tests for this component into a single "suite".
 describe('GameTitleComponent', () => {
-  // Variables partagées entre les tests, (re)initialisées avant chacun via beforeEach.
-  let component: GameTitleComponent;                 // l'instance du composant
-  let fixture: ComponentFixture<GameTitleComponent>; // l'enveloppe (accès instance + DOM)
-  let routerMock: { navigate: jasmine.Spy };         // notre faux Router
+  // Variables shared across the tests, (re)initialized before each one via beforeEach.
+  let component: GameTitleComponent;                 // the component instance
+  let fixture: ComponentFixture<GameTitleComponent>; // the wrapper (instance + DOM access)
+  let routerMock: { navigate: jasmine.Spy };         // our fake Router
 
-  // beforeEach s'exécute AVANT chaque test (it), pour repartir d'un état propre à chaque fois.
+  // beforeEach runs BEFORE each test (it), to start from a clean state every time.
   beforeEach(async () => {
-    // On crée un faux Router : un objet qui a une méthode navigate, mais qui est un "spy".
-    // Un spy enregistre chaque appel (avec quels arguments) sans exécuter la vraie logique.
+    // We create a fake Router: an object with a navigate method, but as a "spy".
+    // A spy records every call (with which arguments) without running the real logic.
     routerMock = { navigate: jasmine.createSpy('navigate') };
 
-    // On configure le module de test :
-    // - imports : le composant est "standalone", donc on l'importe directement.
-    // - providers : on dit à Angular "quand quelqu'un demande Router, donne-lui notre mock".
+    // We configure the test module:
+    // - imports: the component is "standalone", so we import it directly.
+    // - providers: we tell Angular "when someone asks for Router, give them our mock".
     await TestBed.configureTestingModule({
       imports: [GameTitleComponent],
       providers: [{ provide: Router, useValue: routerMock }],
-    }).compileComponents(); // compile le HTML/CSS du composant.
+    }).compileComponents(); // compiles the component's HTML/CSS.
 
-    // On crée concrètement le composant et on récupère son instance.
+    // We concretely create the component and grab its instance.
     fixture = TestBed.createComponent(GameTitleComponent);
     component = fixture.componentInstance;
 
-    // detectChanges() déclenche le rendu Angular (le DOM est construit à partir du template).
+    // detectChanges() triggers Angular rendering (the DOM is built from the template).
     fixture.detectChanges();
   });
 
-  // --- Test 1 : le composant s'instancie sans erreur (smoke test) ---
+  // --- Test 1: the component instantiates without error (smoke test) ---
   it('should create', () => {
-    // toBeTruthy() vérifie que component n'est ni null ni undefined.
+    // toBeTruthy() checks that component is neither null nor undefined.
     expect(component).toBeTruthy();
   });
 
-  // --- Test 2 : le titre est bien affiché dans le DOM rendu ---
+  // --- Test 2: the title is properly displayed in the rendered DOM ---
   it('should display the game title', () => {
-    // nativeElement = l'élément HTML racine du composant. On cherche le titre par son id.
+    // nativeElement = the component's root HTML element. We look up the title by its id.
     const titleElement: HTMLElement =
       fixture.nativeElement.querySelector('#title');
 
-    // On vérifie d'abord que l'élément existe...
+    // First we check that the element exists...
     expect(titleElement).toBeTruthy();
-    // ...puis que son texte contient bien le nom du jeu.
+    // ...then that its text does contain the game name.
     expect(titleElement.textContent).toContain('Tactical Thieves');
   });
 
-  // --- Test 3 : cliquer sur le bouton "Start" appelle la méthode startGame() ---
+  // --- Test 3: clicking the "Start" button calls the startGame() method ---
   it('should call startGame() when the Start button is clicked', () => {
-    // On espionne la méthode startGame du composant pour savoir si elle est appelée.
+    // We spy on the component's startGame method to know whether it is called.
     spyOn(component, 'startGame');
 
-    // On récupère le bouton dans le DOM.
+    // We grab the button from the DOM.
     const button: HTMLButtonElement =
       fixture.nativeElement.querySelector('button.btn-play');
 
-    // On simule un vrai clic utilisateur.
+    // We simulate a real user click.
     button.click();
 
-    // On vérifie que le clic a bien déclenché la méthode (grâce au binding (click) du template).
+    // We check that the click did trigger the method (thanks to the template's (click) binding).
     expect(component.startGame).toHaveBeenCalled();
   });
 
-  // --- Test 4 : startGame() navigue vers /unity-game (comportement clé) ---
+  // --- Test 4: startGame() navigates to /unity-game (key behavior) ---
   it('should navigate to /unity-game on startGame()', () => {
-    // On appelle directement la méthode du composant.
+    // We call the component's method directly.
     component.startGame();
 
-    // On vérifie que le Router (notre mock) a bien reçu l'ordre de naviguer,
-    // avec exactement le bon chemin.
+    // We check that the Router (our mock) did receive the order to navigate,
+    // with exactly the right path.
     expect(routerMock.navigate).toHaveBeenCalledWith(['/unity-game']);
   });
 });
