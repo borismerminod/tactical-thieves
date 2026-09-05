@@ -19,12 +19,89 @@ MonoBehaviour:
     width: 2560
     height: 1349.3334
   m_ShowMode: 4
-  m_Title: Hierarchy
-  m_RootView: {fileID: 6}
-  m_MinSize: {x: 875, y: 300}
+  m_Title: Game
+  m_RootView: {fileID: 8}
+  m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: ProjectBrowser
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 678.6667
+    width: 376
+    height: 620.6667
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
+  m_ActualView: {fileID: 14}
+  m_Panes:
+  - {fileID: 14}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &3
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 4}
+  - {fileID: 2}
+  m_Position:
+    serializedVersion: 2
+    x: 1624
+    y: 0
+    width: 376
+    height: 1299.3334
+  m_MinSize: {x: 100, y: 200}
+  m_MaxSize: {x: 8096, y: 16192}
+  vertical: 1
+  controlID: 74
+--- !u!114 &4
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: SceneHierarchyWindow
+  m_EditorClassIdentifier: 
+  m_Children: []
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 376
+    height: 678.6667
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 16}
+  m_Panes:
+  - {fileID: 16}
+  m_Selected: 0
+  m_LastSelected: 0
+--- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,8 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 9}
+  - {fileID: 11}
   - {fileID: 3}
+  - {fileID: 6}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -48,8 +126,8 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 26
---- !u!114 &3
+  controlID: 50
+--- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,23 +137,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
+  m_Name: TestRunnerWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 1955.3334
+    x: 2000
     y: 0
-    width: 604.6666
+    width: 560
     height: 1299.3334
-  m_MinSize: {x: 275, y: 50}
+  m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
+  - {fileID: 15}
   - {fileID: 13}
-  m_Selected: 0
+  m_Selected: 1
   m_LastSelected: 0
---- !u!114 &4
+--- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,50 +164,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children: []
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 484
-    height: 770
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 14}
-  m_Panes:
-  - {fileID: 14}
-  m_Selected: 0
-  m_LastSelected: 0
---- !u!114 &5
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
     x: 0
     y: 770
-    width: 1955.3334
+    width: 1624
     height: 529.3334
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 12}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 19}
   m_Panes:
-  - {fileID: 12}
-  - {fileID: 17}
+  - {fileID: 19}
   m_Selected: 0
-  m_LastSelected: 1
---- !u!114 &6
+  m_LastSelected: 0
+--- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,9 +193,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Children:
-  - {fileID: 7}
-  - {fileID: 2}
-  - {fileID: 8}
+  - {fileID: 9}
+  - {fileID: 5}
+  - {fileID: 10}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -156,7 +208,7 @@ MonoBehaviour:
   m_TopViewHeight: 30
   m_UseBottomView: 1
   m_BottomViewHeight: 20
---- !u!114 &7
+--- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +230,7 @@ MonoBehaviour:
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
   m_LastLoadedLayoutName: 
---- !u!114 &8
+--- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,56 +251,6 @@ MonoBehaviour:
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
---- !u!114 &9
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 10}
-  - {fileID: 5}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1955.3334
-    height: 1299.3334
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 16192, y: 16192}
-  vertical: 1
-  controlID: 27
---- !u!114 &10
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 1
-  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Children:
-  - {fileID: 4}
-  - {fileID: 11}
-  m_Position:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1955.3334
-    height: 770
-  m_MinSize: {x: 200, y: 100}
-  m_MaxSize: {x: 16192, y: 8096}
-  vertical: 0
-  controlID: 28
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -258,25 +260,2351 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 1
+  m_Script: {fileID: 12010, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Children:
+  - {fileID: 12}
+  - {fileID: 7}
+  m_Position:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1624
+    height: 1299.3334
+  m_MinSize: {x: 100, y: 200}
+  m_MaxSize: {x: 8096, y: 16192}
+  vertical: 1
+  controlID: 51
+--- !u!114 &12
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneView
+  m_Name: GameView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 484
+    x: 0
     y: 0
-    width: 1471.3334
+    width: 1624
     height: 770
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 15}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 18}
   m_Panes:
-  - {fileID: 15}
-  - {fileID: 16}
-  m_Selected: 0
-  m_LastSelected: 1
---- !u!114 &12
+  - {fileID: 17}
+  - {fileID: 18}
+  m_Selected: 1
+  m_LastSelected: 0
+--- !u!114 &13
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13401, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Test Runner
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 2000
+    y: 72.66667
+    width: 559
+    height: 1278.3334
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_OverlaysVisible: 1
+  m_Spl:
+    ID: 174
+    splitterInitialOffset: 0
+    currentActiveSplitter: -1
+    realSizes:
+    - 906
+    - 302
+    relativeSizes:
+    - 0.75
+    - 0.25
+    minSizes:
+    - 32
+    - 32
+    maxSizes:
+    - 0
+    - 0
+    lastTotalSize: 1208
+    splitSize: 6
+    xOffset: 0
+    m_Version: 1
+    oldRealSizes: 
+    oldMinSizes: 
+    oldMaxSizes: 
+    oldSplitSize: 0
+  m_TestTypeToolbarIndex: 0
+  m_PlayModeTestListGUI:
+    m_Window: {fileID: 13}
+    m_NewResultList:
+    - id: 1005
+      uniqueId: '[TacticalThieves][suite]'
+      name: TacticalThieves
+      fullName: TacticalThieves
+      resultStatus: 1
+      duration: 0.165733
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    - id: 1077
+      uniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+      name: Tests.dll
+      fullName: C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll
+      resultStatus: 1
+      duration: 0.0329563
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1005
+      parentUniqueId: '[TacticalThieves][suite]'
+    - id: 1006
+      uniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+      name: AIControllerTest
+      fullName: AIControllerTest
+      resultStatus: 1
+      duration: 0.0778717
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1028
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AdjustRouteFromMoveRange_NegativeRange_ReturnsSingleElement]
+      name: AdjustRouteFromMoveRange_NegativeRange_ReturnsSingleElement
+      fullName: AIControllerTest.AdjustRouteFromMoveRange_NegativeRange_ReturnsSingleElement
+      resultStatus: 1
+      duration: 0.0117322
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1026
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AdjustRouteFromMoveRange_NullRoute_ReturnsNull]
+      name: AdjustRouteFromMoveRange_NullRoute_ReturnsNull
+      fullName: AIControllerTest.AdjustRouteFromMoveRange_NullRoute_ReturnsNull
+      resultStatus: 1
+      duration: 0.0003701
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1024
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AdjustRouteFromMoveRange_RouteEqualToRange_ReturnsOriginalList]
+      name: AdjustRouteFromMoveRange_RouteEqualToRange_ReturnsOriginalList
+      fullName: AIControllerTest.AdjustRouteFromMoveRange_RouteEqualToRange_ReturnsOriginalList
+      resultStatus: 1
+      duration: 0.0003917
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1023
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AdjustRouteFromMoveRange_RouteLongerThanRange_TruncatesToRange]
+      name: AdjustRouteFromMoveRange_RouteLongerThanRange_TruncatesToRange
+      fullName: AIControllerTest.AdjustRouteFromMoveRange_RouteLongerThanRange_TruncatesToRange
+      resultStatus: 1
+      duration: 0.0011496
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1025
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AdjustRouteFromMoveRange_RouteShorterThanRange_ReturnsOriginalList]
+      name: AdjustRouteFromMoveRange_RouteShorterThanRange_ReturnsOriginalList
+      fullName: AIControllerTest.AdjustRouteFromMoveRange_RouteShorterThanRange_ReturnsOriginalList
+      resultStatus: 1
+      duration: 0.0002542
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1027
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AdjustRouteFromMoveRange_ZeroRange_ReturnsSingleElement]
+      name: AdjustRouteFromMoveRange_ZeroRange_ReturnsSingleElement
+      fullName: AIControllerTest.AdjustRouteFromMoveRange_ZeroRange_ReturnsSingleElement
+      resultStatus: 1
+      duration: 0.0002604
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1007
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.AIController_ShouldBeInstantiated]
+      name: AIController_ShouldBeInstantiated
+      fullName: AIControllerTest.AIController_ShouldBeInstantiated
+      resultStatus: 1
+      duration: 0.0013364
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1014
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.Attack_ThiefOnEnabledTile_ReturnsTrue]
+      name: Attack_ThiefOnEnabledTile_ReturnsTrue
+      fullName: AIControllerTest.Attack_ThiefOnEnabledTile_ReturnsTrue
+      resultStatus: 1
+      duration: 0.0214634
+      messages: 
+      output: 'Init animator is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        OnMonsterAttack
+        : animator is null
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1015
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.Attack_ThiefOutsideEnabledTiles_ReturnsFalse]
+      name: Attack_ThiefOutsideEnabledTiles_ReturnsFalse
+      fullName: AIControllerTest.Attack_ThiefOutsideEnabledTiles_ReturnsFalse
+      resultStatus: 1
+      duration: 0.0066121
+      messages: 
+      output: 'SetEnableForAttack renderer is null
+
+        SetEnableForAttack renderer
+        is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1016
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.Attack_WithEmptyTileList_ReturnsFalse]
+      name: Attack_WithEmptyTileList_ReturnsFalse
+      fullName: AIControllerTest.Attack_WithEmptyTileList_ReturnsFalse
+      resultStatus: 1
+      duration: 0.0014552
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1008
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.CurrentMonster_SetThenGet_ReturnsSameMonster]
+      name: CurrentMonster_SetThenGet_ReturnsSameMonster
+      fullName: AIControllerTest.CurrentMonster_SetThenGet_ReturnsSameMonster
+      resultStatus: 1
+      duration: 0.0004193
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1010
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.OnMonsterSelected_WithNullMonster_ReturnsFalse]
+      name: OnMonsterSelected_WithNullMonster_ReturnsFalse
+      fullName: AIControllerTest.OnMonsterSelected_WithNullMonster_ReturnsFalse
+      resultStatus: 1
+      duration: 0.0001709
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1009
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.OnMonsterSelected_WithValidMonster_SelectsAndInitializesIt]
+      name: OnMonsterSelected_WithValidMonster_SelectsAndInitializesIt
+      fullName: AIControllerTest.OnMonsterSelected_WithValidMonster_SelectsAndInitializesIt
+      resultStatus: 1
+      duration: 0.0008162
+      messages: 
+      output: 'Init animator is null
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1021
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SelectShortestMoveRoute_MultipleThieves_ReturnsShortestRoute]
+      name: SelectShortestMoveRoute_MultipleThieves_ReturnsShortestRoute
+      fullName: AIControllerTest.SelectShortestMoveRoute_MultipleThieves_ReturnsShortestRoute
+      resultStatus: 1
+      duration: 0.0043812
+      messages: 
+      output: "Unity GUID: 5d046ed9-4faf-4a3a-ac28-3c5ac353edd8\r\nSessionId: \r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1022
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SelectShortestMoveRoute_NoThief_ReturnsEmptyRoute]
+      name: SelectShortestMoveRoute_NoThief_ReturnsEmptyRoute
+      fullName: AIControllerTest.SelectShortestMoveRoute_NoThief_ReturnsEmptyRoute
+      resultStatus: 1
+      duration: 0.0008984
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1020
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SelectShortestMoveRoute_SingleThief_ReturnsRouteTowardIt]
+      name: SelectShortestMoveRoute_SingleThief_ReturnsRouteTowardIt
+      fullName: AIControllerTest.SelectShortestMoveRoute_SingleThief_ReturnsRouteTowardIt
+      resultStatus: 1
+      duration: 0.0021392
+      messages: 
+      output: "Unity GUID: 0070e19e-8561-4bd7-9ee2-34a54e1c281e\r\nSessionId: \r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1011
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SetMonsterAttack_NominalCase_ReturnsReachableAttackTiles]
+      name: SetMonsterAttack_NominalCase_ReturnsReachableAttackTiles
+      fullName: AIControllerTest.SetMonsterAttack_NominalCase_ReturnsReachableAttackTiles
+      resultStatus: 1
+      duration: 0.0032981
+      messages: 
+      output: 'SetEnableForAttack renderer is null
+
+        SetEnableForAttack renderer
+        is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+        SetEnableForAttack
+        renderer is null
+
+        SetEnableForAttack renderer is null
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1013
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SetMonsterAttack_WithNullHandler_ReturnsEmptyList]
+      name: SetMonsterAttack_WithNullHandler_ReturnsEmptyList
+      fullName: AIControllerTest.SetMonsterAttack_WithNullHandler_ReturnsEmptyList
+      resultStatus: 1
+      duration: 0.0004055
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1012
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SetMonsterAttack_WithNullMonster_ReturnsEmptyList]
+      name: SetMonsterAttack_WithNullMonster_ReturnsEmptyList
+      fullName: AIControllerTest.SetMonsterAttack_WithNullMonster_ReturnsEmptyList
+      resultStatus: 1
+      duration: 0.0006893
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1017
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SetMonsterMove_NominalCase_ReturnsReachableMoveTiles]
+      name: SetMonsterMove_NominalCase_ReturnsReachableMoveTiles
+      fullName: AIControllerTest.SetMonsterMove_NominalCase_ReturnsReachableMoveTiles
+      resultStatus: 1
+      duration: 0.0035697
+      messages: 
+      output: 'SetEnableForMove renderer is null
+
+        SetEnableForMove renderer
+        is null
+
+        SetEnableForMove renderer is null
+
+        SetEnableForMove
+        renderer is null
+
+        SetEnableForMove renderer is null
+
+        SetEnableForMove
+        renderer is null
+
+        SetEnableForMove renderer is null
+
+        SetEnableForMove
+        renderer is null
+
+        SetEnableForMove renderer is null
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1019
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SetMonsterMove_WithNullHandler_ReturnsEmptyList]
+      name: SetMonsterMove_WithNullHandler_ReturnsEmptyList
+      fullName: AIControllerTest.SetMonsterMove_WithNullHandler_ReturnsEmptyList
+      resultStatus: 1
+      duration: 0.0004147
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1018
+      uniqueId: Tests.dll/AIControllerTest/[Tests][AIControllerTest.SetMonsterMove_WithNullMonster_ReturnsEmptyList]
+      name: SetMonsterMove_WithNullMonster_ReturnsEmptyList
+      fullName: AIControllerTest.SetMonsterMove_WithNullMonster_ReturnsEmptyList
+      resultStatus: 1
+      duration: 0.0006985
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1006
+      parentUniqueId: Tests.dll/[Tests][AIControllerTest][suite]
+    - id: 1024
+      uniqueId: Tests.dll/[Tests][APIClientTest][suite]
+      name: APIClientTest
+      fullName: APIClientTest
+      resultStatus: 1
+      duration: 0.0674275
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1035
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.AllThievesDied_SendsEmptyBody]
+      name: AllThievesDied_SendsEmptyBody
+      fullName: APIClientTest.AllThievesDied_SendsEmptyBody
+      resultStatus: 1
+      duration: 0.0146
+      messages: 
+      output: "Unity GUID: c43deb8b-a66f-4853-b29a-1acde1e60397\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1034
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.AllThievesDied_TargetsThievesDiedEndpoint]
+      name: AllThievesDied_TargetsThievesDiedEndpoint
+      fullName: APIClientTest.AllThievesDied_TargetsThievesDiedEndpoint
+      resultStatus: 1
+      duration: 0.0030782
+      messages: 
+      output: "Unity GUID: d68e44fd-7510-4461-8247-663c1b3162d1\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1033
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.AllThievesDied_UsesPostMethod]
+      name: AllThievesDied_UsesPostMethod
+      fullName: APIClientTest.AllThievesDied_UsesPostMethod
+      resultStatus: 1
+      duration: 0.0011513
+      messages: 
+      output: "Unity GUID: 0e7dfa5b-4ce9-4733-a719-5c002474475a\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1027
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.CollectTreasure_SerializesAmountInBody]
+      name: CollectTreasure_SerializesAmountInBody
+      fullName: APIClientTest.CollectTreasure_SerializesAmountInBody
+      resultStatus: 1
+      duration: 0.0016062
+      messages: 
+      output: "Unity GUID: c83800c4-13d5-4b4a-b550-1c58187a734d\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1028
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.CollectTreasure_SerializesNonPositiveAmount]
+      name: CollectTreasure_SerializesNonPositiveAmount
+      fullName: APIClientTest.CollectTreasure_SerializesNonPositiveAmount
+      resultStatus: 1
+      duration: 0.000977
+      messages: 
+      output: "Unity GUID: fb967df4-8ba6-4fec-bb88-2c3ccc523b79\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1026
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.CollectTreasure_TargetsCollectTreasureEndpoint]
+      name: CollectTreasure_TargetsCollectTreasureEndpoint
+      fullName: APIClientTest.CollectTreasure_TargetsCollectTreasureEndpoint
+      resultStatus: 1
+      duration: 0.000917
+      messages: 
+      output: "Unity GUID: f5d9e693-9a44-436d-bbac-d43648e7948f\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1025
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.CollectTreasure_UsesPostMethod]
+      name: CollectTreasure_UsesPostMethod
+      fullName: APIClientTest.CollectTreasure_UsesPostMethod
+      resultStatus: 1
+      duration: 0.0010963
+      messages: 
+      output: "Unity GUID: 4cbd8d1a-55b6-42a4-b646-2e34630f73dd\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1038
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.GameStart_SerializesSessionId]
+      name: GameStart_SerializesSessionId
+      fullName: APIClientTest.GameStart_SerializesSessionId
+      resultStatus: 1
+      duration: 0.0014334
+      messages: 
+      output: "Unity GUID: 71e44c3e-f7c0-42d7-8c53-67b1b87ebf68\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1039
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.GameStart_SerializesUnityGuid]
+      name: GameStart_SerializesUnityGuid
+      fullName: APIClientTest.GameStart_SerializesUnityGuid
+      resultStatus: 1
+      duration: 0.0011829
+      messages: 
+      output: "Unity GUID: cd24b540-93ad-4f39-85c6-1f73d89087bf\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1037
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.GameStart_TargetsGameStartEndpoint]
+      name: GameStart_TargetsGameStartEndpoint
+      fullName: APIClientTest.GameStart_TargetsGameStartEndpoint
+      resultStatus: 1
+      duration: 0.0009634
+      messages: 
+      output: "Unity GUID: 2194e66b-75ae-4633-81b7-df3acc0602d7\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1036
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.GameStart_UsesPostMethod]
+      name: GameStart_UsesPostMethod
+      fullName: APIClientTest.GameStart_UsesPostMethod
+      resultStatus: 1
+      duration: 0.0009241
+      messages: 
+      output: "Unity GUID: 77d363f6-d464-4860-a89b-dfeed42df0b7\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1050
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.LoadLevelAsync_EscapesPseudoInUrl]
+      name: LoadLevelAsync_EscapesPseudoInUrl
+      fullName: APIClientTest.LoadLevelAsync_EscapesPseudoInUrl
+      resultStatus: 1
+      duration: 0.0026872
+      messages: 
+      output: "Unity GUID: 543f9652-7582-4271-8285-78c660c53122\r\nSessionId: \r\nLoadLevelAsync
+        Response: {\"success\":true,\"id\":1,\"pseudo\":\"a&b\",\"level\":1}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1048
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.LoadLevelAsync_InvalidJson_FaultsTask]
+      name: LoadLevelAsync_InvalidJson_FaultsTask
+      fullName: APIClientTest.LoadLevelAsync_InvalidJson_FaultsTask
+      resultStatus: 1
+      duration: 0.0031513
+      messages: 
+      output: "Unity GUID: d1eb0c8a-0824-45a5-9109-b705ef02a553\r\nSessionId: \r\nLoadLevelAsync
+        Response: pas du json\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1049
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.LoadLevelAsync_ServerError_FaultsTask]
+      name: LoadLevelAsync_ServerError_FaultsTask
+      fullName: APIClientTest.LoadLevelAsync_ServerError_FaultsTask
+      resultStatus: 1
+      duration: 0.0027408
+      messages: 
+      output: "Unity GUID: b3d8d475-1926-4a19-8038-3da3e58e6754\r\nSessionId: \r\nLoadLevelAsync
+        Error: simulated network error\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1046
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.LoadLevelAsync_Success_ReturnsLevel]
+      name: LoadLevelAsync_Success_ReturnsLevel
+      fullName: APIClientTest.LoadLevelAsync_Success_ReturnsLevel
+      resultStatus: 1
+      duration: 0.0017317
+      messages: 
+      output: "Unity GUID: b6c8a6d8-2c2e-424c-b510-a23105ddc55c\r\nSessionId: \r\nLoadLevelAsync
+        Response: {\"success\":true,\"id\":1,\"pseudo\":\"alice\",\"level\":7}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1047
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.LoadLevelAsync_SuccessFalse_FaultsTask]
+      name: LoadLevelAsync_SuccessFalse_FaultsTask
+      fullName: APIClientTest.LoadLevelAsync_SuccessFalse_FaultsTask
+      resultStatus: 1
+      duration: 0.0010745
+      messages: 
+      output: "Unity GUID: e91a4d88-e0ba-4630-a31e-a53e3237817a\r\nSessionId: \r\nLoadLevelAsync
+        Response: {\"success\":false,\"id\":0,\"pseudo\":\"alice\",\"level\":0}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1045
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.LoadLevelAsync_TargetsLoadLevelEndpoint]
+      name: LoadLevelAsync_TargetsLoadLevelEndpoint
+      fullName: APIClientTest.LoadLevelAsync_TargetsLoadLevelEndpoint
+      resultStatus: 1
+      duration: 0.0010874
+      messages: 
+      output: "Unity GUID: 4f4359b8-d8bd-49b4-8d3f-b0e92e9168e7\r\nSessionId: \r\nLoadLevelAsync
+        Response: {\"success\":true,\"id\":1,\"pseudo\":\"alice\",\"level\":7}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1044
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.LoadLevelAsync_UsesGetMethod]
+      name: LoadLevelAsync_UsesGetMethod
+      fullName: APIClientTest.LoadLevelAsync_UsesGetMethod
+      resultStatus: 1
+      duration: 0.0009839
+      messages: 
+      output: "Unity GUID: c519e5f3-0b18-4bd1-9abe-fb91b63e3f90\r\nSessionId: \r\nLoadLevelAsync
+        Response: {\"success\":true,\"id\":1,\"pseudo\":\"alice\",\"level\":7}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1042
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.SaveLevelAsync_SerializesPseudoAndLevel]
+      name: SaveLevelAsync_SerializesPseudoAndLevel
+      fullName: APIClientTest.SaveLevelAsync_SerializesPseudoAndLevel
+      resultStatus: 1
+      duration: 0.0013743
+      messages: 
+      output: "Unity GUID: 72d03fb6-9414-41a4-a7dd-87ebb91bf89c\r\nSessionId: \r\nSaveLevelAsync
+        Response: {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1043
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.SaveLevelAsync_ServerError_FaultsTask]
+      name: SaveLevelAsync_ServerError_FaultsTask
+      fullName: APIClientTest.SaveLevelAsync_ServerError_FaultsTask
+      resultStatus: 1
+      duration: 0.0012693
+      messages: 
+      output: "Unity GUID: 1bb1584c-4366-4eaf-8c31-6e4b25ae0485\r\nSessionId: \r\nSaveLevelAsync
+        Error: simulated network error\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1040
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.SaveLevelAsync_Success_CompletesTask]
+      name: SaveLevelAsync_Success_CompletesTask
+      fullName: APIClientTest.SaveLevelAsync_Success_CompletesTask
+      resultStatus: 1
+      duration: 0.0010491
+      messages: 
+      output: "Unity GUID: 1779eb73-a746-4768-a8f5-facd7bda7b49\r\nSessionId: \r\nSaveLevelAsync
+        Response: {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1041
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.SaveLevelAsync_TargetsSaveLevelEndpoint]
+      name: SaveLevelAsync_TargetsSaveLevelEndpoint
+      fullName: APIClientTest.SaveLevelAsync_TargetsSaveLevelEndpoint
+      resultStatus: 1
+      duration: 0.0011057
+      messages: 
+      output: "Unity GUID: 4a698f3b-4fa9-4495-9ea7-ddd928632b86\r\nSessionId: \r\nSaveLevelAsync
+        Response: {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1032
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.ThiefReachedExit_SendsHardcodedPseudo]
+      name: ThiefReachedExit_SendsHardcodedPseudo
+      fullName: APIClientTest.ThiefReachedExit_SendsHardcodedPseudo
+      resultStatus: 1
+      duration: 0.0014912
+      messages: 
+      output: "Unity GUID: b3610c8e-fc29-4ce1-b5f4-6d79f4bc570c\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1031
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.ThiefReachedExit_SerializesLevelInBody]
+      name: ThiefReachedExit_SerializesLevelInBody
+      fullName: APIClientTest.ThiefReachedExit_SerializesLevelInBody
+      resultStatus: 1
+      duration: 0.0010541
+      messages: 
+      output: "Unity GUID: db26b51a-6712-4e9b-9afb-dc5808dcdffc\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1030
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.ThiefReachedExit_TargetsExitReachedEndpoint]
+      name: ThiefReachedExit_TargetsExitReachedEndpoint
+      fullName: APIClientTest.ThiefReachedExit_TargetsExitReachedEndpoint
+      resultStatus: 1
+      duration: 0.000966
+      messages: 
+      output: "Unity GUID: 67ae8a22-aacb-49da-a637-68b6216b7cff\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1029
+      uniqueId: Tests.dll/APIClientTest/[Tests][APIClientTest.ThiefReachedExit_UsesPostMethod]
+      name: ThiefReachedExit_UsesPostMethod
+      fullName: APIClientTest.ThiefReachedExit_UsesPostMethod
+      resultStatus: 1
+      duration: 0.0014691
+      messages: 
+      output: "Unity GUID: b55305b5-439e-4448-8a27-49489a6be94a\r\nSessionId: \r\nResponse:
+        {}\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1024
+      parentUniqueId: Tests.dll/[Tests][APIClientTest][suite]
+    - id: 1051
+      uniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+      name: CharactersManagerTest
+      fullName: CharactersManagerTest
+      resultStatus: 1
+      duration: 0.0737773
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1120
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1056
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AddCharacter_AcceptsThievesAndMonstersWithoutTypeFiltering]
+      name: AddCharacter_AcceptsThievesAndMonstersWithoutTypeFiltering
+      fullName: CharactersManagerTest.AddCharacter_AcceptsThievesAndMonstersWithoutTypeFiltering
+      resultStatus: 1
+      duration: 0.0258469
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1052
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AddCharacter_AddsCharacterToList]
+      name: AddCharacter_AddsCharacterToList
+      fullName: CharactersManagerTest.AddCharacter_AddsCharacterToList
+      resultStatus: 1
+      duration: 0.00158
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1055
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AddCharacter_AddsMultipleDistinctInInsertionOrder]
+      name: AddCharacter_AddsMultipleDistinctInInsertionOrder
+      fullName: CharactersManagerTest.AddCharacter_AddsMultipleDistinctInInsertionOrder
+      resultStatus: 1
+      duration: 0.0030748
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1054
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AddCharacter_IgnoresDuplicate]
+      name: AddCharacter_IgnoresDuplicate
+      fullName: CharactersManagerTest.AddCharacter_IgnoresDuplicate
+      resultStatus: 1
+      duration: 0.0017775
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1053
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AddCharacter_IgnoresNull]
+      name: AddCharacter_IgnoresNull
+      fullName: CharactersManagerTest.AddCharacter_IgnoresNull
+      resultStatus: 1
+      duration: 0.0003772
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1068
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_HandlesNullEntryWithoutThrowing]
+      name: AreAllThievesDied_HandlesNullEntryWithoutThrowing
+      fullName: CharactersManagerTest.AreAllThievesDied_HandlesNullEntryWithoutThrowing
+      resultStatus: 1
+      duration: 0.0015558
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1065
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_IgnoresMonstersWhenAllThievesAreDead]
+      name: AreAllThievesDied_IgnoresMonstersWhenAllThievesAreDead
+      fullName: CharactersManagerTest.AreAllThievesDied_IgnoresMonstersWhenAllThievesAreDead
+      resultStatus: 1
+      duration: 0.0027221
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1067
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenMonsterPresentAndThiefAlive]
+      name: AreAllThievesDied_ReturnsFalseWhenMonsterPresentAndThiefAlive
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenMonsterPresentAndThiefAlive
+      resultStatus: 1
+      duration: 0.0020861
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1064
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenOneThiefIsStillAliveAmongDeadOnes]
+      name: AreAllThievesDied_ReturnsFalseWhenOneThiefIsStillAliveAmongDeadOnes
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenOneThiefIsStillAliveAmongDeadOnes
+      resultStatus: 1
+      duration: 0.0024366
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1061
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive][suite]
+      name: AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive
+      resultStatus: 1
+      duration: 0.0075467
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1058
+      uniqueId: Tests.dll/CharactersManagerTest/AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(Wait)]
+      name: AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(Wait)
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(Wait)
+      resultStatus: 1
+      duration: 0.0015593
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1061
+      parentUniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive][suite]
+    - id: 1059
+      uniqueId: Tests.dll/CharactersManagerTest/AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(MovementEnable)]
+      name: AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(MovementEnable)
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(MovementEnable)
+      resultStatus: 1
+      duration: 0.0009381
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1061
+      parentUniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive][suite]
+    - id: 1060
+      uniqueId: Tests.dll/CharactersManagerTest/AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(isMoving)]
+      name: AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(isMoving)
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive(isMoving)
+      resultStatus: 1
+      duration: 0.0009416
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1061
+      parentUniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsFalseWhenSingleThiefIsAlive][suite]
+    - id: 1063
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenAllThievesAreDead]
+      name: AreAllThievesDied_ReturnsTrueWhenAllThievesAreDead
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenAllThievesAreDead
+      resultStatus: 1
+      duration: 0.0037393
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1057
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenListIsEmpty]
+      name: AreAllThievesDied_ReturnsTrueWhenListIsEmpty
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenListIsEmpty
+      resultStatus: 1
+      duration: 0.0004679
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1066
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenNoThiefIsPresent]
+      name: AreAllThievesDied_ReturnsTrueWhenNoThiefIsPresent
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenNoThiefIsPresent
+      resultStatus: 1
+      duration: 0.0010918
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1062
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenSingleThiefIsDead]
+      name: AreAllThievesDied_ReturnsTrueWhenSingleThiefIsDead
+      fullName: CharactersManagerTest.AreAllThievesDied_ReturnsTrueWhenSingleThiefIsDead
+      resultStatus: 1
+      duration: 0.0014696
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1069
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.Characters_ReflectsAddedCharacters]
+      name: Characters_ReflectsAddedCharacters
+      fullName: CharactersManagerTest.Characters_ReflectsAddedCharacters
+      resultStatus: 1
+      duration: 0.0015111
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1070
+      uniqueId: Tests.dll/CharactersManagerTest/[Tests][CharactersManagerTest.Characters_ReturnsSameUnderlyingInstance]
+      name: Characters_ReturnsSameUnderlyingInstance
+      fullName: CharactersManagerTest.Characters_ReturnsSameUnderlyingInstance
+      resultStatus: 1
+      duration: 0.0004281
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1051
+      parentUniqueId: Tests.dll/[Tests][CharactersManagerTest][suite]
+    - id: 1029
+      uniqueId: Tests.dll/[Tests][ExitTest][suite]
+      name: ExitTest
+      fullName: ExitTest
+      resultStatus: 1
+      duration: 0.026723
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1072
+      uniqueId: Tests.dll/ExitTest/[Tests][ExitTest.OnThiefReachExit_ShouldReturnFalse_WhenGuardsFail]
+      name: OnThiefReachExit_ShouldReturnFalse_WhenGuardsFail
+      fullName: ExitTest.OnThiefReachExit_ShouldReturnFalse_WhenGuardsFail
+      resultStatus: 1
+      duration: 0.0149633
+      messages: 
+      output: "Unity GUID: 95eae5b6-4aed-4996-b386-259083f2ae18\r\nSessionId: \r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1071
+      parentUniqueId: Tests.dll/[Tests][ExitTest][suite]
+    - id: 1073
+      uniqueId: Tests.dll/ExitTest/[Tests][ExitTest.OnThiefReachExit_ShouldTriggerVictory_WhenInGame]
+      name: OnThiefReachExit_ShouldTriggerVictory_WhenInGame
+      fullName: ExitTest.OnThiefReachExit_ShouldTriggerVictory_WhenInGame
+      resultStatus: 1
+      duration: 0.0017524
+      messages: 
+      output: "Unity GUID: d8c43e39-2187-4f04-842e-3f14ee9f1103\r\nSessionId: \r\nGame
+        state changed to: WIN\r\n"
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1071
+      parentUniqueId: Tests.dll/[Tests][ExitTest][suite]
+    - id: 1031
+      uniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+      name: GameManagerTest
+      fullName: GameManagerTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1032
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.CollectingTreasureAddsGold]
+      name: CollectingTreasureAddsGold
+      fullName: GameManagerTest.CollectingTreasureAddsGold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1031
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1036
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn][suite]
+      name: GameManagerTest_GameManagerSetCharacterTurn
+      fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1031
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1034
+      uniqueId: Tests.dll/GameManagerTest/GameManagerTest_GameManagerSetCharacterTurn/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(True)]
+      name: GameManagerTest_GameManagerSetCharacterTurn(True)
+      fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1036
+      parentUniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn][suite]
+    - id: 1035
+      uniqueId: Tests.dll/GameManagerTest/GameManagerTest_GameManagerSetCharacterTurn/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(False)]
+      name: GameManagerTest_GameManagerSetCharacterTurn(False)
+      fullName: GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn(False)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1036
+      parentUniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_GameManagerSetCharacterTurn][suite]
+    - id: 1037
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameManagerTest_OnLevelLoadedTest]
+      name: GameManagerTest_OnLevelLoadedTest
+      fullName: GameManagerTest.GameManagerTest_OnLevelLoadedTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1031
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1033
+      uniqueId: Tests.dll/GameManagerTest/[Tests][GameManagerTest.GameStateTransitionsToWinOnVictory]
+      name: GameStateTransitionsToWinOnVictory
+      fullName: GameManagerTest.GameStateTransitionsToWinOnVictory
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1031
+      parentUniqueId: Tests.dll/[Tests][GameManagerTest][suite]
+    - id: 1038
+      uniqueId: Tests.dll/[Tests][GridTest][suite]
+      name: GridTest
+      fullName: GridTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1046
+      uniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+      name: GridTest_GetARandomTileLocation
+      fullName: GridTest.GridTest_GetARandomTileLocation
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1038
+      parentUniqueId: Tests.dll/[Tests][GridTest][suite]
+    - id: 1042
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(1,1,4,4)]
+      name: GridTest_GetARandomTileLocation(1,1,4,4)
+      fullName: GridTest.GridTest_GetARandomTileLocation(1,1,4,4)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+    - id: 1043
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(-2,-2,4,4)]
+      name: GridTest_GetARandomTileLocation(-2,-2,4,4)
+      fullName: GridTest.GridTest_GetARandomTileLocation(-2,-2,4,4)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+    - id: 1044
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(1,1,1,1)]
+      name: GridTest_GetARandomTileLocation(1,1,1,1)
+      fullName: GridTest.GridTest_GetARandomTileLocation(1,1,1,1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+    - id: 1045
+      uniqueId: Tests.dll/GridTest/GridTest_GetARandomTileLocation/[Tests][GridTest.GridTest_GetARandomTileLocation(4,4,4,4)]
+      name: GridTest_GetARandomTileLocation(4,4,4,4)
+      fullName: GridTest.GridTest_GetARandomTileLocation(4,4,4,4)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1046
+      parentUniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GetARandomTileLocation][suite]
+    - id: 1039
+      uniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GridCreation]
+      name: GridTest_GridCreation
+      fullName: GridTest.GridTest_GridCreation
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1038
+      parentUniqueId: Tests.dll/[Tests][GridTest][suite]
+    - id: 1040
+      uniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GridShouldEnableTilesForMonsterAttack]
+      name: GridTest_GridShouldEnableTilesForMonsterAttack
+      fullName: GridTest.GridTest_GridShouldEnableTilesForMonsterAttack
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1038
+      parentUniqueId: Tests.dll/[Tests][GridTest][suite]
+    - id: 1041
+      uniqueId: Tests.dll/GridTest/[Tests][GridTest.GridTest_GridShouldEnableTilesForMove]
+      name: GridTest_GridShouldEnableTilesForMove
+      fullName: GridTest.GridTest_GridShouldEnableTilesForMove
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1038
+      parentUniqueId: Tests.dll/[Tests][GridTest][suite]
+    - id: 1047
+      uniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
+      name: LevelManagerTest
+      fullName: LevelManagerTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1048
+      uniqueId: Tests.dll/LevelManagerTest/[Tests][LevelManagerTest.LevelManagerTest_LevelManagerShouldBeCreated]
+      name: LevelManagerTest_LevelManagerShouldBeCreated
+      fullName: LevelManagerTest.LevelManagerTest_LevelManagerShouldBeCreated
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1047
+      parentUniqueId: Tests.dll/[Tests][LevelManagerTest][suite]
+    - id: 1049
+      uniqueId: Tests.dll/[Tests][MonsterTest][suite]
+      name: MonsterTest
+      fullName: MonsterTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1050
+      uniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterCreation]
+      name: MonsterTest_MonsterCreation
+      fullName: MonsterTest.MonsterTest_MonsterCreation
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: Tests.dll/[Tests][MonsterTest][suite]
+    - id: 1063
+      uniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterFirstActionShouldBeAttack]
+      name: MonsterTest_MonsterFirstActionShouldBeAttack
+      fullName: MonsterTest.MonsterTest_MonsterFirstActionShouldBeAttack
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: Tests.dll/[Tests][MonsterTest][suite]
+    - id: 1062
+      uniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange][suite]
+      name: MonsterTest_MonsterShouldHaveAnAttackRange
+      fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1049
+      parentUniqueId: Tests.dll/[Tests][MonsterTest][suite]
+    - id: 1057
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldHaveAnAttackRange/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(1,1)]
+      name: MonsterTest_MonsterShouldHaveAnAttackRange(1,1)
+      fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(1,1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange][suite]
+    - id: 1058
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldHaveAnAttackRange/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(2,2)]
+      name: MonsterTest_MonsterShouldHaveAnAttackRange(2,2)
+      fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(2,2)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange][suite]
+    - id: 1059
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldHaveAnAttackRange/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(100,100)]
+      name: MonsterTest_MonsterShouldHaveAnAttackRange(100,100)
+      fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(100,100)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange][suite]
+    - id: 1060
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldHaveAnAttackRange/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(0,0)]
+      name: MonsterTest_MonsterShouldHaveAnAttackRange(0,0)
+      fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(0,0)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange][suite]
+    - id: 1061
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldHaveAnAttackRange/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(-1,0)]
+      name: MonsterTest_MonsterShouldHaveAnAttackRange(-1,0)
+      fullName: MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange(-1,0)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldHaveAnAttackRange][suite]
+    - id: 1056
+      uniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords][suite]
+      name: MonsterTest_MonsterShouldUseGridCoords
+      fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1049
+      parentUniqueId: Tests.dll/[Tests][MonsterTest][suite]
+    - id: 1051
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldUseGridCoords/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords(1,1,1,1)]
+      name: MonsterTest_MonsterShouldUseGridCoords(1,1,1,1)
+      fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(1,1,1,1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1056
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords][suite]
+    - id: 1052
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldUseGridCoords/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords(4,2,4,2)]
+      name: MonsterTest_MonsterShouldUseGridCoords(4,2,4,2)
+      fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(4,2,4,2)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1056
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords][suite]
+    - id: 1053
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldUseGridCoords/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords(3,4,3,4)]
+      name: MonsterTest_MonsterShouldUseGridCoords(3,4,3,4)
+      fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(3,4,3,4)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1056
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords][suite]
+    - id: 1054
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldUseGridCoords/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords(0,0,1,1)]
+      name: MonsterTest_MonsterShouldUseGridCoords(0,0,1,1)
+      fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(0,0,1,1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1056
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords][suite]
+    - id: 1055
+      uniqueId: Tests.dll/MonsterTest/MonsterTest_MonsterShouldUseGridCoords/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords(-5,-5,1,1)]
+      name: MonsterTest_MonsterShouldUseGridCoords(-5,-5,1,1)
+      fullName: MonsterTest.MonsterTest_MonsterShouldUseGridCoords(-5,-5,1,1)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1056
+      parentUniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterShouldUseGridCoords][suite]
+    - id: 1064
+      uniqueId: Tests.dll/MonsterTest/[Tests][MonsterTest.MonsterTest_MonsterTryingToMove]
+      name: MonsterTest_MonsterTryingToMove
+      fullName: MonsterTest.MonsterTest_MonsterTryingToMove
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: Tests.dll/[Tests][MonsterTest][suite]
+    - id: 1065
+      uniqueId: Tests.dll/[Tests][ThiefTest][suite]
+      name: ThiefTest
+      fullName: ThiefTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1068
+      uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_MovementEnabledWithUnWalkableTiles]
+      name: ThiefTest_MovementEnabledWithUnWalkableTiles
+      fullName: ThiefTest.ThiefTest_MovementEnabledWithUnWalkableTiles
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1065
+      parentUniqueId: Tests.dll/[Tests][ThiefTest][suite]
+    - id: 1066
+      uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_ThiefCreation]
+      name: ThiefTest_ThiefCreation
+      fullName: ThiefTest.ThiefTest_ThiefCreation
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1065
+      parentUniqueId: Tests.dll/[Tests][ThiefTest][suite]
+    - id: 1067
+      uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_ThiefMovementEnabled]
+      name: ThiefTest_ThiefMovementEnabled
+      fullName: ThiefTest.ThiefTest_ThiefMovementEnabled
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1065
+      parentUniqueId: Tests.dll/[Tests][ThiefTest][suite]
+    - id: 1234
+      uniqueId: Tests.dll/ThiefTest/[Tests][ThiefTest.ThiefTest_ThiefShouldDieIfAttacked]
+      name: ThiefTest_ThiefShouldDieIfAttacked
+      fullName: ThiefTest.ThiefTest_ThiefShouldDieIfAttacked
+      resultStatus: 2
+      duration: 0
+      messages: Method marked with UnityTest must return IEnumerator.
+      output: 
+      stacktrace: 
+      notRunnable: 1
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1230
+      parentUniqueId: Tests.dll/[Tests][ThiefTest][suite]
+    - id: 1070
+      uniqueId: Tests.dll/[Tests][TileTest][suite]
+      name: TileTest
+      fullName: TileTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1074
+      uniqueId: Tests.dll/TileTest/[Tests][TileTest.TileTest_TileCouldBeEnableForAttack][suite]
+      name: TileTest_TileCouldBeEnableForAttack
+      fullName: TileTest.TileTest_TileCouldBeEnableForAttack
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1070
+      parentUniqueId: Tests.dll/[Tests][TileTest][suite]
+    - id: 1072
+      uniqueId: Tests.dll/TileTest/TileTest_TileCouldBeEnableForAttack/[Tests][TileTest.TileTest_TileCouldBeEnableForAttack(True,True)]
+      name: TileTest_TileCouldBeEnableForAttack(True,True)
+      fullName: TileTest.TileTest_TileCouldBeEnableForAttack(True,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1074
+      parentUniqueId: Tests.dll/TileTest/[Tests][TileTest.TileTest_TileCouldBeEnableForAttack][suite]
+    - id: 1073
+      uniqueId: Tests.dll/TileTest/TileTest_TileCouldBeEnableForAttack/[Tests][TileTest.TileTest_TileCouldBeEnableForAttack(False,False)]
+      name: TileTest_TileCouldBeEnableForAttack(False,False)
+      fullName: TileTest.TileTest_TileCouldBeEnableForAttack(False,False)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1074
+      parentUniqueId: Tests.dll/TileTest/[Tests][TileTest.TileTest_TileCouldBeEnableForAttack][suite]
+    - id: 1071
+      uniqueId: Tests.dll/TileTest/[Tests][TileTest.TileTest_TileShouldBeCreated]
+      name: TileTest_TileShouldBeCreated
+      fullName: TileTest.TileTest_TileShouldBeCreated
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1070
+      parentUniqueId: Tests.dll/[Tests][TileTest][suite]
+    - id: 1075
+      uniqueId: Tests.dll/[Tests][TreasureTest][suite]
+      name: TreasureTest
+      fullName: TreasureTest
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1077
+      parentUniqueId: '[Tests][C:/Users/Bobo/Documents/Projets/tactical-thieves/TacticalThievesUnity/Library/ScriptAssemblies/Tests.dll][suite]'
+    - id: 1076
+      uniqueId: Tests.dll/TreasureTest/[Tests][TreasureTest.CollectTreasure_ShouldIncreasePlayerGold]
+      name: CollectTreasure_ShouldIncreasePlayerGold
+      fullName: TreasureTest.CollectTreasure_ShouldIncreasePlayerGold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: Tests.dll/[Tests][TreasureTest][suite]
+    m_ResultText: ExitTest (0,027s)
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: c3ef609a
+      m_LastClickedID: -1704923197
+      m_ExpandedIDs: c3ef609a8f0781abcfe95dc6396a33ca47642edde16a5ae86a31c6f6e121200146008a13131d0f151e559e1971ccbf1e5db0b52db37cc93f72077c66fe114070c8a1ff70ffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+    m_SelectedOption: 0
+  m_EditModeTestListGUI:
+    m_Window: {fileID: 13}
+    m_NewResultList:
+    - id: 1000
+      uniqueId: '[TacticalThieves][suite]'
+      name: TacticalThieves
+      fullName: TacticalThieves
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 
+      parentUniqueId: 
+    m_ResultText: 
+    m_ResultStacktrace: 
+    m_TestListState:
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 47642eddffffff7f
+      m_RenameOverlay:
+        m_UserAcceptedRename: 0
+        m_Name: 
+        m_OriginalName: 
+        m_EditFieldRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        m_UserData: 0
+        m_IsWaitingForDelay: 0
+        m_IsRenaming: 0
+        m_OriginalEventType: 11
+        m_IsRenamingFilename: 0
+        m_ClientGUIView: {fileID: 0}
+      m_SearchString: 
+    m_TestRunnerUIFilter:
+      PassedHidden: 0
+      FailedHidden: 0
+      NotRunHidden: 0
+      m_SearchString: 
+      selectedCategoryMask: 0
+      availableCategories:
+      - Uncategorized
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,10 +2624,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 842.6667
-    width: 1954.3334
-    height: 508.33337
+    x: 1624
+    y: 751.3334
+    width: 374
+    height: 599.6667
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -315,24 +2643,23 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Resources/Prefabs
+    m_Folders: []
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
-  m_ViewMode: 1
+  m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Prefabs
+  - Assets/Tests
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Bobo\Documents\Projets\tactical-thieves\TacticalThievesUnity
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 2e810000
-    m_LastClickedID: 33070
-    m_ExpandedIDs: 000000002a8100002c8100002e81000030810000328100003481000036810000388100003a8100003c8100003e81000040810000428100004481000046810000488100004a8100004c8100004e81000050810000528100005481000056810000588100005a8100005c8100005e81000060810000628100006481000066810000688100006a8100006c8100006e81000070810000728100007481000076810000788100007a8100007c8100007e8100008081000000ca9a3b
+    m_SelectedIDs: 7c810000
+    m_LastClickedID: 33148
+    m_ExpandedIDs: 00000000428100004481000046810000488100004a810000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -357,10 +2684,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 0}
+    scrollPos: {x: 0, y: 600}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002a8100002c8100002e81000030810000328100003481000036810000388100003a8100003c8100003e81000040810000428100004481000046810000488100004a8100004c8100004e81000050810000528100005481000056810000588100005a8100005c8100005e81000060810000628100006481000066810000688100006a8100006c8100006e81000070810000728100007481000076810000788100007a8100007c8100007e81000080810000
+    m_ExpandedIDs: ffffffff00000000428100004481000046810000488100004a810000a2810000a6810000ea8c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -387,7 +2714,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -404,7 +2731,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 7}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -416,7 +2743,7 @@ MonoBehaviour:
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 207
---- !u!114 &13
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,9 +2763,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1955.3334
+    x: 2000
     y: 72.66667
-    width: 603.6666
+    width: 559
     height: 1278.3334
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -458,7 +2785,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &14
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,10 +2805,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
+    x: 1624
     y: 72.66667
-    width: 483
-    height: 749
+    width: 374
+    height: 657.6667
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -492,7 +2819,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 48f1ffffc0f1fffff4f1ffff60f3ffffb6f3ffff52f5ffffa8f7fffff8f7ffff94f9ffff06fbffff16980000
+      m_ExpandedIDs: 9066ffffcc66ffff3a68ffff4069ffff7c69ffffe86affff4e6bffff8a6bfffff66cffff5c6dffff986dffff5a97ffff8298ffffbe98ffff409cffff509dffff8c9dffff289fffff8e9fffffca9fffff26a1ffff0aa3ffff2ea3ffff6aa3ffffc4a4ffff32a5ffff6ea5ffffc8a6ffff3aa7ffff76a7ffffd0a8ffff3ea9ffff7aa9ffffd4aaffff3eabffff7aabffffd6acffff04aeffff40aeffffe4b0ffff4ab1ffff86b1ffff18d2ffff4cd3ffff88d3ffff18f4ffff7ef4ffffbaf4ffffbcf9fffff0faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -516,7 +2843,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 4c969a2b90040154d917609493e03593
---- !u!114 &15
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -536,9 +2863,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 484
+    x: 0
     y: 72.66667
-    width: 1469.3334
+    width: 1954.3334
     height: 749
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -855,7 +3182,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &16
+--- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -875,9 +3202,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 484
+    x: 0
     y: 72.66667
-    width: 1469.3334
+    width: 1623
     height: 749
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -890,7 +3217,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1469.3334, y: 728}
+  m_TargetSize: {x: 1623, y: 728}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -905,8 +3232,8 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-    m_HBaseRangeMin: -489.7778
-    m_HBaseRangeMax: 489.7778
+    m_HBaseRangeMin: -541
+    m_HBaseRangeMax: 541
     m_VBaseRangeMin: -242.66667
     m_VBaseRangeMax: 242.66667
     m_HAllowExceedBaseRangeMin: 1
@@ -917,7 +3244,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -926,29 +3253,29 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 1469.3334
+      width: 1623
       height: 728
     m_Scale: {x: 1.5, y: 1.5}
-    m_Translation: {x: 734.6667, y: 364}
+    m_Translation: {x: 811.5, y: 364}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -489.7778
+      x: -541
       y: -242.66667
-      width: 979.5556
+      width: 1082
       height: 485.33334
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 2204, y: 1123.5}
+  m_LastWindowPixelSize: {x: 2434.5, y: 1123.5}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &17
+--- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -970,7 +3297,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 842.6667
-    width: 1954.3334
+    width: 1623
     height: 508.33337
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:

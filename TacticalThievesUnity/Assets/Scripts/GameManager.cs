@@ -202,8 +202,8 @@ namespace TacticalThieves
         /// </summary>
         private void Start()
         {
-            try
-            {
+            //try
+            //{
                 State = GameState.LOADING;
                 bInit = false;
 
@@ -217,11 +217,11 @@ namespace TacticalThieves
                     StartCoroutine(WaitAndConnectDev());
                 }
 #endif
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("Error during GameManager Start: " + ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.LogError("Error during GameManager Start: " + ex.Message);
+            //}
         }
 
         /// <summary>

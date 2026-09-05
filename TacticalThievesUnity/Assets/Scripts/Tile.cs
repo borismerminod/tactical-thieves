@@ -232,16 +232,23 @@ namespace TacticalThieves
             }
 
             EnableForMove = enable;
-            if (enable)
+
+            if(renderer != null)
             {
-                renderer.material = moveMaterial;
+                if (enable)
+                {
+                    renderer.material = moveMaterial;
+                }
+                else
+                {
+                    renderer.material = defaultMaterial;
+                }
+                previousMaterial = renderer?.material;
             }
             else
             {
-                renderer.material = defaultMaterial;
+                Debug.LogWarning("SetEnableForMove renderer is null");
             }
-
-            previousMaterial = renderer?.material;
         }
 
         /// <summary>
@@ -252,18 +259,26 @@ namespace TacticalThieves
         /// <param name="enable">If <c>true</c> the tile is enabled for attack; otherwise it is disabled.</param>
         public void SetEnableForAttack(bool enable)
         {
+
             EnableForAttack = enable;
-            if (enable)
+
+            if (renderer != null)
             {
-                renderer.material = attackMaterial;
+
+                if (enable)
+                {
+                    renderer.material = attackMaterial;
+                }
+                else
+                {
+                    renderer.material = defaultMaterial;
+                }
+
+                if (walkable)
+                    previousMaterial = renderer?.material;
             }
             else
-            {
-                renderer.material = defaultMaterial;
-            }
-
-            if(walkable)
-                previousMaterial = renderer?.material;
+                Debug.LogWarning("SetEnableForAttack renderer is null");
         }
     }
 }

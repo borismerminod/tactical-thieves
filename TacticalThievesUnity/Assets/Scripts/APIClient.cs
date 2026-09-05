@@ -24,9 +24,50 @@ namespace TacticalThieves
 
         [SerializeField] private bool apiClientStarted;
 
+        /// <summary>
+        /// Delegate that actually performs an HTTP request. Defaults to <see cref="DefaultSendRequest"/>
+        /// (real UnityWebRequest). Unit tests can assign a fake implementation to intercept requests
+        /// without hitting the network, since UnityWebRequest cannot complete synchronously in an EditMode [Test].
+        /// </summary>
+        private System.Func<string, string, string, System.Action<string>, System.Action<string>, IEnumerator> requestSender;
 
         /// <summary>
-        /// This method centralizes the logic for sending API requests, including setting headers and handling responses. 
+        /// The request sender used by every API call. Production code keeps the default; tests may override it.
+        /// </summary>
+        public System.Func<string, string, string, System.Action<string>, System.Action<string>, IEnumerator> RequestSender
+        {
+            get => requestSender ?? DefaultSendRequest;
+            set => requestSender = value;
+        }
+
+        /// <summary>
+        /// Starts a coroutine. Defaults to <see cref="MonoBehaviour.StartCoroutine(IEnumerator)"/>.
+        /// Unit tests can assign a synchronous runner so that the Task-based wrappers
+        /// (<see cref="SaveLevelAsync"/>, <see cref="LoadLevelAsync"/>) complete inside an EditMode [Test],
+        /// where StartCoroutine does not run.
+        /// </summary>
+        private System.Action<IEnumerator> coroutineStarter;
+
+        /// <summary>
+        /// The coroutine starter used by the Task-based wrappers. Production code keeps the default; tests may override it.
+        /// </summary>
+        public System.Action<IEnumerator> CoroutineStarter
+        {
+            get => coroutineStarter ?? RunWithStartCoroutine;
+            set => coroutineStarter = value;
+        }
+
+        /// <summary>
+        /// Default coroutine starter: delegates to the MonoBehaviour coroutine loop.
+        /// </summary>
+        private void RunWithStartCoroutine(IEnumerator routine)
+        {
+            StartCoroutine(routine);
+        }
+
+
+        /// <summary>
+        /// This method centralizes the logic for sending API requests, including setting headers and handling responses.
         /// It takes care of both success and error cases, allowing the caller to simply provide callbacks for each scenario. 
         /// This helps reduce code duplication across different API calls and makes it easier to maintain the request logic in one place.
         /// </summary>
@@ -37,6 +78,16 @@ namespace TacticalThieves
         /// <param name="onError">The call back function on failure case</param>
         /// <returns>IEnumerator for use with StartCoroutine</returns>
         private IEnumerator SendRequest(string url, string method, string jsonBody, System.Action<string> onSuccess, System.Action<string> onError = null)
+        {
+            var sender = RequestSender;
+            return sender(url, method, jsonBody, onSuccess, onError);
+        }
+
+        /// <summary>
+        /// Default request sender: performs the real HTTP call through UnityWebRequest.
+        /// </summary>
+        /// <returns>IEnumerator for use with StartCoroutine</returns>
+        private IEnumerator DefaultSendRequest(string url, string method, string jsonBody, System.Action<string> onSuccess, System.Action<string> onError = null)
         {
             if(method != "POST" && method != "GET")
             {
@@ -81,7 +132,7 @@ namespace TacticalThieves
                     onSuccess: response => Debug.Log("Response: " + response),
                     onError: error => Debug.LogError("Error: " + error)
             );
-            }
+        }
            
 
 
@@ -139,7 +190,7 @@ namespace TacticalThieves
 
         }
 
-        // Version awaitable pour SaveLevel : Task (lève une exception en cas d'erreur)
+        // Version awaitable pour SaveLevel : Task (lï¿½ve une exception en cas d'erreur)
         /// <summary>
         /// Asynchronously saves the player's current level on the remote service.
         /// </summary>
@@ -149,7 +200,7 @@ namespace TacticalThieves
         public Task SaveLevelAsync(string pseudo, int nextLevel)
         {
             var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            StartCoroutine(SaveLevel(pseudo, nextLevel, tcs));
+            CoroutineStarter(SaveLevel(pseudo, nextLevel, tcs));
             return tcs.Task;
         }
 
@@ -189,7 +240,7 @@ namespace TacticalThieves
         public Task<int> LoadLevelAsync(string pseudo)
         {
             var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
-            StartCoroutine(LoadLevel(pseudo, tcs));
+            CoroutineStarter(LoadLevel(pseudo, tcs));
             return tcs.Task;
         }
 
@@ -246,7 +297,7 @@ namespace TacticalThieves
             public string Pseudo;
         }
 
-        // DTO pour la réponse LoadLevel { success, id, pseudo, level }
+        // DTO pour la rï¿½ponse LoadLevel { success, id, pseudo, level }
         /// <summary>
         /// DTO representing the server response when loading a player's saved level.
         /// </summary>

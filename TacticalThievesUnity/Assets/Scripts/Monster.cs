@@ -111,7 +111,10 @@ namespace TacticalThieves
         public void Init()
         {
             ActionPhase = eActionPhase.WAIT;
-            animator?.SetBool(Utils.AnimatorParam.Run, false);
+            if(animator != null)
+                animator.SetBool(Utils.AnimatorParam.Run, false);
+            else 
+                Debug.LogWarning("Init animator is null");
         }
 
         /// <summary>
@@ -271,12 +274,18 @@ namespace TacticalThieves
             Vector3 direction = (thief.transform.position - transform.position).normalized;
             direction = new Vector3(direction.x, 0.0f, direction.z);
             transform.rotation = Quaternion.LookRotation(direction);
-            animator?.SetBool(Utils.AnimatorParam.Attack, true);
 
-            DOVirtual.DelayedCall(0.5f, () =>
+            if (animator != null)
             {
-                animator?.SetBool(Utils.AnimatorParam.Attack, false);
-            });
+                animator.SetBool(Utils.AnimatorParam.Attack, true);
+
+                DOVirtual.DelayedCall(0.5f, () =>
+                {
+                    animator.SetBool(Utils.AnimatorParam.Attack, false);
+                });
+            }
+            else
+                Debug.LogWarning("OnMonsterAttack : animator is null");
         }
 
     }
